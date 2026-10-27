@@ -1,0 +1,440 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Tee’s Wardrobe — Customer Order Status &amp; Balance</title>
+  
+  <!-- 1. Authentic typography: Load Inter from Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+  <!-- 2. Generated Design System Tokens -->
+  <link rel="stylesheet" href="css/tokens.css">
+
+  <style>
+    /* Global reset & box sizing */
+    html {
+      box-sizing: border-box;
+    }
+    *, *::before, *::after {
+      box-sizing: inherit;
+    }
+
+    body {
+      margin: 0;
+      padding: 10px;
+      background-color: var(--color-role-surface);
+      color: var(--color-role-on-surface);
+      font-family: var(--type-body-medium-font-family);
+      width: 100%;
+      min-height: 100vh;
+    }
+
+    .container {
+      width: 100%;
+      max-width: 392px; /* Fits comfortably within 412px mobile viewport with 10px padding on each side */
+      margin: 0 auto;
+      background-color: var(--color-role-surface);
+      border: 1px solid var(--color-role-field-outline);
+      border-radius: 12px;
+      padding: 14px;
+      box-shadow: var(--shadow-soft);
+    }
+
+    /* Demo disclaimer banner */
+    .demo-banner {
+      background-color: var(--color-role-surface);
+      border: 1px solid var(--color-role-field-outline);
+      border-radius: 8px;
+      padding: 8px 10px;
+      margin-bottom: 14px;
+      color: var(--color-role-on-surface);
+    }
+
+    /* Brand Header with primary sea green accent */
+    .brand-header {
+      margin-bottom: 14px;
+      padding-bottom: 10px;
+      border-bottom: 2px solid var(--color-role-primary);
+    }
+
+    h1.brand-title-badge,
+    .brand-title-badge {
+      display: inline-block;
+      background-color: var(--color-role-primary);
+      color: var(--color-role-on-primary);
+      padding: 4px 10px;
+      border-radius: 6px;
+      margin: 0 0 4px 0;
+    }
+
+    .brand-subtitle {
+      color: var(--color-role-field-outline);
+      margin: 0;
+    }
+
+    /* Order selector control */
+    .view-toggle {
+      margin-bottom: 16px;
+      padding: 10px;
+      background-color: var(--color-role-surface);
+      border: 1px solid var(--color-role-field-outline);
+      border-radius: 8px;
+    }
+
+    .view-toggle label {
+      display: block;
+      margin-bottom: 6px;
+      color: var(--color-role-on-surface);
+    }
+
+    select {
+      width: 100%;
+      max-width: 100%;
+      padding: 8px 8px;
+      border: 1px solid var(--color-role-field-outline);
+      border-radius: 6px;
+      background-color: var(--color-role-surface);
+      color: var(--color-role-on-surface);
+      cursor: pointer;
+    }
+
+    /* Checked keyboard focus indicator */
+    select:focus-visible,
+    button:focus-visible,
+    a:focus-visible {
+      outline: 2px solid var(--color-role-focus-indicator);
+      outline-offset: 2px;
+    }
+
+    /* Section headings */
+    h2 {
+      margin-top: 18px;
+      margin-bottom: 10px;
+      padding-bottom: 4px;
+      border-bottom: 1px solid var(--color-role-field-outline);
+      color: var(--color-role-on-surface);
+    }
+
+    /* Order meta rows - responsive for 412px width */
+    .meta-list {
+      margin-bottom: 14px;
+    }
+
+    .meta-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      gap: 8px;
+      padding: 6px 0;
+      border-bottom: 1px solid var(--color-role-field-outline);
+    }
+
+    .meta-key {
+      flex: 0 0 38%;
+      max-width: 38%;
+      color: var(--color-role-field-outline);
+      word-break: break-word;
+    }
+
+    .meta-val {
+      flex: 1 1 62%;
+      text-align: right;
+      color: var(--color-role-on-surface);
+      word-break: break-word;
+    }
+
+    .status-badge {
+      display: inline-block;
+      padding: 2px 6px;
+      background-color: var(--color-role-surface);
+      border: 1px solid var(--color-role-field-outline);
+      border-radius: 4px;
+      color: var(--color-role-on-surface);
+    }
+
+    /* Financial table styling */
+    .financial-card {
+      margin: 14px 0;
+      border: 1px solid var(--color-role-field-outline);
+      border-radius: 8px;
+      overflow: hidden;
+    }
+
+    .financial-table {
+      width: 100%;
+      border-collapse: collapse;
+      table-layout: fixed;
+    }
+
+    .financial-table th,
+    .financial-table td {
+      padding: 8px 8px;
+      text-align: left;
+      border-bottom: 1px solid var(--color-role-field-outline);
+      vertical-align: top;
+      word-break: break-word;
+    }
+
+    .financial-table th {
+      background-color: var(--color-role-surface);
+      color: var(--color-role-on-surface);
+    }
+
+    .financial-table td.amount {
+      text-align: right;
+      font-variant-numeric: tabular-nums;
+    }
+
+    .awaiting-quote {
+      font-style: italic;
+      color: var(--color-role-warning);
+    }
+
+    .payment-confirmed {
+      color: var(--color-role-success);
+    }
+
+    .balance-highlight {
+      background-color: var(--color-role-surface);
+      border-top: 2px solid var(--color-role-primary);
+    }
+
+    .balance-highlight td {
+      padding: 10px 8px;
+    }
+
+    /* FAQ / Policy Blocks */
+    .faq-card {
+      margin: 10px 0;
+      padding: 10px;
+      background-color: var(--color-role-surface);
+      border: 1px solid var(--color-role-field-outline);
+      border-left: 3px solid var(--color-role-primary);
+      border-radius: 0 8px 8px 0;
+    }
+
+    .faq-question {
+      margin-bottom: 4px;
+      color: var(--color-role-on-surface);
+    }
+
+    .faq-answer {
+      color: var(--color-role-on-surface);
+      line-height: 1.45;
+    }
+
+    /* Footer */
+    footer {
+      margin-top: 20px;
+      padding-top: 10px;
+      border-top: 1px solid var(--color-role-field-outline);
+      text-align: center;
+      color: var(--color-role-field-outline);
+    }
+  </style>
+</head>
+<body>
+
+  <div class="container">
+    <div class="demo-banner type-body-small" id="demoBanner">
+      <strong style="color: var(--color-role-on-surface);">Demonstration Only:</strong> This screen is an order tracking prototype for Tee’s Wardrobe, not a live payment system. All customer names and order amounts are fictional example data.
+    </div>
+
+    <header class="brand-header">
+      <h1 class="brand-title-badge type-title-large">Tee’s Wardrobe</h1>
+      <p class="brand-subtitle type-body-medium">Customer Order Status &amp; Balance</p>
+    </header>
+
+    <div class="view-toggle">
+      <label for="orderSelector" class="type-label-medium"><strong>Select Fictional Example Order:</strong></label>
+      <select id="orderSelector" class="type-body-medium" onchange="switchOrder(this.value)">
+        <option value="orderA">Order #TW-2026-084 (Delivery: not yet quoted)</option>
+        <option value="orderB">Order #TW-2026-085 (Delivery: quoted Lagos)</option>
+      </select>
+    </div>
+
+    <main id="orderContent">
+      <section class="order-meta">
+        <h2 class="type-title-medium">Order Information</h2>
+        <div class="meta-list">
+          <div class="meta-row">
+            <span class="meta-key type-label-medium">Order Reference:</span>
+            <strong class="meta-val type-body-medium" id="orderRef">#TW-2026-084</strong>
+          </div>
+          <div class="meta-row">
+            <span class="meta-key type-label-medium">Customer (Fictional):</span>
+            <span class="meta-val type-body-medium" id="custName">Amina Bello</span>
+          </div>
+          <div class="meta-row">
+            <span class="meta-key type-label-medium">Garment Ordered:</span>
+            <span class="meta-val type-body-medium" id="garmentDesc">Silk-Blend Kimono &amp; Wide-Leg Trousers Set</span>
+          </div>
+          <div class="meta-row">
+            <span class="meta-key type-label-medium">Destination City:</span>
+            <span class="meta-val type-body-medium" id="destinationCity">Abuja</span>
+          </div>
+          <div class="meta-row">
+            <span class="meta-key type-label-medium">Progress Status:</span>
+            <span class="meta-val"><span class="status-badge type-label-small" id="orderProgress">In Progress (Fabric Cut)</span></span>
+          </div>
+        </div>
+      </section>
+
+      <section>
+        <h2 class="type-title-medium">Financial Breakdown &amp; Balance</h2>
+        <p class="type-body-small" style="color: var(--color-role-field-outline); margin-top: 0; margin-bottom: 8px;">
+          Clothing prices exclude delivery charges. Tee’s Wardrobe receives delivery payments once quoted.
+        </p>
+
+        <div class="financial-card">
+          <table class="financial-table">
+            <thead>
+              <tr>
+                <th class="type-label-medium" style="width: 54%;">Item / Charge</th>
+                <th class="type-label-medium" style="text-align: right; width: 46%;">Amount (NGN)</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>
+                  <span class="type-body-medium">Clothing agreed price</span>
+                </td>
+                <td class="amount type-body-large" id="clothingPrice">₦48,000.00</td>
+              </tr>
+              <tr>
+                <td>
+                  <span class="type-body-medium">Delivery charge</span>
+                  <br>
+                  <small id="deliverySubtext" class="type-body-small" style="color: var(--color-role-field-outline);">
+                    Location: Abuja (awaiting courier quote; not free or zero)
+                  </small>
+                </td>
+                <td class="amount type-body-medium" id="deliveryPrice">
+                  <span class="awaiting-quote">not yet quoted</span>
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <strong class="type-label-large">Total agreed charge</strong>
+                </td>
+                <td class="amount type-body-medium" id="totalAgreedCharge">
+                  <span class="awaiting-quote">Awaiting delivery quote (clothing agreed at ₦48,000.00)</span>
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <span class="type-body-medium">Confirmed payments received (manual bank transfer)</span>
+                </td>
+                <td class="amount type-body-large payment-confirmed" id="amountPaid">- ₦25,000.00</td>
+              </tr>
+              <tr class="balance-highlight">
+                <td>
+                  <strong class="type-title-small">Remaining Balance</strong>
+                </td>
+                <td class="amount type-title-small" id="remainingBalance" style="color: var(--color-role-on-surface);">
+                  <strong>₦23,000.00 on clothing (delivery to be added once quoted)</strong>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <section>
+        <h2 class="type-title-medium">Order Questions &amp; Policy Status</h2>
+        
+        <div class="faq-card">
+          <div class="faq-question type-label-large">How much do I still owe, and was my payment received?</div>
+          <div class="faq-answer type-body-medium" id="answerOwe">
+            Payment of ₦25,000.00 was received and confirmed via bank app. You currently owe a remaining clothing balance of ₦23,000.00. Delivery to Abuja is not yet quoted and is excluded from this figure until quoted.
+          </div>
+        </div>
+
+        <div class="faq-card">
+          <div class="faq-question type-label-large">Is my outfit ready, and when will I receive it?</div>
+          <div class="faq-answer type-body-medium" id="answerReady">
+            Current stage: In Progress (Fabric Cut). Completion date and delivery timing are not yet confirmed.
+          </div>
+        </div>
+
+        <div class="faq-card">
+          <div class="faq-question type-label-large">Can I change or cancel my order?</div>
+          <div class="faq-answer type-body-medium" id="answerCancel">
+            There is currently no established process for changed or cancelled orders; nothing is done about them at the moment.
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <footer>
+      <p class="type-label-small">Tee’s Wardrobe Order Demonstration • Version 2 (Design System Applied)</p>
+    </footer>
+  </div>
+
+  <script>
+    const orders = {
+      orderA: {
+        ref: "#TW-2026-084",
+        name: "Amina Bello",
+        garment: "Silk-Blend Kimono & Wide-Leg Trousers Set",
+        city: "Abuja",
+        progress: "In Progress (Fabric Cut)",
+        clothing: "₦48,000.00",
+        delivery: '<span class="awaiting-quote">not yet quoted</span>',
+        deliverySub: "Location: Abuja (awaiting courier quote; not free or zero)",
+        total: '<span class="awaiting-quote">Awaiting delivery quote (clothing agreed at ₦48,000.00)</span>',
+        paid: "- ₦25,000.00",
+        balance: "<strong>₦23,000.00 on clothing (delivery to be added once quoted)</strong>",
+        answerOwe: "Payment of ₦25,000.00 was received and confirmed via bank app. You currently owe a remaining clothing balance of ₦23,000.00. Delivery to Abuja is not yet quoted and is excluded from this figure until quoted.",
+        answerReady: "Current stage: In Progress (Fabric Cut). Completion date and delivery timing are not yet confirmed.",
+        answerCancel: "There is currently no established process for changed or cancelled orders; nothing is done about them at the moment."
+      },
+      orderB: {
+        ref: "#TW-2026-085",
+        name: "Fatima Garba",
+        garment: "Embellished Silk Bubu Gown",
+        city: "Lagos (Mainland)",
+        progress: "Ready for Dispatch",
+        clothing: "₦36,000.00",
+        delivery: "₦3,500.00",
+        deliverySub: "Location: Lagos Mainland (courier delivery quoted)",
+        total: "₦39,500.00 (₦36,000.00 clothing + ₦3,500.00 delivery)",
+        paid: "- ₦20,000.00",
+        balance: "<strong>₦19,500.00</strong>",
+        answerOwe: "Payment of ₦20,000.00 was received and confirmed via bank app. Total agreed charge is ₦39,500.00 (₦36,000.00 clothing + ₦3,500.00 delivery). Remaining balance due is ₦19,500.00.",
+        answerReady: "Current stage: Ready for Dispatch. Exact courier handover and receipt timing are not yet confirmed.",
+        answerCancel: "There is currently no established process for changed or cancelled orders; nothing is done about them at the moment."
+      }
+    };
+
+    function switchOrder(key) {
+      const data = orders[key];
+      if (!data) return;
+      document.getElementById('orderRef').textContent = data.ref;
+      document.getElementById('custName').textContent = data.name;
+      document.getElementById('garmentDesc').textContent = data.garment;
+      document.getElementById('destinationCity').textContent = data.city;
+      document.getElementById('orderProgress').textContent = data.progress;
+      document.getElementById('clothingPrice').textContent = data.clothing;
+      document.getElementById('deliveryPrice').innerHTML = data.delivery;
+      document.getElementById('deliverySubtext').textContent = data.deliverySub;
+      document.getElementById('totalAgreedCharge').innerHTML = data.total;
+      document.getElementById('amountPaid').textContent = data.paid;
+      document.getElementById('remainingBalance').innerHTML = data.balance;
+      
+      // Update order-specific answers
+      document.getElementById('answerOwe').textContent = data.answerOwe;
+      document.getElementById('answerReady').textContent = data.answerReady;
+      document.getElementById('answerCancel').textContent = data.answerCancel;
+    }
+
+    // Initialize with Order A on load
+    window.addEventListener('DOMContentLoaded', () => {
+      switchOrder('orderA');
+    });
+  </script>
+</body>
+</html>
