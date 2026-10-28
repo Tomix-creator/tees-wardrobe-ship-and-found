@@ -1,0 +1,196 @@
+================================================================================
+AGENT TYPOGRAPHY ANSWER & BROWSER VERIFICATION
+================================================================================
+Project: Tee’s Wardrobe - Task One Design System
+Target Element: "Financial Breakdown & Balance" Heading
+Evidence File: evidence/08-agent-typography-answer.txt
+Date: 2026-10-27T22:20:24+01:00
+
+================================================================================
+1. QUESTION & TYPOGRAPHY STYLE IDENTIFICATION
+================================================================================
+Question:
+"For the 'Financial Breakdown & Balance' heading, state exactly which typography style the screen uses."
+
+Answer:
+The screen uses the typography style:
+  • Style Name: Title Medium
+  • Token Identifier: font["tee's wardrobe"].title.medium (also typography["tee's wardrobe"].title.medium)
+  • CSS Class: .type-title-medium
+
+================================================================================
+2. FILE CITATIONS
+================================================================================
+
+A. Markup Citation (index.html):
+File: task-01-design-system/index.html (Line 287)
+Code:
+  <h2 class="type-title-medium">Financial Breakdown &amp; Balance</h2>
+
+Related Element Rules in index.html (Lines 113–119):
+  h2 {
+    margin-top: 18px;
+    margin-bottom: 10px;
+    padding-bottom: 4px;
+    border-bottom: 1px solid var(--color-role-field-outline);
+    color: var(--color-role-on-surface);
+  }
+
+B. Design Tokens CSS Citation (css/tokens.css):
+File: task-01-design-system/css/tokens.css
+
+1. Custom Property Declarations (Lines 192–196):
+  --type-title-medium-font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  --type-title-medium-font-size: 16px;
+  --type-title-medium-font-weight: 500;
+  --type-title-medium-line-height: 22.4px;
+  --type-title-medium-letter-spacing: -0.64px;
+
+2. Utility Class Definition (Lines 293–299):
+  .type-title-medium {
+    font-family: var(--type-title-medium-font-family);
+    font-size: var(--type-title-medium-font-size);
+    font-weight: var(--type-title-medium-font-weight);
+    line-height: var(--type-title-medium-line-height);
+    letter-spacing: var(--type-title-medium-letter-spacing);
+  }
+
+C. Figma Source Tokens Citation (evidence/06-tokens-complete.json):
+File: task-01-design-system/evidence/06-tokens-complete.json
+
+1. Primary Composite Style Definition (Parsed by scripts/convert-tokens.js):
+JSON Path: font["tee's wardrobe"].title.medium
+Lines: 299–320
+Literal JSON Excerpt:
+        "medium": {
+          "type": "custom-fontStyle",
+          "value": {
+            "fontSize": 16,
+            "textDecoration": "none",
+            "fontFamily": "Inter",
+            "fontWeight": 500,
+            "fontStyle": "normal",
+            "fontStretch": "normal",
+            "letterSpacing": -0.64,
+            "lineHeight": 22.4,
+            "paragraphIndent": 0,
+            "paragraphSpacing": 0,
+            "textCase": "none"
+          },
+          "extensions": {
+            "org.lukasoppermann.figmaDesignTokens": {
+              "styleId": "S:46853cac149ac505a3e0caf30337724fc6143617,",
+              "exportKey": "font"
+            }
+          }
+        }
+
+2. Expanded Breakdown Definition (Secondary Representation in Export):
+JSON Path: typography["tee's wardrobe"].title.medium
+Lines: 2669–2713
+Literal JSON Excerpt:
+        "medium": {
+          "fontSize": {
+            "type": "dimension",
+            "value": 16
+          },
+          "textDecoration": {
+            "type": "string",
+            "value": "none"
+          },
+          "fontFamily": {
+            "type": "string",
+            "value": "Inter"
+          },
+          "fontWeight": {
+            "type": "number",
+            "value": 500
+          },
+          "fontStyle": {
+            "type": "string",
+            "value": "normal"
+          },
+          "fontStretch": {
+            "type": "string",
+            "value": "normal"
+          },
+          "letterSpacing": {
+            "type": "dimension",
+            "value": -0.64
+          },
+          "lineHeight": {
+            "type": "dimension",
+            "value": 22.4
+          },
+          "paragraphIndent": {
+            "type": "dimension",
+            "value": 0
+          },
+          "paragraphSpacing": {
+            "type": "dimension",
+            "value": 0
+          },
+          "textCase": {
+            "type": "string",
+            "value": "none"
+          }
+        }
+
+3. Calculation / Relationship Note (Note: Calculations below are mathematical explanations, NOT literal JSON quotes):
+  - Literal JSON values: fontSize: 16, fontWeight: 500, lineHeight: 22.4, letterSpacing: -0.64.
+  - Calculated proportional relationships:
+    * Line Height calculation: 22.4px = 140% of 16px (16 × 1.40 = 22.4).
+    * Letter Spacing calculation: -0.64px = -4% of 16px (16 × -0.04 = -0.64).
+  In evidence/06-tokens-complete.json, these properties are literally stored as computed absolute numbers (16, 22.4, -0.64), not strings with percentage signs.
+
+================================================================================
+3. LIVE BROWSER VERIFICATION
+================================================================================
+Test Environment:
+  - Browser Engine: Google Chrome (Headless, macOS)
+  - Protocol: Chrome DevTools Protocol (CDP) WebSocket Session
+  - Running URL: http://localhost:8085/index.html
+  - Viewport Emulation: 412px wide x 915px high (mobile: true)
+  - Font Loading State: document.fonts.ready resolved (Inter webfont loaded)
+  - Inspection Target: document.querySelectorAll('h2')[1] ("Financial Breakdown & Balance")
+  - Method: window.getComputedStyle(targetH2)
+
+Computed Style Output from Live Browser:
+{
+  "tagName": "H2",
+  "className": "type-title-medium",
+  "textContent": "Financial Breakdown & Balance",
+  "fontFamily": "Inter, -apple-system, \"system-ui\", \"Segoe UI\", Roboto, sans-serif",
+  "fontWeight": "500",
+  "fontSize": "16px",
+  "lineHeight": "22.4px",
+  "letterSpacing": "-0.64px",
+  "color": "rgb(25, 28, 28)",
+  "borderBottom": "1px solid rgb(92, 95, 94)",
+  "margin": "18px 0px 10px",
+  "padding": "0px 0px 4px"
+}
+
+================================================================================
+4. APPLIED PROPERTY COMPARISON TABLE
+================================================================================
+Property          Literal JSON Token Spec    Actual Applied in Browser        Verification
+----------------  -------------------------  -------------------------------  ------------
+Font Family       "Inter"                    Inter, -apple-system, "system... MATCH [PASS]
+Font Weight       500                        500                              MATCH [PASS]
+Font Size         16                         16px                             MATCH [PASS]
+Line Height       22.4                       22.4px                           MATCH [PASS]
+Letter Spacing    -0.64                      -0.64px                          MATCH [PASS]
+
+Additional Visual Styles Computed in Browser:
+  - Color: rgb(25, 28, 28) (resolves from var(--color-role-on-surface) -> #191c1cff)
+  - Bottom Border: 1px solid rgb(92, 95, 94) (resolves from var(--color-role-field-outline) -> #5c5f5eff)
+  - Margin: 18px 0px 10px (top: 18px, right/left: 0px, bottom: 10px)
+  - Padding: 0px 0px 4px (bottom: 4px)
+
+================================================================================
+5. CONCLUSION
+================================================================================
+The "Financial Breakdown & Balance" heading on index.html strictly uses the "Title Medium" (.type-title-medium) design token typography style.
+All five typography properties (font family, weight, size, line height, letter spacing) computed in the live running browser match the exported Figma design tokens in evidence/06-tokens-complete.json with 100% precision.
+Browser user-agent default heading styles (e.g. bold weight or 1.5em font size) are fully overridden by the assigned utility class.

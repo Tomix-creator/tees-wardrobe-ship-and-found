@@ -1,0 +1,339 @@
+================================================================================
+RAW COLOUR VALUE & INTERFACE COLOUR AUDIT REPORT
+================================================================================
+Project: Tee’s Wardrobe - Task One Design System
+Date: 2026-10-27T22:20:24+01:00
+Target Directory: task-01-design-system
+Evidence File: evidence/07-raw-value-search.txt
+
+================================================================================
+1. RECORDED SEARCH COMMANDS & FULL OUTPUTS
+================================================================================
+
+--------------------------------------------------------------------------------
+SEARCH 1: Project-wide Search for Raw Colour Values (Hex, RGB/RGBA, HSL/HSLA)
+--------------------------------------------------------------------------------
+Command:
+$ grep -rnEI '#[0-9a-fA-F]{3,8}\b|rgba?\([^)]*\)|hsla?\([^)]*\)' task-01-design-system
+
+Full Command Output (232 matches across project):
+task-01-design-system/evidence/06-tokens-complete.json:350:          "description": "Low lift for resting cards. Derived from primary/10 (#0D2C2B), 12% opacity; X 0, Y 2, blur 8, spread 0. Colour is stored as RGBA; palette changes require updating this effect style.",
+task-01-design-system/evidence/06-tokens-complete.json:355:            "color": "#0d2c2b1f",
+task-01-design-system/evidence/06-tokens-complete.json:368:          "description": "Raised menus and popovers. Derived from primary/10 (#0D2C2B), 16% opacity; X 0, Y 6, blur 16, spread 0. Colour is stored as RGBA; palette changes require updating this effect style.",
+task-01-design-system/evidence/06-tokens-complete.json:373:            "color": "#0d2c2b29",
+task-01-design-system/evidence/06-tokens-complete.json:386:          "description": "Strong lift for floating dialogs; use sparingly. Derived from primary/10 (#0D2C2B), 24% opacity; X 0, Y 10, blur 16, spread 0. Hard is relative to the other two styles, not a zero-blur shadow. Colour is stored as RGBA; palette changes require updating this effect style.",
+task-01-design-system/evidence/06-tokens-complete.json:391:            "color": "#0d2c2b3d",
+task-01-design-system/evidence/06-tokens-complete.json:411:        "value": "#32b1aaff",
+task-01-design-system/evidence/06-tokens-complete.json:429:        "value": "#000000ff",
+task-01-design-system/evidence/06-tokens-complete.json:445:        "value": "#061615ff",
+task-01-design-system/evidence/06-tokens-complete.json:461:        "value": "#0d2c2bff",
+task-01-design-system/evidence/06-tokens-complete.json:477:        "value": "#134240ff",
+task-01-design-system/evidence/06-tokens-complete.json:493:        "value": "#195955ff",
+task-01-design-system/evidence/06-tokens-complete.json:509:        "value": "#1f6f6aff",
+task-01-design-system/evidence/06-tokens-complete.json:525:        "value": "#268580ff",
+task-01-design-system/evidence/06-tokens-complete.json:541:        "value": "#2c9b95ff",
+task-01-design-system/evidence/06-tokens-complete.json:557:        "value": "#32b1aaff",
+task-01-design-system/evidence/06-tokens-complete.json:573:        "value": "#54beb8ff",
+task-01-design-system/evidence/06-tokens-complete.json:589:        "value": "#76cbc6ff",
+task-01-design-system/evidence/06-tokens-complete.json:605:        "value": "#99d8d5ff",
+task-01-design-system/evidence/06-tokens-complete.json:621:        "value": "#bbe5e3ff",
+task-01-design-system/evidence/06-tokens-complete.json:637:        "value": "#ddf2f1ff",
+task-01-design-system/evidence/06-tokens-complete.json:653:        "value": "#eef9f8ff",
+task-01-design-system/evidence/06-tokens-complete.json:669:        "value": "#f8fcfcff",
+task-01-design-system/evidence/06-tokens-complete.json:685:        "value": "#fcfefeff",
+task-01-design-system/evidence/06-tokens-complete.json:701:        "value": "#ffffffff",
+task-01-design-system/evidence/06-tokens-complete.json:719:        "value": "#000000ff",
+task-01-design-system/evidence/06-tokens-complete.json:735:        "value": "#001413ff",
+task-01-design-system/evidence/06-tokens-complete.json:751:        "value": "#081f1eff",
+task-01-design-system/evidence/06-tokens-complete.json:767:        "value": "#132928ff",
+task-01-design-system/evidence/06-tokens-complete.json:783:        "value": "#1e3432ff",
+task-01-design-system/evidence/06-tokens-complete.json:799:        "value": "#293f3eff",
+task-01-design-system/evidence/06-tokens-complete.json:815:        "value": "#354b49ff",
+task-01-design-system/evidence/06-tokens-complete.json:831:        "value": "#405755ff",
+task-01-design-system/evidence/06-tokens-complete.json:847:        "value": "#4c6360ff",
+task-01-design-system/evidence/06-tokens-complete.json:863:        "value": "#647c79ff",
+task-01-design-system/evidence/06-tokens-complete.json:879:        "value": "#7e9593ff",
+task-01-design-system/evidence/06-tokens-complete.json:895:        "value": "#98b0adff",
+task-01-design-system/evidence/06-tokens-complete.json:911:        "value": "#b3cbc8ff",
+task-01-design-system/evidence/06-tokens-complete.json:927:        "value": "#cfe8e4ff",
+task-01-design-system/evidence/06-tokens-complete.json:943:        "value": "#ddf6f3ff",
+task-01-design-system/evidence/06-tokens-complete.json:959:        "value": "#e5fffbff",
+task-01-design-system/evidence/06-tokens-complete.json:975:        "value": "#f2fffdff",
+task-01-design-system/evidence/06-tokens-complete.json:991:        "value": "#ffffffff",
+task-01-design-system/evidence/06-tokens-complete.json:1009:        "value": "#000000ff",
+task-01-design-system/evidence/06-tokens-complete.json:1025:        "value": "#001223ff",
+task-01-design-system/evidence/06-tokens-complete.json:1041:        "value": "#041d32ff",
+task-01-design-system/evidence/06-tokens-complete.json:1057:        "value": "#10273cff",
+task-01-design-system/evidence/06-tokens-complete.json:1073:        "value": "#1c3248ff",
+task-01-design-system/evidence/06-tokens-complete.json:1089:        "value": "#283d53ff",
+task-01-design-system/evidence/06-tokens-complete.json:1105:        "value": "#33485fff",
+task-01-design-system/evidence/06-tokens-complete.json:1121:        "value": "#3f546bff",
+task-01-design-system/evidence/06-tokens-complete.json:1137:        "value": "#4b6078ff",
+task-01-design-system/evidence/06-tokens-complete.json:1153:        "value": "#647992ff",
+task-01-design-system/evidence/06-tokens-complete.json:1169:        "value": "#7d93acff",
+task-01-design-system/evidence/06-tokens-complete.json:1185:        "value": "#97adc8ff",
+task-01-design-system/evidence/06-tokens-complete.json:1201:        "value": "#b3c9e4ff",
+task-01-design-system/evidence/06-tokens-complete.json:1217:        "value": "#d0e4ffff",
+task-01-design-system/evidence/06-tokens-complete.json:1233:        "value": "#e9f1ffff",
+task-01-design-system/evidence/06-tokens-complete.json:1249:        "value": "#f8f9ffff",
+task-01-design-system/evidence/06-tokens-complete.json:1265:        "value": "#fcfcffff",
+task-01-design-system/evidence/06-tokens-complete.json:1281:        "value": "#ffffffff",
+task-01-design-system/evidence/06-tokens-complete.json:1299:        "value": "#000000ff",
+task-01-design-system/evidence/06-tokens-complete.json:1315:        "value": "#0e1211ff",
+task-01-design-system/evidence/06-tokens-complete.json:1331:        "value": "#191c1cff",
+task-01-design-system/evidence/06-tokens-complete.json:1347:        "value": "#232626ff",
+task-01-design-system/evidence/06-tokens-complete.json:1363:        "value": "#2e3130ff",
+task-01-design-system/evidence/06-tokens-complete.json:1379:        "value": "#393c3bff",
+task-01-design-system/evidence/06-tokens-complete.json:1395:        "value": "#444747ff",
+task-01-design-system/evidence/06-tokens-complete.json:1411:        "value": "#505352ff",
+task-01-design-system/evidence/06-tokens-complete.json:1427:        "value": "#5c5f5eff",
+task-01-design-system/evidence/06-tokens-complete.json:1443:        "value": "#757877ff",
+task-01-design-system/evidence/06-tokens-complete.json:1459:        "value": "#8e9190ff",
+task-01-design-system/evidence/06-tokens-complete.json:1475:        "value": "#a9acabff",
+task-01-design-system/evidence/06-tokens-complete.json:1491:        "value": "#c5c7c6ff",
+task-01-design-system/evidence/06-tokens-complete.json:1507:        "value": "#e1e3e2ff",
+task-01-design-system/evidence/06-tokens-complete.json:1523:        "value": "#eff1f0ff",
+task-01-design-system/evidence/06-tokens-complete.json:1539:        "value": "#f8faf8ff",
+task-01-design-system/evidence/06-tokens-complete.json:1555:        "value": "#fbfdfbff",
+task-01-design-system/evidence/06-tokens-complete.json:1571:        "value": "#ffffffff",
+task-01-design-system/evidence/06-tokens-complete.json:1589:        "value": "#000000ff",
+task-01-design-system/evidence/06-tokens-complete.json:1605:        "value": "#0a1212ff",
+task-01-design-system/evidence/06-tokens-complete.json:1621:        "value": "#151d1cff",
+task-01-design-system/evidence/06-tokens-complete.json:1637:        "value": "#1f2726ff",
+task-01-design-system/evidence/06-tokens-complete.json:1653:        "value": "#293231ff",
+task-01-design-system/evidence/06-tokens-complete.json:1669:        "value": "#343d3cff",
+task-01-design-system/evidence/06-tokens-complete.json:1685:        "value": "#404847ff",
+task-01-design-system/evidence/06-tokens-complete.json:1701:        "value": "#4b5453ff",
+task-01-design-system/evidence/06-tokens-complete.json:1717:        "value": "#57605fff",
+task-01-design-system/evidence/06-tokens-complete.json:1733:        "value": "#707978ff",
+task-01-design-system/evidence/06-tokens-complete.json:1749:        "value": "#899391ff",
+task-01-design-system/evidence/06-tokens-complete.json:1765:        "value": "#a4adabff",
+task-01-design-system/evidence/06-tokens-complete.json:1781:        "value": "#bfc8c7ff",
+task-01-design-system/evidence/06-tokens-complete.json:1797:        "value": "#dbe4e2ff",
+task-01-design-system/evidence/06-tokens-complete.json:1813:        "value": "#eaf3f1ff",
+task-01-design-system/evidence/06-tokens-complete.json:1829:        "value": "#f2fbf9ff",
+task-01-design-system/evidence/06-tokens-complete.json:1845:        "value": "#f5fefcff",
+task-01-design-system/evidence/06-tokens-complete.json:1861:        "value": "#ffffffff",
+task-01-design-system/evidence/06-tokens-complete.json:1878:        "value": "#ba1a1aff",
+task-01-design-system/evidence/06-tokens-complete.json:1893:        "value": "#7a5900ff",
+task-01-design-system/evidence/06-tokens-complete.json:1908:        "value": "#17643bff",
+task-01-design-system/css/tokens.css:14:  --color-primitive-brand-brand-source: #32b1aaff;
+task-01-design-system/css/tokens.css:17:  --color-primitive-brand-primary-0: #000000ff;
+task-01-design-system/css/tokens.css:18:  --color-primitive-brand-primary-5: #061615ff;
+task-01-design-system/css/tokens.css:19:  --color-primitive-brand-primary-10: #0d2c2bff;
+task-01-design-system/css/tokens.css:20:  --color-primitive-brand-primary-15: #134240ff;
+task-01-design-system/css/tokens.css:21:  --color-primitive-brand-primary-20: #195955ff;
+task-01-design-system/css/tokens.css:22:  --color-primitive-brand-primary-25: #1f6f6aff;
+task-01-design-system/css/tokens.css:23:  --color-primitive-brand-primary-30: #268580ff;
+task-01-design-system/css/tokens.css:24:  --color-primitive-brand-primary-35: #2c9b95ff;
+task-01-design-system/css/tokens.css:25:  --color-primitive-brand-primary-40: #32b1aaff;
+task-01-design-system/css/tokens.css:26:  --color-primitive-brand-primary-50: #54beb8ff;
+task-01-design-system/css/tokens.css:27:  --color-primitive-brand-primary-60: #76cbc6ff;
+task-01-design-system/css/tokens.css:28:  --color-primitive-brand-primary-70: #99d8d5ff;
+task-01-design-system/css/tokens.css:29:  --color-primitive-brand-primary-80: #bbe5e3ff;
+task-01-design-system/css/tokens.css:30:  --color-primitive-brand-primary-90: #ddf2f1ff;
+task-01-design-system/css/tokens.css:31:  --color-primitive-brand-primary-95: #eef9f8ff;
+task-01-design-system/css/tokens.css:32:  --color-primitive-brand-primary-98: #f8fcfcff;
+task-01-design-system/css/tokens.css:33:  --color-primitive-brand-primary-99: #fcfefeff;
+task-01-design-system/css/tokens.css:34:  --color-primitive-brand-primary-100: #ffffffff;
+task-01-design-system/css/tokens.css:37:  --color-primitive-brand-secondary-0: #000000ff;
+task-01-design-system/css/tokens.css:38:  --color-primitive-brand-secondary-5: #001413ff;
+task-01-design-system/css/tokens.css:39:  --color-primitive-brand-secondary-10: #081f1eff;
+task-01-design-system/css/tokens.css:40:  --color-primitive-brand-secondary-15: #132928ff;
+task-01-design-system/css/tokens.css:41:  --color-primitive-brand-secondary-20: #1e3432ff;
+task-01-design-system/css/tokens.css:42:  --color-primitive-brand-secondary-25: #293f3eff;
+task-01-design-system/css/tokens.css:43:  --color-primitive-brand-secondary-30: #354b49ff;
+task-01-design-system/css/tokens.css:44:  --color-primitive-brand-secondary-35: #405755ff;
+task-01-design-system/css/tokens.css:45:  --color-primitive-brand-secondary-40: #4c6360ff;
+task-01-design-system/css/tokens.css:46:  --color-primitive-brand-secondary-50: #647c79ff;
+task-01-design-system/css/tokens.css:47:  --color-primitive-brand-secondary-60: #7e9593ff;
+task-01-design-system/css/tokens.css:48:  --color-primitive-brand-secondary-70: #98b0adff;
+task-01-design-system/css/tokens.css:49:  --color-primitive-brand-secondary-80: #b3cbc8ff;
+task-01-design-system/css/tokens.css:50:  --color-primitive-brand-secondary-90: #cfe8e4ff;
+task-01-design-system/css/tokens.css:51:  --color-primitive-brand-secondary-95: #ddf6f3ff;
+task-01-design-system/css/tokens.css:52:  --color-primitive-brand-secondary-98: #e5fffbff;
+task-01-design-system/css/tokens.css:53:  --color-primitive-brand-secondary-99: #f2fffdff;
+task-01-design-system/css/tokens.css:54:  --color-primitive-brand-secondary-100: #ffffffff;
+task-01-design-system/css/tokens.css:57:  --color-primitive-brand-tertiary-0: #000000ff;
+task-01-design-system/css/tokens.css:58:  --color-primitive-brand-tertiary-5: #001223ff;
+task-01-design-system/css/tokens.css:59:  --color-primitive-brand-tertiary-10: #041d32ff;
+task-01-design-system/css/tokens.css:60:  --color-primitive-brand-tertiary-15: #10273cff;
+task-01-design-system/css/tokens.css:61:  --color-primitive-brand-tertiary-20: #1c3248ff;
+task-01-design-system/css/tokens.css:62:  --color-primitive-brand-tertiary-25: #283d53ff;
+task-01-design-system/css/tokens.css:63:  --color-primitive-brand-tertiary-30: #33485fff;
+task-01-design-system/css/tokens.css:64:  --color-primitive-brand-tertiary-35: #3f546bff;
+task-01-design-system/css/tokens.css:65:  --color-primitive-brand-tertiary-40: #4b6078ff;
+task-01-design-system/css/tokens.css:66:  --color-primitive-brand-tertiary-50: #647992ff;
+task-01-design-system/css/tokens.css:67:  --color-primitive-brand-tertiary-60: #7d93acff;
+task-01-design-system/css/tokens.css:68:  --color-primitive-brand-tertiary-70: #97adc8ff;
+task-01-design-system/css/tokens.css:69:  --color-primitive-brand-tertiary-80: #b3c9e4ff;
+task-01-design-system/css/tokens.css:70:  --color-primitive-brand-tertiary-90: #d0e4ffff;
+task-01-design-system/css/tokens.css:71:  --color-primitive-brand-tertiary-95: #e9f1ffff;
+task-01-design-system/css/tokens.css:72:  --color-primitive-brand-tertiary-98: #f8f9ffff;
+task-01-design-system/css/tokens.css:73:  --color-primitive-brand-tertiary-99: #fcfcffff;
+task-01-design-system/css/tokens.css:74:  --color-primitive-brand-tertiary-100: #ffffffff;
+task-01-design-system/css/tokens.css:77:  --color-primitive-brand-neutral-0: #000000ff;
+task-01-design-system/css/tokens.css:78:  --color-primitive-brand-neutral-5: #0e1211ff;
+task-01-design-system/css/tokens.css:79:  --color-primitive-brand-neutral-10: #191c1cff;
+task-01-design-system/css/tokens.css:80:  --color-primitive-brand-neutral-15: #232626ff;
+task-01-design-system/css/tokens.css:81:  --color-primitive-brand-neutral-20: #2e3130ff;
+task-01-design-system/css/tokens.css:82:  --color-primitive-brand-neutral-25: #393c3bff;
+task-01-design-system/css/tokens.css:83:  --color-primitive-brand-neutral-30: #444747ff;
+task-01-design-system/css/tokens.css:84:  --color-primitive-brand-neutral-35: #505352ff;
+task-01-design-system/css/tokens.css:85:  --color-primitive-brand-neutral-40: #5c5f5eff;
+task-01-design-system/css/tokens.css:86:  --color-primitive-brand-neutral-50: #757877ff;
+task-01-design-system/css/tokens.css:87:  --color-primitive-brand-neutral-60: #8e9190ff;
+task-01-design-system/css/tokens.css:88:  --color-primitive-brand-neutral-70: #a9acabff;
+task-01-design-system/css/tokens.css:89:  --color-primitive-brand-neutral-80: #c5c7c6ff;
+task-01-design-system/css/tokens.css:90:  --color-primitive-brand-neutral-90: #e1e3e2ff;
+task-01-design-system/css/tokens.css:91:  --color-primitive-brand-neutral-95: #eff1f0ff;
+task-01-design-system/css/tokens.css:92:  --color-primitive-brand-neutral-98: #f8faf8ff;
+task-01-design-system/css/tokens.css:93:  --color-primitive-brand-neutral-99: #fbfdfbff;
+task-01-design-system/css/tokens.css:94:  --color-primitive-brand-neutral-100: #ffffffff;
+task-01-design-system/css/tokens.css:97:  --color-primitive-brand-neutral-variant-0: #000000ff;
+task-01-design-system/css/tokens.css:98:  --color-primitive-brand-neutral-variant-5: #0a1212ff;
+task-01-design-system/css/tokens.css:99:  --color-primitive-brand-neutral-variant-10: #151d1cff;
+task-01-design-system/css/tokens.css:100:  --color-primitive-brand-neutral-variant-15: #1f2726ff;
+task-01-design-system/css/tokens.css:101:  --color-primitive-brand-neutral-variant-20: #293231ff;
+task-01-design-system/css/tokens.css:102:  --color-primitive-brand-neutral-variant-25: #343d3cff;
+task-01-design-system/css/tokens.css:103:  --color-primitive-brand-neutral-variant-30: #404847ff;
+task-01-design-system/css/tokens.css:104:  --color-primitive-brand-neutral-variant-35: #4b5453ff;
+task-01-design-system/css/tokens.css:105:  --color-primitive-brand-neutral-variant-40: #57605fff;
+task-01-design-system/css/tokens.css:106:  --color-primitive-brand-neutral-variant-50: #707978ff;
+task-01-design-system/css/tokens.css:107:  --color-primitive-brand-neutral-variant-60: #899391ff;
+task-01-design-system/css/tokens.css:108:  --color-primitive-brand-neutral-variant-70: #a4adabff;
+task-01-design-system/css/tokens.css:109:  --color-primitive-brand-neutral-variant-80: #bfc8c7ff;
+task-01-design-system/css/tokens.css:110:  --color-primitive-brand-neutral-variant-90: #dbe4e2ff;
+task-01-design-system/css/tokens.css:111:  --color-primitive-brand-neutral-variant-95: #eaf3f1ff;
+task-01-design-system/css/tokens.css:112:  --color-primitive-brand-neutral-variant-98: #f2fbf9ff;
+task-01-design-system/css/tokens.css:113:  --color-primitive-brand-neutral-variant-99: #f5fefcff;
+task-01-design-system/css/tokens.css:114:  --color-primitive-brand-neutral-variant-100: #ffffffff;
+task-01-design-system/css/tokens.css:117:  --color-primitive-brand-status-error: #ba1a1aff;
+task-01-design-system/css/tokens.css:118:  --color-primitive-brand-status-warning: #7a5900ff;
+task-01-design-system/css/tokens.css:119:  --color-primitive-brand-status-success: #17643bff;
+task-01-design-system/css/tokens.css:126:  /* Role: primary -> primitive brand.primary.40 (#32b1aaff) */
+task-01-design-system/css/tokens.css:128:  /* Role: on primary -> primitive brand.neutral.10 (#191c1cff) */
+task-01-design-system/css/tokens.css:130:  /* Role: error -> primitive brand.status.error (#ba1a1aff) */
+task-01-design-system/css/tokens.css:132:  /* Role: warning -> primitive brand.status.warning (#7a5900ff) */
+task-01-design-system/css/tokens.css:134:  /* Role: success -> primitive brand.status.success (#17643bff) */
+task-01-design-system/css/tokens.css:136:  /* Role: surface -> primitive brand.neutral.98 (#f8faf8ff) */
+task-01-design-system/css/tokens.css:138:  /* Role: on surface -> primitive brand.neutral.10 (#191c1cff) */
+task-01-design-system/css/tokens.css:140:  /* Role: field outline -> primitive brand.neutral.40 (#5c5f5eff) */
+task-01-design-system/css/tokens.css:142:  /* Role: focus indicator -> primitive brand.primary.15 (#134240ff) */
+task-01-design-system/css/tokens.css:149:  --shadow-soft: 0px 2px 8px 0px #0d2c2b1f;
+task-01-design-system/css/tokens.css:150:  --shadow-medium: 0px 6px 16px 0px #0d2c2b29;
+task-01-design-system/css/tokens.css:151:  --shadow-hard: 0px 10px 16px 0px #0d2c2b3d;
+task-01-design-system/docs/business-research.md:82:   - The digital shade was sampled from the **supplied colour image** as **sRGB `#32B1AA`**, formally replacing an earlier proposed `#2E8B57` shade.
+task-01-design-system/docs/business-brief.md:35:swatch was sampled as sRGB #32B1AA, replacing an earlier
+task-01-design-system/docs/business-brief.md:36:proposed #2E8B57 shade. The owner identified cost, difficulty
+task-01-design-system/docs/prompts.md:101:## Prompt 3: Business Brief Resolution (Swatch sRGB #32B1AA & Delivery Collector)
+task-01-design-system/docs/prompts.md:109:- The supplied reference swatch was sampled as sRGB #32B1AA.
+task-01-design-system/docs/prompts.md:110:- This replaces the earlier proposed #2E8B57 shade.
+task-01-design-system/docs/prompts.md:130:- Updated brief with sampled sRGB `#32B1AA` (replacing `#2E8B57`), confirmed Tee’s Wardrobe receives delivery payments, and clarified "awaiting quote" status.
+task-01-design-system/docs/prompts.md:146:- Brand color: sRGB #32B1AA, from the supplied swatch.
+task-01-design-system/docs/prompts.md:323:  - `--color-role-primary`: Sea green brand accent (`#32B1AA`), brand title badge, table borders, FAQ card borders.
+task-01-design-system/docs/prompts.md:339:  - `:focus-visible` on `#orderSelector` displays a solid 2px outline with 2px offset in `--color-role-focus-indicator` (`rgb(19, 66, 64)`).
+task-01-design-system/docs/prompts.md:371:  - Replaced all raw colors (`#ffffff`) and direct primitive references (`--color-primitive-brand-neutral-*`) in `index.html` with semantic colour roles.
+task-01-design-system/docs/prompts.md:373:    - `--color-role-surface-container-lowest`: Sourced from `var(--color-primitive-brand-neutral-100)` (`#ffffffff`). Used for elevated card container and select input backgrounds.
+task-01-design-system/docs/prompts.md:374:    - `--color-role-outline-variant`: Sourced from `var(--color-primitive-brand-neutral-90)` (`#dbe4e2ff`). Used for subtle structural card borders, view-toggle outline, heading dividers, and table/card borders (distinguished from high-contrast form field outline `--color-role-field-outline`).
+task-01-design-system/docs/prompts.md:375:    - `--color-role-surface-container`: Sourced from `var(--color-primitive-brand-neutral-95)` (`#eff1f0ff`). Used for subtle metadata row dividers, table row dividers, and status badge backgrounds.
+task-01-design-system/docs/prompts.md:385:  - Keyboard focus on `#orderSelector`: outline solid 2px, color `rgb(19, 66, 64)` (`--color-role-focus-indicator`), offset 2px.
+task-01-design-system/docs/prompts.md:420:    2. Later clarifications confirmed by the owner (business trading name "Tee's Wardrobe", no logo yet, sRGB `#32B1AA` sea green sampled from reference swatch, clothing prices excluding delivery, delivery charges dependent on location, Tee's Wardrobe receiving delivery payments, and unquoted delivery charges remaining "awaiting quote" / not free).
+task-01-design-system/docs/prompts.md:470:  - **Keyboard Focus**: Focus on `#orderSelector` renders active outline with 2px solid `--color-role-focus-indicator` (`rgb(19, 66, 64)`).
+task-01-design-system/scripts/verify-tokens.js:35:    expectedHex: '#32b1aaff'
+task-01-design-system/scripts/verify-tokens.js:42:    expectedHex: '#191c1cff'
+task-01-design-system/scripts/verify-tokens.js:49:    expectedHex: '#ba1a1aff'
+task-01-design-system/scripts/verify-tokens.js:56:    expectedHex: '#7a5900ff'
+task-01-design-system/scripts/verify-tokens.js:63:    expectedHex: '#17643bff'
+task-01-design-system/scripts/verify-tokens.js:70:    expectedHex: '#f8faf8ff'
+task-01-design-system/scripts/verify-tokens.js:77:    expectedHex: '#191c1cff'
+task-01-design-system/scripts/verify-tokens.js:84:    expectedHex: '#5c5f5eff'
+task-01-design-system/scripts/verify-tokens.js:91:    expectedHex: '#134240ff'
+
+--------------------------------------------------------------------------------
+SEARCH 2: Targeted Search on Interface Code for Raw Colour Values
+--------------------------------------------------------------------------------
+Command:
+$ grep -rnEI '#[0-9a-fA-F]{3,8}\b|rgba?\([^)]*\)|hsla?\([^)]*\)' task-01-design-system/index.html
+
+Full Command Output:
+(No output produced)
+Exit Code: 1 (0 matches found - explicit no-match result)
+
+--------------------------------------------------------------------------------
+SEARCH 3: Targeted Search on Interface Code for CSS Property Values Using Named Colours
+--------------------------------------------------------------------------------
+Scope: Searches CSS declarations (e.g. "color:", "background-color:", "border:") in task-01-design-system/index.html for any of the 148 standard CSS named color keywords.
+Command:
+$ grep -nEI -i ':\s*[^;]*\b(aliceblue|antiquewhite|aqua|aquamarine|azure|beige|bisque|black|blanchedalmond|blue|blueviolet|brown|burlywood|cadetblue|chartreuse|chocolate|coral|cornflowerblue|cornsilk|crimson|cyan|darkblue|darkcyan|darkgoldenrod|darkgray|darkgreen|darkgrey|darkkhaki|darkmagenta|darkolivegreen|darkorange|darkorchid|darkred|darksalmon|darkseagreen|darkslateblue|darkslategray|darkslategrey|darkturquoise|darkviolet|deeppink|deepskyblue|dimgray|dimgrey|dodgerblue|firebrick|floralwhite|forestgreen|fuchsia|gainsboro|ghostwhite|gold|goldenrod|gray|green|greenyellow|grey|honeydew|hotpink|indianred|indigo|ivory|khaki|lavender|lavenderblush|lawngreen|lemonchiffon|lightblue|lightcoral|lightcyan|lightgoldenrodyellow|lightgray|lightgreen|lightgrey|lightpink|lightsalmon|lightseagreen|lightskyblue|lightslategray|lightslategrey|lightsteelblue|lightyellow|lime|limegreen|linen|magenta|maroon|mediumaquamarine|mediumblue|mediumorchid|mediumpurple|mediumseagreen|mediumslateblue|mediumspringgreen|mediumturquoise|mediumvioletred|midnightblue|mintcream|mistyrose|moccasin|navajowhite|navy|oldlace|olive|olivedrab|orange|orangered|orchid|palegoldenrod|palegreen|paleturquoise|palevioletred|papayawhip|peachpuff|peru|pink|plum|powderblue|purple|rebeccapurple|red|rosybrown|royalblue|saddlebrown|salmon|sandybrown|seagreen|seashell|sienna|silver|skyblue|slateblue|slategray|slategrey|snow|springgreen|steelblue|tan|teal|thistle|tomato|turquoise|violet|wheat|white|whitesmoke|yellow|yellowgreen)\b' task-01-design-system/index.html
+
+Full Command Output:
+(No output produced)
+Exit Code: 1 (0 matches found - explicit no-match result)
+
+--------------------------------------------------------------------------------
+SEARCH 4: Full-text Search on Interface Code for Common Colour Keyword Tokens
+--------------------------------------------------------------------------------
+Scope: Searches task-01-design-system/index.html anywhere for common colour names (to verify whether any occur in markup, text, or comments).
+Command:
+$ grep -nEI -i '\b(black|white|red|green|blue|gray|grey|yellow|orange|purple|pink|cyan|magenta|brown)\b' task-01-design-system/index.html
+
+Full Command Output:
+56:    /* Brand Header with primary sea green accent */
+Exit Code: 0 (1 match found)
+
+Note on Match: Line 56 is an explanatory CSS comment ("/* Brand Header with primary sea green accent */") referencing the brand accent concept. It is not a CSS property declaration or value.
+
+--------------------------------------------------------------------------------
+SEARCH 5: Targeted Search on Interface Code for Direct Primitive Token References
+--------------------------------------------------------------------------------
+Scope: Searches task-01-design-system/index.html for any direct references to primitive custom properties (--color-primitive-*).
+Command:
+$ grep -nEI -e '--color-primitive-' task-01-design-system/index.html
+
+Full Command Output:
+(No output produced)
+Exit Code: 1 (0 matches found - explicit no-match result)
+
+================================================================================
+2. EXPLANATION OF SEARCH 1 MATCHES ACROSS THE PROJECT
+================================================================================
+The 232 matches from Search 1 fall into the following defined categories:
+
+A. Design Token Source & Generated Definitions (206 matches):
+   1. task-01-design-system/evidence/06-tokens-complete.json (100 matches):
+      - Lines 355, 373, 391: RGBA hex color values (#0d2c2b1f, #0d2c2b29, #0d2c2b3d) for the 3 shadow effect tokens (soft, medium, hard).
+      - Lines 411-1908: Primitive color palette hex values defining:
+        * Brand Primary scale (values 0 through 100)
+        * Brand Neutral scale (values 0 through 100)
+        * Brand Neutral Variant scale (values 0 through 100)
+        * Brand Status scale (error #ba1a1aff, warning #7a5900ff, success #17643bff)
+   2. task-01-design-system/css/tokens.css (106 matches):
+      - Generated by scripts/convert-tokens.js from 06-tokens-complete.json.
+      - Lines 23-119 (94 matches): Primitive CSS custom properties (--color-primitive-brand-*).
+      - Lines 126-142 (9 matches): Informational comments indicating the resolved primitive hex value for each of the 9 colour roles.
+      - Lines 149-151 (3 matches): Shadow definitions (--shadow-soft, --shadow-medium, --shadow-hard).
+
+B. Test Assertion Suite (9 matches):
+   - task-01-design-system/scripts/verify-tokens.js (9 matches):
+     Lines 35, 42, 49, 56, 63, 70, 77, 84, 91: Test assertions in the verification script checking that each of the 9 colour roles resolves to its expected primitive hex code.
+
+C. Documentation & Prompt Logs (17 matches):
+   - task-01-design-system/docs/business-brief.md (2 matches): Lines 35-36 record sampled sRGB #32B1AA replacing earlier #2E8B57.
+   - task-01-design-system/docs/business-research.md (1 match): Line 82 documents owner-confirmed brand shade sRGB #32B1AA.
+   - task-01-design-system/docs/prompts.md (14 matches): Audit trail entries citing brand hex sampling and test reports.
+
+D. Interface Code (task-01-design-system/index.html):
+   - 0 matches in Search 1.
+
+================================================================================
+3. CONCLUSIONS BASED STRICTLY ON RECORDED SEARCHES
+================================================================================
+Based strictly on the recorded search commands and outputs:
+1. Search 1 confirms that all 232 raw colour value matches (hex, rgb, hsl) exist exclusively in token source/generated files (06-tokens-complete.json, tokens.css), test code (verify-tokens.js), and documentation files (business-brief.md, business-research.md, prompts.md).
+2. Search 2 confirms that task-01-design-system/index.html contains 0 raw hex colour codes, 0 rgb/rgba functions, and 0 hsl/hsla functions.
+3. Search 3 confirms that task-01-design-system/index.html contains 0 CSS property declarations assigning any of the 148 standard CSS named colour keywords.
+4. Search 4 confirms that the only occurrence of a named colour word in task-01-design-system/index.html is a descriptive comment on line 56 ("sea green accent"), and not a styling rule.
+5. Search 5 confirms that task-01-design-system/index.html contains 0 direct references to primitive variables (--color-primitive-*).
+
+Therefore, within the scope of the executed checks, there are no raw colours, no named colour property declarations, and no direct primitive colour variables in the interface code of task-01-design-system/index.html.
