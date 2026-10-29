@@ -1,0 +1,17 @@
+# Secrets: never commit these (a secret anywhere in Git history is an automatic fail)
+.env
+.env.*
+!.env.example
+
+# Mac system files
+.DS_Store
+
+# Installed packages and build output
+node_modules/
+.next/
+out/
+build/
+coverage/
+
+# Logs
+*.log
