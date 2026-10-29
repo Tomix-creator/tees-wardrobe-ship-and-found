@@ -1,0 +1,224 @@
+{
+  "fileKey": "XIFrDeHj5m6eKiQutAGk9j",
+  "verifiedDate": "2026-10-27",
+  "verificationMethod": "Read each saved text style through the Figma browser style editor after editing. This is a verification record, not a native Figma export.",
+  "styles": [
+    {
+      "name": "tee's wardrobe/display/large",
+      "fontFamily": "Inter",
+      "fontStyle": "Regular",
+      "fontSize": 57,
+      "lineHeight": {
+        "unit": "PIXELS",
+        "value": 79.8
+      },
+      "letterSpacing": {
+        "unit": "PERCENT",
+        "value": -4
+      }
+    },
+    {
+      "name": "tee's wardrobe/display/medium",
+      "fontFamily": "Inter",
+      "fontStyle": "Regular",
+      "fontSize": 45,
+      "lineHeight": {
+        "unit": "PIXELS",
+        "value": 63
+      },
+      "letterSpacing": {
+        "unit": "PERCENT",
+        "value": -4
+      }
+    },
+    {
+      "name": "tee's wardrobe/display/small",
+      "fontFamily": "Inter",
+      "fontStyle": "Regular",
+      "fontSize": 36,
+      "lineHeight": {
+        "unit": "PIXELS",
+        "value": 50.4
+      },
+      "letterSpacing": {
+        "unit": "PERCENT",
+        "value": -4
+      }
+    },
+    {
+      "name": "tee's wardrobe/headline/large",
+      "fontFamily": "Inter",
+      "fontStyle": "Regular",
+      "fontSize": 32,
+      "lineHeight": {
+        "unit": "PIXELS",
+        "value": 44.8
+      },
+      "letterSpacing": {
+        "unit": "PERCENT",
+        "value": -4
+      }
+    },
+    {
+      "name": "tee's wardrobe/headline/medium",
+      "fontFamily": "Inter",
+      "fontStyle": "Regular",
+      "fontSize": 28,
+      "lineHeight": {
+        "unit": "PIXELS",
+        "value": 39.2
+      },
+      "letterSpacing": {
+        "unit": "PERCENT",
+        "value": -4
+      }
+    },
+    {
+      "name": "tee's wardrobe/headline/small",
+      "fontFamily": "Inter",
+      "fontStyle": "Regular",
+      "fontSize": 24,
+      "lineHeight": {
+        "unit": "PIXELS",
+        "value": 33.6
+      },
+      "letterSpacing": {
+        "unit": "PERCENT",
+        "value": -4
+      }
+    },
+    {
+      "name": "tee's wardrobe/title/large",
+      "fontFamily": "Inter",
+      "fontStyle": "Medium",
+      "fontSize": 22,
+      "lineHeight": {
+        "unit": "PIXELS",
+        "value": 30.8
+      },
+      "letterSpacing": {
+        "unit": "PERCENT",
+        "value": -4
+      }
+    },
+    {
+      "name": "tee's wardrobe/title/medium",
+      "fontFamily": "Inter",
+      "fontStyle": "Medium",
+      "fontSize": 16,
+      "lineHeight": {
+        "unit": "PIXELS",
+        "value": 22.4
+      },
+      "letterSpacing": {
+        "unit": "PERCENT",
+        "value": -4
+      }
+    },
+    {
+      "name": "tee's wardrobe/title/small",
+      "fontFamily": "Inter",
+      "fontStyle": "Medium",
+      "fontSize": 14,
+      "lineHeight": {
+        "unit": "PIXELS",
+        "value": 19.6
+      },
+      "letterSpacing": {
+        "unit": "PERCENT",
+        "value": -4
+      }
+    },
+    {
+      "name": "tee's wardrobe/body/large",
+      "fontFamily": "Inter",
+      "fontStyle": "Regular",
+      "fontSize": 16,
+      "lineHeight": {
+        "unit": "PIXELS",
+        "value": 24
+      },
+      "letterSpacing": {
+        "unit": "PERCENT",
+        "value": -4
+      }
+    },
+    {
+      "name": "tee's wardrobe/body/medium",
+      "fontFamily": "Inter",
+      "fontStyle": "Regular",
+      "fontSize": 14,
+      "lineHeight": {
+        "unit": "PIXELS",
+        "value": 22.4
+      },
+      "letterSpacing": {
+        "unit": "PERCENT",
+        "value": -4
+      }
+    },
+    {
+      "name": "tee's wardrobe/body/small",
+      "fontFamily": "Inter",
+      "fontStyle": "Regular",
+      "fontSize": 12,
+      "lineHeight": {
+        "unit": "PIXELS",
+        "value": 19.2
+      },
+      "letterSpacing": {
+        "unit": "PERCENT",
+        "value": -4
+      }
+    },
+    {
+      "name": "tee's wardrobe/label/large",
+      "fontFamily": "Inter",
+      "fontStyle": "Medium",
+      "fontSize": 14,
+      "lineHeight": {
+        "unit": "PIXELS",
+        "value": 19.6
+      },
+      "letterSpacing": {
+        "unit": "PERCENT",
+        "value": -4
+      }
+    },
+    {
+      "name": "tee's wardrobe/label/medium",
+      "fontFamily": "Inter",
+      "fontStyle": "Medium",
+      "fontSize": 12,
+      "lineHeight": {
+        "unit": "PIXELS",
+        "value": 16.8
+      },
+      "letterSpacing": {
+        "unit": "PERCENT",
+        "value": -4
+      }
+    },
+    {
+      "name": "tee's wardrobe/label/small",
+      "fontFamily": "Inter",
+      "fontStyle": "Medium",
+      "fontSize": 11,
+      "lineHeight": {
+        "unit": "PIXELS",
+        "value": 15.4
+      },
+      "letterSpacing": {
+        "unit": "PERCENT",
+        "value": -4
+      }
+    }
+  ],
+  "visualChecks": [
+    "Existing Body specimen and status examples checked at 100% browser canvas zoom; no overlap or clipping observed."
+  ],
+  "remainingChecks": [
+    "Real phone reading and narrow-screen layout in the eventual application. All 15 styles do not yet have separate on-canvas specimens."
+  ],
+  "userDecision": "Apply -4 percent letter spacing to every saved text style."
+}

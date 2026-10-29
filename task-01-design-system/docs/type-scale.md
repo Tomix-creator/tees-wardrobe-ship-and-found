@@ -1,38 +1,47 @@
-# Tee’s Wardrobe — type scale
+# Type scale
 
-All 15 saved styles were reopened and checked in Figma on 2026-10-27. These are the applied values; this document is not a native Figma export.
+Fifteen styles: five roles, three sizes each. All use Inter. I re-opened and checked every saved style in Figma on 27 October 2026.
 
-```text
-Style              Font   Weight  Size  Letter spacing  Line height  Multiplier
-display/large      Inter  400    57    -4%             79.8         1.4
-display/medium     Inter  400    45    -4%             63           1.4
-display/small      Inter  400    36    -4%             50.4         1.4
-headline/large     Inter  400    32    -4%             44.8         1.4
-headline/medium    Inter  400    28    -4%             39.2         1.4
-headline/small     Inter  400    24    -4%             33.6         1.4
-title/large        Inter  500    22    -4%             30.8         1.4
-title/medium       Inter  500    16    -4%             22.4         1.4
-title/small        Inter  500    14    -4%             19.6         1.4
-body/large         Inter  400    16    -4%             24           1.5
-body/medium        Inter  400    14    -4%             22.4         1.6
-body/small         Inter  400    12    -4%             19.2         1.6
-label/large        Inter  500    14    -4%             19.6         1.4
-label/medium       Inter  500    12    -4%             16.8         1.4
-label/small        Inter  500    11    -4%             15.4         1.4
-```
+| Style | Weight | Size (px) | Letter spacing | Line height (px) | Multiplier |
+|---|---|---:|---|---:|---:|
+| display/large | 400 | 57 | −4% | 79.8 | 1.4 |
+| display/medium | 400 | 45 | −4% | 63 | 1.4 |
+| display/small | 400 | 36 | −4% | 50.4 | 1.4 |
+| headline/large | 400 | 32 | −4% | 44.8 | 1.4 |
+| headline/medium | 400 | 28 | −4% | 39.2 | 1.4 |
+| headline/small | 400 | 24 | −4% | 33.6 | 1.4 |
+| title/large | 500 | 22 | −4% | 30.8 | 1.4 |
+| title/medium | 500 | 16 | −4% | 22.4 | 1.4 |
+| title/small | 500 | 14 | −4% | 19.6 | 1.4 |
+| body/large | 400 | 16 | −4% | 24 | 1.5 |
+| body/medium | 400 | 14 | −4% | 22.4 | 1.6 |
+| body/small | 400 | 12 | −4% | 19.2 | 1.6 |
+| label/large | 500 | 14 | −4% | 19.6 | 1.4 |
+| label/medium | 500 | 12 | −4% | 16.8 | 1.4 |
+| label/small | 500 | 11 | −4% | 15.4 | 1.4 |
 
-Regular means weight 400; Medium means weight 500. Size and line height are recorded in pixels. Letter spacing is a percentage of the font size.
+400 = Regular, 500 = Medium. Letter spacing is a percentage of font size, so −4% at 57px is −2.28px.
 
-## Why these roles differ
+## Which multiplier, and why
 
-Display and Headline are short, prominent text. Title marks sections; Body carries order details; Label identifies controls and small supporting information. Most styles use a 1.4 multiplier for this class exercise, Body/Large uses 1.5, and Body/Medium and Small use 1.6 to give multi-line supporting text more room. These are deliberate project choices, not universal accessibility requirements or unchanged Material defaults.
+Line height is always font size × 1.4, 1.5 or 1.6:
 
-Body/Large is the starting choice for order amounts, payment messages and ordinary essential reading. Small 11–12px styles are restricted to nonessential details and still need real phone reading checks. The presence of 15 styles in the library does not mean every screen should use all 15.
+- **1.4: Display, Headline, Title, Label.** These are short and usually sit on one line. Extra space between lines would just push content down.
+- **1.5: Body Large.** This is the main reading text: order amounts, payment messages.
+- **1.6: Body Medium and Small.** Smaller text that often wraps, like policy answers and notes. Tight small text is the hardest to follow across lines, so it gets the most room.
 
-## Display Large spacing comparison
+## How the roles are used
 
-The two actual Figma exports use the same words, Inter Regular at 57px, 79.8px line height, colours and frame size. The reference reconstructs the original generated style’s -0.25px spacing with the current font; it is not a historical screenshot of the complete original Roboto style. The chosen saved style uses -4%, or -2.28px at this size.
+- **Body Large** is the default for anything essential: amounts owed, payment confirmations.
+- **Title** marks sections, e.g. "Financial Breakdown & Balance" uses Title Medium.
+- **11–12px styles** are kept for non-essential details only, because they haven't been checked on a real phone.
 
-In the pictures, the chosen sentence occupies less horizontal space and its letters sit closer together. The words are legible in this large sample, but this single example cannot prove that -4% is easy to read everywhere. Small labels and dense order details could feel crowded on a phone, so check real content on a phone and loosen spacing where needed.
+Having 15 styles doesn't mean every screen uses all 15.
 
-Evidence: [reference](../evidence/03-spacing-default.png) and [chosen](../evidence/04-spacing-chosen.png).
+## Display Large: default spacing vs chosen spacing
+
+[`03-spacing-default.png`](../evidence/03-spacing-default.png) and [`04-spacing-chosen.png`](../evidence/04-spacing-chosen.png) show the same sentence in Inter Regular 57px, 79.8px line height, same colours and frame. The only difference is letter spacing: −0.25px (Material's default) vs −4% (−2.28px).
+
+With −4%, the sentence is noticeably shorter and the letters sit closer, so the heading reads as one solid shape rather than a row of separate letters. At this size it's still easy to read. This one sample doesn't prove −4% works for small text; see `divergences.md`.
+
+Note: `03` is a reconstruction. I re-applied Material's −0.25px to Inter; it isn't a screenshot of the original Roboto style.

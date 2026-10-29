@@ -1,115 +1,86 @@
-# Tee’s Wardrobe — Task One: Design System & Prototype
+# Task One: Design system, and proving the agent used it
 
-This directory contains the Task One deliverables for **Tee’s Wardrobe**, implementing a token-driven design system, an automated token compilation pipeline, and a mobile-first order-tracking demonstration prototype.
+**Business:** Tee's Wardrobe, a one-person clothing business taking made-to-order and ready-made orders over direct messages. The thing that must work: **every order's balance is right.** ([brief](docs/business-brief.md))
 
-> **Demonstration Disclaimer**:  
-> The screen in this directory (`index.html`) is an order-tracking **demonstration prototype** designed to test token styling, responsive mobile layout (412px), and business-logic presentation. It **does not save real orders, record payments, or connect to a live backend database**. All customer records and transactions displayed are fictional demonstration data.
+## What I built
 
----
+1. **A design system in Figma** around Tee's sea green, `#32B1AA`:
+   - a palette from Material Theme Builder, with her exact colour pinned at primary 40 ([colour roles](docs/colour-roles.md))
+   - 9 colour roles, every pair contrast-checked with numbers
+   - 15 text styles in Inter ([type scale](docs/type-scale.md))
+   - 3 brand-coloured shadows ([shadows](docs/shadows.md))
+2. **Two exports**: one missing the colours by mistake, one complete ([what was missing](docs/export-review.md)).
+3. **A converter** that turns the Figma JSON into CSS variables (`scripts/convert-tokens.js`). The interface may only use roles, never raw palette colours. `scripts/verify-tokens.js` runs 112 checks on the output.
+4. **One screen** (`index.html`): an order-balance demo with fictional data, built by Antigravity first without the system, then with it.
+5. **Proof the agent used the system**: a raw-colour search, the agent's own answer about which text style it used, before/after screenshots, and a deliberately broken branch.
 
-## 1. What Was Built
+## Key decisions
 
-1. **Design Token Source & Converter**:
-   - Source Token File: [`evidence/06-tokens-complete.json`](evidence/06-tokens-complete.json), exporting 94 primitive colors, 9 semantic color roles, 15 typography styles, and 3 elevation shadow effects.
-   - Token Compilation Script: [`scripts/convert-tokens.js`](scripts/convert-tokens.js), converting Figma Design Tokens JSON into standardized CSS custom properties in [`css/tokens.css`](css/tokens.css).
-   - Automated Token Verification Suite: [`scripts/verify-tokens.js`](scripts/verify-tokens.js), running 112 automated integrity tests against generated CSS to ensure complete coverage, alias resolution, and safe execution.
-2. **Order Demonstration Prototype (`index.html`)**:
-   - Mobile-first interface built for 412px viewport width.
-   - Strictly applies semantic color roles (`--color-role-*`) and typography utility classes (`.type-*`).
-   - Implements dynamic order switching between two fictional customer orders (`orderA` and `orderB`).
-   - Features visible focus indicators, accessible contrast boundaries, and an unstyled-vs-styled evidence record.
+- **Pinned the brand colour.** The generator turned Tee's colour into a dull `#006A65`; pinning kept her sea green as the real primary.
+- **Dark text on the brand colour.** White on `#32B1AA` is only 2.62:1, so buttons and badges use `#191C1C` (6.54:1).
+- **Inter at −4% letter spacing**, with line height ×1.4 for headings and labels and ×1.5–1.6 for body text. ([why, and where it's wrong](docs/divergences.md))
+- **Shadows from dark sea green** (`#0D2C2B`), not black.
 
----
+## What I got wrong
 
-## 2. How to View the Demonstration
+- My first brand colour was a guess (web "seagreen", `#2E8B57`) until Tee sent her real swatch.
+- My first export left out every colour, because I didn't include Figma variables.
+- The shadows can't follow a brand change, because their colour is fixed, not linked.
+- The order screen still has hand-typed spacing; only colour and type come from tokens.
+- An agent audit once described the wrong business and invented files. I now check agent reports against the actual files.
 
-1. **Start the Local HTTP Server**:
-   From the repository root, run:
-   ```bash
-   python3 -m http.server 8085 --directory "task-01-design-system"
-   ```
-2. **Open in Browser**:
-   Navigate to:
-   ```text
-   http://localhost:8085
-   ```
-   *(Or open `task-01-design-system/index.html` directly in any modern web browser).*
-3. **Viewport Inspection**:
-   - Set browser device emulation to **412 px** width (e.g., Pixel 7 / Samsung Galaxy mobile viewport).
-   - Verify that horizontal scrolling is absent and that content containers adapt cleanly.
-4. **Interactive Verification**:
-   - **Order Toggle**: Use the select dropdown at the top to toggle between Order `#TW-2026-084` (Amina Bello) and `#TW-2026-085` (Fatima Garba). Observe that all pricing figures, balance calculations, delivery quoting notes, and customer policy answers update dynamically.
-   - **Keyboard Navigation**: Press <kbd>Tab</kbd> to verify visible focus outlines (`--color-role-focus-indicator`, 10.64:1 contrast ratio against Surface) on the order selector and interactive elements.
+Full list with file and line numbers: [defects](docs/defects.md).
 
----
+## Run it
 
-## 3. Key Design Decisions
+From the repository root:
 
-- **Brand Anchor & Primary Palette**:
-  - The business owner supplied sea green as the brand color; the reference swatch was sampled as sRGB `#32B1AA`.
-  - Pinned as `primary/40` so that tonal palettes generated symmetrically without shifting the brand hue.
-- **Strict Separation of Clothing Price and Delivery Fees**:
-  - Clothing price and delivery fee are calculated separately. An unquoted delivery fee is visibly marked **“not yet quoted” / “awaiting quote”** and is **never** treated or displayed as free or zero (₦0.00).
-- **Core Remaining Balance Formula**:
-  $$\text{Remaining Balance} = \text{Agreed Clothing Price} - \text{Confirmed Payments}$$
-  *(Delivery fee is added to the balance only after a formal destination quote is agreed).*
-- **Typography Scale**:
-  - Uses the **Inter** family across all 15 Material-structured styles with compact -4% letter spacing.
-  - Line heights use deliberate role-based multipliers: a $1.4\times$ multiplier for Display, Headline, Title, and Label styles; $1.5\times$ for Body Large ($24\text{px}$ on $16\text{px}$ font); and $1.6\times$ for Body Medium ($22.4\text{px}$ on $14\text{px}$) and Body Small ($19.2\text{px}$ on $12\text{px}$) to provide necessary reading room for multi-line customer details.
-- **Brand-Tinted Elevation Shadows**:
-  - Drop shadows are tinted with dark brand hue `#0D2C2B` (`primary/10`, 12%–24% opacity) rather than neutral black, with custom geometry: Soft ($Y=2\text{px}$, Blur = $8\text{px}$), Medium ($Y=6\text{px}$, Blur = $16\text{px}$), and Hard ($Y=10\text{px}$, Blur = $16\text{px}$).
-- **Role-Based Token Architecture**:
-  - UI code references semantic roles only (e.g. `--color-role-surface`, `--color-role-primary`); primitive palette values are never hardcoded in page styles.
+```bash
+python3 -m http.server 8085 --directory task-01-design-system
+```
 
----
+Open `http://localhost:8085`, ideally at a 412px-wide phone view. Use the dropdown to switch between the two fictional orders.
 
-## 4. What Is Unfinished / Open Work
+To regenerate and check the CSS from the Figma export:
 
-The following items represent open tasks or items requiring final review:
-1. **Deliberate Regression Branch Experiment (Step 8)**:
-   - The isolated branch `experiment/deliberate-token-regression` was created to demonstrate broken token referencing, committed, visual evidence captured, and deleted without merge.
-   - Visual captures ([`evidence/11-broken-referencing.png`](evidence/11-broken-referencing.png), [`evidence/11-broken-referencing-fullwidth.png`](evidence/11-broken-referencing-fullwidth.png)) and the explanatory note ([`evidence/11-broken-referencing-explanation.txt`](evidence/11-broken-referencing-explanation.txt)) are present in the repository, alongside the Git audit log ([`evidence/12-git-log-branch-unmerged.txt`](evidence/12-git-log-branch-unmerged.txt)). These files are present in the repository, but their contents remain subject to final user evaluation.
-2. **Viva Interview Defence Answers**:
-   - [`docs/interview-answers.md`](docs/interview-answers.md) contains substantive answers ($\le 200$ words each) to all 12 viva questions from pages 8–9 of the assessment PDF. The file is present, but answers are marked unverified pending final review.
-3. **Dark Mode Role Mappings**:
-   - Dark theme semantic role mappings remain open in [`docs/colour-roles.md`](docs/colour-roles.md).
-4. **Optional Walkthrough Video**:
-   - `evidence/13-walkthrough.mp4` (4-minute voice-recorded type scale justification) remains optional and not recorded.
+```bash
+node task-01-design-system/scripts/convert-tokens.js
+```
 
----
+```bash
+node task-01-design-system/scripts/verify-tokens.js
+```
 
-## 5. Location of Evidence and Known Defects
+## Deliverables
 
-- **Evidence Files**: Located in [`task-01-design-system/evidence/`](evidence/), numbered sequentially from `01` to `12`, accompanied by supporting audit files (`support-*`).
-- **Known Defects**: Fully documented with substantiation and impact analysis in [`task-01-design-system/docs/defects.md`](docs/defects.md).
+| Required | File |
+|---|---|
+| Business brief | [docs/business-brief.md](docs/business-brief.md) |
+| Type scale (all 15) | [docs/type-scale.md](docs/type-scale.md) |
+| Colour roles and contrast | [docs/colour-roles.md](docs/colour-roles.md) |
+| Shadows | [docs/shadows.md](docs/shadows.md) |
+| Divergences | [docs/divergences.md](docs/divergences.md) |
+| Prompts, verbatim | [docs/prompts.md](docs/prompts.md) |
+| Defects | [docs/defects.md](docs/defects.md) |
+| Interview answers (12) | [docs/interview-answers.md](docs/interview-answers.md) |
+| Palette before / after pinning | [01](evidence/01-palette-before-pin.png) / [02](evidence/02-palette-after-pin.png) (others: 02b–02e) |
+| Display Large spacing, default / chosen | [03](evidence/03-spacing-default.png) / [04](evidence/04-spacing-chosen.png) |
+| Token export, incomplete / complete | [05](evidence/05-tokens-incomplete.json) / [06](evidence/06-tokens-complete.json) |
+| Raw-colour search, command and output | [07](evidence/07-raw-value-search.txt) |
+| Agent's typography answer | [08](evidence/08-agent-typography-answer.txt) |
+| Screen without / with the system | [09](evidence/09-screen-without-system.png) / [10](evidence/10-screen-with-system.png) |
+| Broken referencing | [11](evidence/11-broken-referencing.png) (+ [explanation](evidence/11-broken-referencing-explanation.txt)) |
+| Git log, branch never merged | [12](evidence/12-git-log-branch-unmerged.txt) |
+| Walkthrough (optional) | Not recorded |
 
----
+Files starting `support-` in `evidence/` are extra Figma screenshots and checks, not required deliverables. The owner interview is in [docs/business-research.md](docs/business-research.md).
 
-## 6. Task One Deliverables Status Checklist
+## Not done
 
-*Evaluated against the Task One Deliverables specification in `Ship-and-Found-Five-Tasks.pdf` (Page 8).*
+- No dark mode.
+- Small text (11–12px at −4%) not tested on a real phone.
+- Walkthrough video not recorded.
 
-| Deliverable | Status | Cited File Path |
-|---|---|---|
-| `README.md` | **Present, unverified** | [`task-01-design-system/README.md`](README.md) (Project overview documentation) |
-| `docs/business-brief.md` | **Present, unverified** | [`task-01-design-system/docs/business-brief.md`](docs/business-brief.md) (384 words; meets $\le 400$ word limit; user context explicitly identifies assumptions) |
-| `docs/type-scale.md` | **Present, unverified** | [`task-01-design-system/docs/type-scale.md`](docs/type-scale.md) (All 15 styles documented; needs verification against runtime styles) |
-| `docs/colour-roles.md` | **Present, unverified** | [`task-01-design-system/docs/colour-roles.md`](docs/colour-roles.md) (Light roles & contrast documented; dark mode mapping marked open) |
-| `docs/shadows.md` | **Present, unverified** | [`task-01-design-system/docs/shadows.md`](docs/shadows.md) (Soft, medium, hard shadows documented) |
-| `docs/divergences.md` | **Present, unverified** | [`task-01-design-system/docs/divergences.md`](docs/divergences.md) (Documented divergences and failure scenarios) |
-| `docs/prompts.md` | **Present, unverified** | [`task-01-design-system/docs/prompts.md`](docs/prompts.md) (Prompt log recording Prompts 1 through 21) |
-| `docs/defects.md` | **Present, unverified** | [`task-01-design-system/docs/defects.md`](docs/defects.md) (Documented defects and technical limitations) |
-| `docs/interview-answers.md` | **Present, unverified** | [`task-01-design-system/docs/interview-answers.md`](docs/interview-answers.md) (12 viva defence answers drafted; needs final user verification) |
-| `evidence/01-palette-before-pin.png` | **Present, unverified** | [`task-01-design-system/evidence/01-palette-before-pin.png`](evidence/01-palette-before-pin.png) |
-| `evidence/02-palette-after-pin.png` | **Present, unverified** | [`task-01-design-system/evidence/02-palette-after-pin.png`](evidence/02-palette-after-pin.png) |
-| `evidence/03-spacing-default.png` | **Present, unverified** | [`task-01-design-system/evidence/03-spacing-default.png`](evidence/03-spacing-default.png) |
-| `evidence/04-spacing-chosen.png` | **Present, unverified** | [`task-01-design-system/evidence/04-spacing-chosen.png`](evidence/04-spacing-chosen.png) |
-| `evidence/05-tokens-incomplete.json` | **Present, unverified** | [`task-01-design-system/evidence/05-tokens-incomplete.json`](evidence/05-tokens-incomplete.json) (Export missing variables) |
-| `evidence/06-tokens-complete.json` | **Verified (test suite)** | [`task-01-design-system/evidence/06-tokens-complete.json`](evidence/06-tokens-complete.json) (SHA-256: `efbab56ac79fb061992bb301d3b5747156bf51b8f7ca2faa6cc4ede86c9cbda4`; verified by scripts/verify-tokens.js) |
-| `evidence/07-raw-value-search.txt` | **Present, unverified** | [`task-01-design-system/evidence/07-raw-value-search.txt`](evidence/07-raw-value-search.txt) (Historical search output recorded at Step 7; not a live clean search) |
-| `evidence/08-agent-typography-answer.txt` | **Present, unverified** | [`task-01-design-system/evidence/08-agent-typography-answer.txt`](evidence/08-agent-typography-answer.txt) (Agent typography Q&A response and cited style references) |
-| `evidence/09-screen-without-system.png` | **Present, unverified** | [`task-01-design-system/evidence/09-screen-without-system.png`](evidence/09-screen-without-system.png) (Unstyled capture; clipped right edge noted in defects) |
-| `evidence/10-screen-with-system.png` | **Present, unverified** | [`task-01-design-system/evidence/10-screen-with-system.png`](evidence/10-screen-with-system.png) (Styled prototype capture at 412 × 915 px viewport) |
-| `evidence/11-broken-referencing.png` | **Present, unverified** | [`task-01-design-system/evidence/11-broken-referencing.png`](evidence/11-broken-referencing.png) (Regression screenshot captured on isolated branch; needs final review) |
-| `evidence/12-git-log-branch-unmerged.txt` | **Present, unverified** | [`task-01-design-system/evidence/12-git-log-branch-unmerged.txt`](evidence/12-git-log-branch-unmerged.txt) (Transcribed git log and ancestry check from deleted experiment branch) |
-| `evidence/13-walkthrough.mp4` | **Missing (Optional)** | Optional walkthrough video (bonus marks) |
+## How this was made
+
+I used AI agents throughout: Codex to guide the Figma work, Antigravity to write the converter and the screen, and Claude to rewrite these documents for readability from my existing drafts. The decisions, the business research and the review of every output are mine. The prompts I gave Antigravity are in [docs/prompts.md](docs/prompts.md).

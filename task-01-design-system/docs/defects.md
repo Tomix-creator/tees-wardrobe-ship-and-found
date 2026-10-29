@@ -1,90 +1,63 @@
-# Tee’s Wardrobe — Task One Known Defects & Technical Limitations
+# Known defects
 
-This document records substantiated defects, layout edge cases, data inconsistencies, and technical limitations identified during the development and audit of the Task One design system and demonstration prototype. 
-
-Only defects directly substantiated by file inspections or empirical tests are recorded below. Items involving unconfirmed external claims are explicitly marked as **unverified**.
+Real problems in my Task One work, each with where it is and what it would cost if this went to production. Ordered from most to least serious.
 
 ---
 
-## 1. Substantiated Visual & Layout Defects
+## 1. Shadows don't follow the brand colour
 
-### Defect 1.1: Clipped Right Edge on Unstyled Baseline Screen Capture
-- **Location**: [`task-01-design-system/evidence/09-screen-without-system.png`](../evidence/09-screen-without-system.png)
-- **Substantiating Evidence**:
-  - Image viewport width: **412 px** (height: 1450 px).
-  - File SHA-256: `d4a45efc4296a40e120e482c8a7fb87eb7f26539526b7375a9f84d7b69fd871c`.
-- **Observed Behavior**:
-  - Along the right-hand margin of the capture, container boundaries and text content (notably the order summary card and financial table borders) terminate directly against the viewport edge without visible padding or margin.
-- **Qualified Causes & Hypotheses**:
-  - While unstyled HTML defaults (such as default table rendering, default 8px body margin accumulation, or lack of `box-sizing: border-box`) can cause content to overflow a 412px boundary, the exact technical cause during capture remains an unverified hypothesis. Other factors, such as desktop browser emulation deducting 15–17px for a vertical scrollbar margin from the 412px viewport, could equally account for the observed edge truncation. No live DOM trace or layout metric was recorded during that historical capture session to isolate the single root cause.
-- **Impact & Resolution in Styled Screen**:
-  - **Impact**: Highlights that baseline unstyled markup lacks responsive mobile constraints, leaving content vulnerable to horizontal clipping on standard mobile devices (412px).
-  - **Resolution in Styled Screen**: In [`evidence/10-screen-with-system.png`](../evidence/10-screen-with-system.png), the styled prototype fits cleanly within the 412px viewport with all cards, text, and tables properly padded. This reflects the combined effect of layout reset rules, explicit container paddings (`--space-*`), and responsive widths (`max-width: 100%`), rather than isolating any single property fix.
-  - **Evidence Integrity**: In accordance with assessment instructions, the original imperfect screenshot is preserved unchanged as authentic baseline evidence.
+- **Where:** `css/tokens.css:149–151`, generated from `evidence/06-tokens-complete.json:355, 373, 391`
+- **What:** The three shadows store their colour as fixed values (`#0d2c2b1f`, `#0d2c2b29`, `#0d2c2b3d`) instead of pointing at `primary/10`. When I tried to link the shadow colour to the variable in Figma, Figma reset the opacity to 100%, so I kept fixed values.
+- **Cost in production:** If Tee changes her brand colour, every button, border and heading updates, but the shadows stay sea-green. Nobody gets an error; the product just looks slightly wrong, and someone has to spot it and fix three values by hand. This is the same failure my step 8 regression demonstrates.
 
----
+## 2. The exported colour references contain a stray space
 
-## 2. Substantiated Token Pipeline Defects
+- **Where:** `evidence/06-tokens-complete.json:1927–2047` (all nine colour roles); worked around in `scripts/convert-tokens.js:63`
+- **What:** Figma exported every role reference with a space before the dot, e.g. `{primitive brand .primary.40}`. The real group name is `primitive brand` with no trailing space, so an exact lookup fails on all nine. My converter splits the reference on dots and trims each part, which makes it work.
+- **Cost in production:** Only my converter knows about this. If the team switched to a standard tool such as Style Dictionary, or another developer wrote their own converter, all nine roles would fail to resolve and the interface would lose every colour at once.
 
-### Defect 2.1: Malformed Token References (Trailing Whitespace in Figma Aliases)
-- **Location**: [`task-01-design-system/evidence/06-tokens-complete.json`](../evidence/06-tokens-complete.json)
-- **Substantiating Evidence**:
-  - In 9 semantic color role variable declarations (Lines 111, 142, 173, 204, 235, 266, 297, 328, 359), alias reference strings contain trailing whitespace before the closing brace:
-    ```json
-    "value": "{color.brand.primary.40 }"
-    ```
-    instead of:
-    ```json
-    "value": "{color.brand.primary.40}"
-    ```
-- **Observed Behavior**:
-  - Exact string matching in automated conversion tools fails to match `{color.brand.primary.40 }` against the key `color.brand.primary.40`.
-- **Impact & Resolution**:
-  - **Impact**: Without explicit normalization, the CSS generator silently fails to resolve references or outputs invalid variable values.
-  - **Resolution**: In [`scripts/convert-tokens.js`](../scripts/convert-tokens.js), regex-based trimming (`.replace(/\s+/g, '')` and `.trim()`) was implemented and is continuously verified by test suite [`scripts/verify-tokens.js`](../scripts/verify-tokens.js).
+## 3. The order screen ignores the spacing tokens
 
-### Defect 2.2: Omission of Variable Collections in Default Figma Export
-- **Location**: [`task-01-design-system/evidence/05-tokens-incomplete.json`](../evidence/05-tokens-incomplete.json)
-- **Substantiating Evidence**:
-  - File size: 29,557 bytes (omits all primitive colors and semantic roles) vs. complete export of 80,472 bytes.
-- **Impact**:
-  - Exporting tokens from Figma without explicitly checking "Include Variables" drops all color primitives and semantic roles, rendering downstream CSS generation completely non-functional.
+- **Where:** `index.html`, 54 hardcoded pixel values, e.g. `index.html:27` (`padding: 10px`), `:37` (`max-width: 392px`), `:42` (`padding: 14px`)
+- **What:** I defined a spacing scale in `css/spacing.css`, but `index.html` never loads it. Colours and type come from tokens; spacing is typed in by hand.
+- **Cost in production:** Spacing will drift. One card gets 14px, the next 16px, and changing the spacing scale changes nothing on screen. It also means my "no hardcoded values" claim is only true for colour.
+
+## 4. −4% letter spacing on the smallest text
+
+- **Where:** `css/tokens.css:228–231` (Label Small: 11px, −0.44px)
+- **What:** I applied −4% to all 15 styles, including the 11px and 12px ones.
+- **Cost in production:** Small labels can become hard to read on low-cost phones or in sunlight. Untested on a real device.
+
+## 5. The rebuilt primary shades are unevenly spaced
+
+- **Where:** `css/tokens.css:23–25` (primary 30 `#268580`, primary 40 `#32b1aa`)
+- **What:** I rebuilt the primary family as a straight blend from black to sea green to white, not with Material's perceptual tones. Neighbouring shades can look almost the same: primary 30 vs 40 is only 1.69:1.
+- **Cost in production:** Hover, pressed and selected states built from neighbouring shades would be nearly invisible, especially to people with low vision.
+
+## 6. No dark mode
+
+- **Where:** `css/tokens.css:7`, where only a `:root` light theme exists
+- **What:** Roles and contrast are only defined and checked for light surfaces.
+- **Cost in production:** A dark-mode request means designing and contrast-checking every role pair from scratch. Nothing is ready to switch on.
+
+## 7. The demo stores nothing
+
+- **Where:** `index.html:378` (`const orders = { … }`)
+- **What:** The two orders are fictional data in a JavaScript object. There is no database, no form and no saving.
+- **Cost in production:** None today, because the screen is labelled as a demonstration. It would only become a defect if anyone presented it as working software. Real storage is Task Two.
 
 ---
 
-## 3. Substantiated Architectural & System Limitations
+## Evidence limitations
 
-### Defect 3.1: Demonstration Prototype Does Not Provide Working Order Storage
-- **Location**: [`task-01-design-system/index.html`](../index.html)
-- **Substantiating Evidence**:
-  - Order state is defined exclusively in in-memory JavaScript objects (`const orders = { ... }`).
-  - There are no HTTP POST/PUT API calls, database connectors, IndexedDB stores, or localStorage handlers.
-- **Impact**:
-  - The interface demonstrates layout, styling, and business calculation logic, but does **not** provide a working order-recording system. Orders, payments, and price updates cannot be permanently saved or submitted.
+These are not code defects, but a marker should know them:
 
-### Defect 3.2: Dark Mode Semantic Role Mappings Are Unimplemented
-- **Location**: [`task-01-design-system/docs/colour-roles.md`](colour-roles.md)
-- **Substantiating Evidence**:
-  - Documentation states: *"Dark-mode mapping remains open."*
-  - [`css/tokens.css`](../css/tokens.css) contains only `:root` definitions without `@media (prefers-color-scheme: dark)` overrides.
-- **Impact**:
-  - The design system does not yet support automatic dark theme switching; contrast pairs and tone mappings have only been verified for light surface backgrounds.
+- **`09-screen-without-system.png`** is cut off on the right edge. I don't know the exact cause (overflowing table defaults or the browser's scrollbar). I kept the original rather than re-taking it.
+- **`03-spacing-default.png`** is a reconstruction: the original −0.25px spacing re-applied to Inter. It is not a screenshot of the original Roboto style.
+- **`07-raw-value-search.txt`** was recorded on 27 October. It proves the screen at that point had no raw colours; it does not cover later changes.
+- **`11-broken-referencing.png`** used a temporary extra role (`brand-accent`) so the broken and working parts could appear on one screen. That role existed only on the deleted branch.
 
----
+## Business assumptions not yet confirmed
 
-## 4. Unverified Stakeholder Claims & Uncertainties
-
-### Item 4.1: Historical Customer Payment Confusion Scenario
-- **Location**: [`task-01-design-system/docs/business-research.md`](business-research.md)
-- **Status**: **Unverified**
-- **Description**:
-  - The source discovery transcript (`QA.docx`) recorded a specific walkthrough of a customer installment payment dispute.
-  - In subsequent owner clarifications, the business owner stated that she was not certain whether this dispute had ever actually occurred, viewing it instead as a representative example of what could go wrong when tracking partial payments informally.
-  - **Resolution**: Treated in all technical and business documentation as an unconfirmed risk example rather than a verified historical transaction, without asserting that no dispute ever took place.
-
-### Item 4.2: Customer Communication & Mobile Data Constraints
-- **Location**: [`task-01-design-system/docs/business-research.md`](business-research.md)
-- **Status**: **Unverified**
-- **Description**:
-  - Stakeholder assumptions that customers strongly prefer WhatsApp direct links over web logins, or that customers frequently suffer network dropouts, represent the owner's personal impressions.
-  - Because customers have not been directly interviewed, these claims remain unverified design assumptions.
+- The payment-confusion story from the first owner interview is unconfirmed. Tee isn't sure it happened, so I treat it as an example, not a fact.
+- Customers' phones, data quality and preference for WhatsApp links are Tee's guesses. No customer has been interviewed.

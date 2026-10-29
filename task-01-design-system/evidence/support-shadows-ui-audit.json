@@ -1,0 +1,58 @@
+{
+  "fileKey": "XIFrDeHj5m6eKiQutAGk9j",
+  "verificationDate": "2026-10-27",
+  "verificationMethod": "Each saved effect style reopened in the Figma browser editor and offsets, blur, spread, colour and opacity read after saving. This is an audit record, not a native JSON export.",
+  "comparisonNodeId": "60:17",
+  "comparisonName": "Shadow styles — review",
+  "comparisonBounds": {
+    "x": -258,
+    "y": -679,
+    "width": 1520,
+    "height": 355.2
+  },
+  "comparisonPadding": 64,
+  "comparisonGap": 96,
+  "comparisonBackgroundRole": "Surface",
+  "styles": [
+    {
+      "name": "tee's wardrobe/shadow/soft",
+      "x": 0,
+      "y": 2,
+      "blur": 8,
+      "spread": 0,
+      "opacity": 0.12,
+      "colour": "#0D2C2B",
+      "exampleNodeId": "60:2",
+      "use": "Resting cards; gentle separation."
+    },
+    {
+      "name": "tee's wardrobe/shadow/medium",
+      "x": 0,
+      "y": 6,
+      "blur": 16,
+      "spread": 0,
+      "opacity": 0.16,
+      "colour": "#0D2C2B",
+      "exampleNodeId": "60:7",
+      "use": "Raised menus and popovers."
+    },
+    {
+      "name": "tee's wardrobe/shadow/hard",
+      "x": 0,
+      "y": 10,
+      "blur": 16,
+      "spread": 0,
+      "opacity": 0.24,
+      "colour": "#0D2C2B",
+      "exampleNodeId": "60:12",
+      "use": "Strong lift for floating dialogs; use sparingly."
+    }
+  ],
+  "source": "primary/10 in the custom brand-anchored palette; dark sea green derived from #32B1AA",
+  "limitations": [
+    "Effect colours are stored as explicit RGBA, not live aliases to primary/10. Palette changes require regenerating/updating these styles.",
+    "Soft/Medium/Hard are custom bootcamp styles, not official Material 3 elevation tokens.",
+    "PNG export was attempted but no downloaded comparison file could be verified. Browser screenshots were visually reviewed."
+  ],
+  "visualReview": "Three distinct strengths visible on the light Surface comparison; shadows not clipped."
+}

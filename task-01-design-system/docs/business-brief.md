@@ -1,18 +1,38 @@
-# Tee’s Wardrobe Business Brief
+# Business brief: Tee's Wardrobe
 
-Tee’s Wardrobe is a new clothing business selling ready-made garments and made-to-order pieces (kimonos, two-piece sets and bubu gowns). Standard sizing applies to ready-made items, while measurements are taken for made-to-order pieces.
+## The business
 
-The primary user is the owner (Tee), who works alone; future users may include shop helpers and customers. Customers are aged 17 and upwards; the owner’s exact age is unknown. Specific user devices are unknown; mobile smartphone use is an assumption. Connection quality is unmeasured; the owner’s suspicion of unreliable mobile data remains an unconfirmed assumption. Technical confidence is unassessed: records are kept across a paper notebook and WhatsApp chats, and bank transfers are checked manually in the bank app, but broader software literacy is unknown, and customer proficiency is unresearched. Delivery charges and payment dates are not always recorded consistently. The earlier payment-confusion story is unconfirmed; Tee is not sure it happened.
+Tee's Wardrobe is a new clothing business run by one person, Tee. She sells ready-made pieces in standard sizes and makes kimonos, two-piece sets and bubu gowns to order using each customer's measurements. Customers find her and order through direct messages.
 
-The one thing that must work is establishing the correct remaining balance for each order from its agreed price and confirmed payments. Clothing prices exclude delivery. Delivery prices are quoted based on customer location and agreed before payment; customer collection is also available. Tee’s Wardrobe receives delivery payments directly. The full agreed charge includes clothing plus delivery once quoted. An unquoted delivery charge must remain visibly “awaiting quote”, not zero or free.
+Her records live in a notebook and WhatsApp chats; she confirms transfers in her bank app. Delivery charges and payment dates aren't always written down.
 
-Three recurring customer questions are:
-- How much is owed, and was payment received?
-- Is the outfit ready, and when can it be collected or delivered?
-- Can the order be changed or cancelled?
+## Who uses it
 
-Changes and cancellations are considered case by case, with no set deposit or refund rule yet. Automated cancellations, refunds and bank integration are outside the proposed first version.
+- **Tee, the owner.** Age not recorded. She works from her phone, but I don't know the exact model, and her data connection hasn't been measured. She's comfortable with WhatsApp and a banking app; beyond that, her confidence with software is unknown.
+- **Later: helpers and customers.** Customers are 17 and over. Tee wants helpers to see orders and delivery details, but not measurements or payments. Whether customers want to check their own orders is her guess; none have been interviewed.
 
-The proposed application lets the owner record orders, prices, payments and progress. Tee prefers that future helpers see orders and delivery details, while measurements and payment details remain limited to the owner or someone who needs them; the demonstration implements no access controls. Customer interest in viewing orders is an unconfirmed guess.
+## The one thing that must work
 
-The interface should feel clear and trustworthy, with simple mobile phone use. Tee’s Wardrobe has no logo yet. The brand color is sea green, sampled from the reference swatch as sRGB #32B1AA (replacing an earlier #2E8B57 shade). Cost, complexity and sluggish phone performance are primary rejection criteria.
+**The balance on every order must be right.**
+
+Balance = agreed clothing price − confirmed payments. Delivery is separate: it's quoted by location and agreed before payment, and Tee collects it herself; customers can also pick up. Until delivery is quoted it must show as **"awaiting quote"**, never as zero or free.
+
+## Three questions customers keep asking
+
+1. How much do I still owe, and did you receive my payment?
+2. Is my outfit ready, and when can I collect it or have it delivered?
+3. Can I change or cancel my order?
+
+Only Tee's own records can answer these. Changes and cancellations are decided case by case; there's no fixed deposit or refund rule yet.
+
+## How it should feel, and why
+
+**Clear and trustworthy.** The screen is about money people have already sent, so amounts must be easy to find and impossible to misread, on a phone, quickly. Tee would reject software that is expensive, hard to learn or slow on her phone. So the type is plain (Inter), headings are compact for scanning, and body text gets extra line spacing.
+
+## Brand
+
+No logo yet. The brand colour is sea green, sampled from Tee's swatch as **#32B1AA**.
+
+## Not in the first version
+
+Automatic cancellations, refunds, bank integration and access controls. The Task One screen is a demonstration with fictional data.

@@ -1,42 +1,36 @@
-# Tee’s Wardrobe — shadows
+# Shadows
 
-Status: three shared effect styles created, applied to comparison cards and verified in Figma on 2026-10-27.
+Three shadows built from the brand palette instead of black. All three use `#0D2C2B`, the dark end of the sea-green family (primary/10). Each is a single drop shadow.
 
-```text
-All geometry is in pixels. One Normal drop shadow per style.
-Colour: #0D2C2B, the existing primary/10 dark brand shade.
+| Style | X | Y | Blur | Spread | Opacity | Use for |
+|---|---:|---:|---:|---:|---:|---|
+| Soft | 0 | 2 | 8 | 0 | 12% | Resting cards |
+| Medium | 0 | 6 | 16 | 0 | 16% | Menus and pop-overs |
+| Hard | 0 | 10 | 16 | 0 | 24% | Floating dialogs only |
 
-Style   X   Y   Blur  Spread  Opacity
-Soft    0   2    8      0      12%
-Medium  0   6   16      0      16%
-Hard    0  10   16      0      24%
-```
+All values in pixels. The order screen uses Soft on its main container.
 
-The dark sea-green shadow carries a small amount of the brand hue, while black would add no hue of its own. At these low opacities the difference is subtle and depends on the background; it is not a promise of stronger contrast.
+## Why brand colour instead of black
 
-Soft is for gentle separation around a resting card. Medium is for raised menus and popovers. Hard is the strongest of this set and should be reserved for floating dialogs; the name is relative, and its 16px blur still produces a soft edge.
+A black shadow is just grey dirt under the card: it adds darkness but no colour, so on a pale sea-green-tinted page it looks slightly cold and out of place. A shadow made from the brand's own dark green blends into the page and makes the whole screen feel like one family of colours, even though the difference is subtle at these low opacities.
 
-These are custom values chosen for the bootcamp requirement of three brand-derived shadows. Material 3 is the starting guide, not a claim that these are its official elevation values. Its documentation distinguishes shadow elevation from tonal elevation.
+## Why primary/10 and not the brand colour itself
 
-Source: https://developer.android.com/develop/ui/compose/designsystems/material3#elevation
+A shadow has to be darker than the surface it sits on. `#32B1AA` at 12% opacity would look like a light green glow rather than a shadow. Primary/10 is the same hue, just much darker, so it reads as a shadow while still carrying the brand.
 
-## Verified
+## Choosing the three
 
-- Saved styles: tee's wardrobe/shadow/soft, medium and hard.
-- Each was reopened and its actual stored geometry, colour and opacity checked.
-- Comparison frame: Shadow styles — review, node 60:17.
-- Three shadowed cards are arranged horizontally with 96px gaps and 64px outer padding. Surface role is used for the review background and cards. No shadow clipping observed.
+- **Soft** separates a card from the page without drawing attention.
+- **Medium** lifts things that sit above the page temporarily.
+- **Hard** is the strongest. Using it on every card would make everything shout, so it's reserved for dialogs. The name is relative: its 16px blur still gives a soft edge.
 
-## Concrete risks and alternatives
+These are my own values. Material 3 has elevation levels, but no brand-coloured shadows to copy.
 
-- Medium severity, future brand changes: direct RGBA shadow colours will stay on the previous colour until the effect styles are updated. The attempt to bind primary/10 reset opacity to 100%, so the intended values were restored and the limitation was documented in each style description. Future conversion should derive shadow RGB from primary/10 with the intended per-style alpha and verify the regenerated result; do not claim an existing live Figma binding.
-- Medium severity, boundary visibility: a faint shadow can disappear on an unsuitable background. Use a checked border or focus outline for controls, rather than relying on a shadow to communicate a required boundary or focus.
-- Low severity, visual clutter: using Hard on every card would give ordinary content too much emphasis. Prefer Soft or no shadow for resting surfaces.
+## Known problems
 
-## Status of Evidence & Genuine Open Issues
+- **The colour is fixed, not linked.** Figma reset opacity to 100% when I linked the shadow to the `primary/10` variable, so each shadow stores its colour directly. If the brand colour changes, the shadows won't follow. (Defect 1 in `defects.md`.)
+- **Shadows aren't borders.** A 12% shadow can disappear on some backgrounds, so anything that needs a visible edge (inputs, the order selector) gets a Field outline border as well.
 
-- **Typography Spacing Evidence**: Completed. [`evidence/03-spacing-default.png`](../evidence/03-spacing-default.png) and [`evidence/04-spacing-chosen.png`](../evidence/04-spacing-chosen.png) are saved in the repository, and the spacing comparison paragraph is documented in [`docs/type-scale.md`](type-scale.md).
-- **Token Exports**: Completed. Both [`evidence/05-tokens-incomplete.json`](../evidence/05-tokens-incomplete.json) and [`evidence/06-tokens-complete.json`](../evidence/06-tokens-complete.json) are saved and verified.
-- **Shadow Frame PNG Export**: Genuinely open. The visual comparison was reviewed in the live Figma file (node 60:17) and its properties documented in [`evidence/support-shadows-ui-audit.json`](../evidence/support-shadows-ui-audit.json); however, a separate standalone PNG export of the comparison frame was not saved into `evidence/`. Do not claim a native comparison PNG exists.
-- **Shadow Color Coupling**: Genuinely open limitation. Because Figma effect opacity bindings reset to 100% when referencing color variables directly, shadow RGBA values (`rgba(13, 44, 43, 0.12)`, etc.) are hardcoded in the token definitions. Changing the brand color will not automatically regenerate the shadow tones; they must be re-derived manually from `primary/10`.
-- **Boundary Contrast**: Genuinely open limitation. Faint shadows (12%–16% opacity) are subtle and cannot substitute for accessible borders or high-contrast focus indicators on resting or active controls.
+## Checked
+
+The three effect styles (tee's wardrobe/shadow/soft, medium, hard) were re-opened in Figma on 27 October and every value matched the table above. The Figma record is in [`support-shadows-ui-audit.json`](../evidence/support-shadows-ui-audit.json).

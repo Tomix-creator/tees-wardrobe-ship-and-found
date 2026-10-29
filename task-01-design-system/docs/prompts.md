@@ -700,3 +700,121 @@ Show me the exact change for review. Do not stage, commit or push.
   - Screen code (`index.html`) and all evidence files (`evidence/07`–`10`) remained untouched.
 - **Commit Status**:
   - Nothing staged, committed, or pushed.
+
+---
+
+## Prompt 20: Import Earlier Task One Design Materials & Gap Analysis Against Assessment Deliverables
+**Date**: 2026-10-28T09:16:22+01:00
+
+```text
+Please bring the earlier Task One design materials into the current
+project for review.
+
+The earlier materials are in:
+
+/Users/mac/Documents/Codex/2026-10-24/you-are-a-senior-engineer-and/outputs/task-01-design-system
+
+The current project is:
+
+/Users/mac/Desktop/tee's wardrobe /task-01-design-system
+
+1. Inspect both folders first. List the relevant documents and evidence
+   that exist in the earlier folder but are missing from the project.
+
+2. Copy the missing Task One design documents and evidence files into the
+   matching docs/ and evidence/ folders. Preserve their original contents
+   and filenames. Do not overwrite any existing project file.
+
+3. Both folders have an evidence/06-tokens-complete.json file. Compare
+   them and report whether they match; do not replace either one.
+
+4. Compare the resulting project against the Task One deliverables in
+   the assessment PDF. Clearly label items as present, missing, or needing
+   verification. Do not claim that an item is correct just because a file
+   exists.
+
+5. Record this prompt and the outcome in docs/prompts.md. Show the file
+   list and any differences for our review. Do not stage, commit, or push.
+```
+
+### Result & Outcome
+- **Inspection of Folders**:
+  - Earlier folder: `/Users/mac/Documents/Codex/2026-10-24/you-are-a-senior-engineer-and/outputs/task-01-design-system`
+  - Current project: `/Users/mac/Desktop/tee's wardrobe /task-01-design-system`
+  - Missing from current project `docs/`: `colour-roles.md`, `divergences.md`, `export-review.md`, `shadows.md`, `type-scale.md`.
+  - Missing from current project `evidence/`: `01-palette-before-pin.png`, `02-palette-after-pin.png`, `02b-palette-after-primary-end-secondary.png`, `02c-palette-after-secondary-end-tertiary.png`, `02d-palette-after-neutral.png`, `02e-palette-after-neutral-variant.png`, `03-spacing-default.png`, `04-spacing-chosen.png`, `05-tokens-incomplete.json`, and 8 supporting files (`support-body-styles-minus4.png`, `support-button-background-role.png`, `support-button-text-role.png`, `support-colour-role-aliases.png`, `support-export-candidate.tokens.json`, `support-shadows-ui-audit.json`, `support-status-body-style.png`, `support-typography-ui-audit.json`).
+  - Earlier folder root also had `README.md` (Codex review checklist pack index) and `evidence-manifest.json`.
+- **Files Copied**:
+  - Copied 5 design documentation files to `docs/` without overwriting existing files.
+  - Copied 17 evidence/supporting files to `evidence/` without overwriting existing files.
+  - Skipped `evidence/06-tokens-complete.json` because it already existed in destination.
+- **Comparison of `evidence/06-tokens-complete.json`**:
+  - Exact binary match confirmed (`b1 == b2` is True).
+  - Both files have identical SHA-256 hash: `efbab56ac79fb061992bb301d3b5747156bf51b8f7ca2faa6cc4ede86c9cbda4` (80,472 bytes). Neither file was replaced.
+- **Audit Against Assessment PDF Task One Deliverables**:
+  - Sourced primary requirements directly from `Ship-and-Found-Five-Tasks.pdf`, pages 5–9.
+  - **Present & Verified Match**: `06-tokens-complete.json`.
+  - **Present, Needing Verification**: `docs/business-brief.md`, `docs/type-scale.md`, `docs/colour-roles.md`, `docs/shadows.md`, `docs/divergences.md`, `docs/prompts.md`, `evidence/01-palette-before-pin.png`, `evidence/02-palette-after-pin.png`, `evidence/03-spacing-default.png`, `evidence/04-spacing-chosen.png`, `evidence/05-tokens-incomplete.json`, `evidence/07-raw-value-search.txt`, `evidence/08-agent-typography-answer.txt`, `evidence/09-screen-without-system.png`, `evidence/10-screen-with-system.png`.
+  - **Missing Deliverables**: `README.md` (project/run overview in root), `docs/defects.md`, `docs/interview-answers.md` (12 technical questions), `evidence/11-broken-referencing.png` (unmerged branch regression capture), `evidence/12-git-log-branch-unmerged.txt` (git log proving deletion without merge), and optional `evidence/13-walkthrough.mp4`.
+- **Commit Status**:
+  - No files staged, committed, or pushed.
+
+---
+
+## Prompt 21: Task One README, Substantiated Defects Documentation & Deliverables Checklist
+**Date**: 2026-10-28T09:38:47+01:00
+
+```text
+We have a deadline tomorrow, so work quickly but do not invent evidence,
+claim unimplemented features work, or mark a requirement complete merely
+because a file exists.
+
+First read the Task One requirements in the assessment PDF and inspect
+the current project and the recently copied design materials.
+
+Create the following for review:
+
+1. task-01-design-system/README.md: explain what was built, how to view
+   the demonstration, what decisions were made, what is unfinished, and
+   where the evidence and known defects are. Clearly say the screen is
+   a demonstration and does not save real orders.
+
+2. task-01-design-system/docs/defects.md: document only issues you can
+   substantiate from the files or actual checks. Include the clipped
+   right edge in the original before picture and explain its impact.
+   Mark anything uncertain as unverified.
+
+3. A short Task One checklist showing each required deliverable as
+   verified, present but unverified, or missing. Cite the actual file
+   for each present item.
+
+Do not create or fabricate the branch experiment, interview answers,
+screenshots, test results, or completion claims. Tell me the single
+highest-priority next action after these files are prepared.
+
+Record this prompt and your outcome in docs/prompts.md. Do not stage,
+commit or push; show me the changes for review.
+```
+
+### Result & Outcome
+- **Created `task-01-design-system/README.md`**:
+  - Detailed what was built (token pipeline, verification suite, mobile-first demonstration screen).
+  - Explicitly stated that the screen is an order-tracking demonstration prototype and does not save real orders, process payments, or provide a backend.
+  - Included step-by-step instructions on running the local HTTP server (`python3 -m http.server 8085`) and inspecting the screen at a 412px mobile viewport.
+  - Summarized key decisions: brand anchoring (`#32B1AA` as `primary/40`), strict separation of clothing and delivery fees, balance calculation formula, typography choices, tinted shadows, and role-based CSS architecture.
+  - Documented unfinished work: Step 8 deliberate regression branch experiment, viva interview defence answers (`docs/interview-answers.md`), dark mode mappings, and optional walkthrough.
+  - Provided the complete Task One deliverables status checklist with citations.
+- **Created `task-01-design-system/docs/defects.md`**:
+  - Documented substantiated visual, token pipeline, and architectural issues based strictly on empirical evidence:
+    * Clipped right edge in `evidence/09-screen-without-system.png` due to lack of responsive box-sizing/padding in unstyled state, its resolution in styled screen, and rationale for preserving the original image.
+    * Trailing whitespace in 9 alias references in `evidence/06-tokens-complete.json` and its converter mitigation.
+    * Omission of variable collections in default export `evidence/05-tokens-incomplete.json`.
+    * Unimplemented dark mode role mappings.
+    * In-memory prototype nature (no persistent order backend).
+    * Explicitly marked uncertain stakeholder claims (e.g. historical payment dispute, customer device assumptions) as **unverified**.
+- **Task One Deliverables Checklist**:
+  - Compiled and embedded in `README.md` and review summary, classifying each required item as Verified, Present but unverified, or Missing, citing exact files.
+- **Identified Highest-Priority Next Action**:
+  - Drafting `docs/interview-answers.md` (the 12 viva interview questions, $\le 200$ words each), which constitutes 15 marks for Viva and supports the 35% reasoning evaluation.
+- **Commit Status**:
+  - No files staged, committed, or pushed.

@@ -1,72 +1,78 @@
-# Tee’s Wardrobe — colour roles and checked pairs
+# Colour system and roles
 
-The current light-surface role aliases were verified in Figma. These are the seven original roles; two additional roles are recorded below. Dark-mode mapping remains open.
+## Where the brand colour came from
 
-```text
-Role         Points to         Value
-Primary      primary/40        #32B1AA
-On primary   neutral/10        #191C1C
-Surface      neutral/98        #F8FAF8
-On surface   neutral/10        #191C1C
-Error        status/error      #BA1A1A
-Warning      status/warning    #7A5900
-Success      status/success    #17643B
-```
+Tee told me her brand colour is sea green. My first guess was the standard web "seagreen", `#2E8B57`, but that was my guess, not hers. She then sent a sea-green swatch, and I sampled it in Figma as **`#32B1AA`**. That is the brand colour everywhere in this system.
 
-A role names a job. A primitive names a stored colour. The roles point to primitives so interface colours can be changed from a shared source.
+## How the palette was built
 
-## Checked text pairs
+1. **Generated in Figma.** I entered `#32B1AA` into the **Material Theme Builder** plugin. It produced five tonal families (primary, secondary, tertiary, neutral, neutral variant) with 18 tones each.
+2. **Before pinning** ([`01`](../evidence/01-palette-before-pin.png)): the plugin put `#006A65` at primary 40, a darker, duller teal. Tee's colour was absorbed and didn't appear anywhere in the primary column.
+3. **After pinning** ([`02`](../evidence/02-palette-after-pin.png), plus `02b`–`02e` for the other families): I put `#32B1AA` exactly at primary 40 and rebuilt the other primary tones around it. Tones 0–35 blend from black towards sea green; tones 50–100 blend from sea green towards white. The primary column is now visibly brighter and recognisably Tee's colour instead of a muted dark teal.
 
-| Pair | Contrast ratio | Ordinary-text minimum of 4.5:1 |
-|---|---:|---|
-| Primary / On primary | 6.5389:1 | Pass |
-| Surface / On surface | 16.3543:1 | Pass |
-| Surface / Error | 6.1594:1 | Pass |
-| Surface / Warning | 6.1481:1 | Pass |
-| Surface / Success | 6.8507:1 | Pass |
+The other four families were kept as the plugin generated them. Evidence `01` only shows the primary column, so I can't prove from saved images alone that the other families stayed identical.
 
-The ratios use the WCAG sRGB relative-luminance calculation. They establish only these foreground/background pairs, not accessibility of a whole screen. Use text labels and other cues with functional colours; colour alone should not carry the message.
+The rebuilt primary tones are a straight-line blend, not Material's perceptual tones. So "primary 20" in my file is not the colour Material would call 20. See `divergences.md` and `defects.md`.
 
-White on the exact brand colour is 2.6234:1 and is not approved for ordinary text or large text. The current brand button uses dark On primary text. Control boundaries and keyboard focus need separate checks in the implemented interface.
+## Why 18 tones
 
-Source: https://www.w3.org/TR/WCAG22/#contrast-minimum
+The plugin produced 18 tones per family: the 13 standard Material tones (0, 10, 20, 30, 40, 50, 60, 70, 80, 90, 95, 98, 99, 100) plus four in-between tones (5, 15, 25, 35). Evidence `01`, taken in Figma on 26 October, shows all 18 before anything else was changed.
 
-## Palette origin and counts
+That's enough for light and dark from one source because each family runs from near-black to near-white:
 
-The owner supplied sea green; the Figma source swatch was confirmed as #32B1AA at 100% opacity. The retained palette has five colour families, each with 18 positions, plus brand/source and three functional primitives: 94 primitives in total. Nine aliases now make 103 variable records across two collections.
+- **Light mode** uses the light end for backgrounds and the dark end for text: surface neutral/98 with text neutral/10 (16.35:1).
+- **Dark mode** would flip it: surface neutral/10 with text neutral/98, also 16.35:1.
+- The in-between tones give finer steps at the dark end, which is where dark-mode surfaces and strong outlines get chosen.
 
-The primary palette was rebuilt around the exact brand at position 40; the other four families were retained from the checked export. The numbered primary positions are custom positions and are not standard Material tone lightness values. See the original palette review and builder retained alongside this submission pack.
+The screen currently uses one in-between tone, primary/15, for the keyboard focus outline. Unused tones cost nothing on screen, because the interface only ever references roles, never tones directly.
 
-### Comparison of Palette Before and After Pinning (Evidence 01 vs 02)
+## Functional colours
 
-In [`evidence/01-palette-before-pin.png`](../evidence/01-palette-before-pin.png), the initial Figma "primitive brand" collection displays the unpinned Material Theme Builder baseline, where `primary/40` was generated as `#006A65`, darkening and absorbing the owner's supplied sea-green swatch (`#32B1AA`). In [`evidence/02-palette-after-pin.png`](../evidence/02-palette-after-pin.png) (supported across the other families by captures `02b` through `02e`), the palette reflects the custom rebuilding method: the exact brand `#32B1AA` is pinned at `primary/40`, and 16 intermediate primary shades were custom-blended in sRGB (mixing black to brand for steps 0–40, and brand to white for steps 40–100). The visible difference is that the primary column is noticeably brighter and centered around the authentic sea-green brand hue rather than a muted dark teal; however, as documented, these step numbers are custom position labels rather than standard Material HCT perceptual lightness values.
+| Name | Value | Contrast on surface `#F8FAF8` |
+|---|---|---:|
+| Error | `#BA1A1A` | 6.16:1 |
+| Warning | `#7A5900` | 6.15:1 |
+| Success | `#17643B` | 6.85:1 |
 
-*Verification limitation on other families*: While the rebuild specification intended to keep the other four tonal families (Secondary, Tertiary, Neutral, Neutral Variant) unchanged from the initial generation, `evidence/01-palette-before-pin.png` captures only the primary column, and no baseline pre-pin token JSON is saved in the repository. Consequently, the claim that all 72 non-primary positions remained strictly identical cannot be verified solely from the saved evidence and is recorded as **unverified**.
+## Roles
 
-## Deliverables Status & Genuine Open Work
+A role is a job, not a colour. The interface only uses roles; roles point at palette tones.
 
-- **Complete Token Export**: Completed. The 103-variable export (94 primitives and 9 aliases across 2 collections) is saved as [`evidence/06-tokens-complete.json`](../evidence/06-tokens-complete.json), while [`evidence/05-tokens-incomplete.json`](../evidence/05-tokens-incomplete.json) documents the baseline omission of variable collections.
-- **Implemented Roles on Prototype**: Completed. The added roles (`field-outline` and `focus-indicator`) are compiled to `css/tokens.css` and actively applied in `index.html`. In [`evidence/07-raw-value-search.txt`](../evidence/07-raw-value-search.txt), automated searches over `index.html` confirmed zero raw colour values (hex, RGB/RGBA, HSL/HSLA, named CSS colours) and zero direct primitive token references; note that the search tested colours and token referencing, not pixel dimensions or font-family declarations.
-- **Justification of 18 Steps**: Genuinely open. The 18 positions were retained from the source palette for symmetry and migration safety, but a formal justification proving why all 18 positions are strictly necessary (versus a leaner 10-step or 12-step scale) remains an open design justification.
-- **Dark Mode Mapping**: Genuinely open. Semantic role pairings and contrast checks have only been verified for light surfaces; no dark mode tokens (`@media (prefers-color-scheme: dark)`) or dark role overrides have been implemented in the codebase.
-- **Physical Phone Contrast Verification**: Genuinely open. Mathematical WCAG 2.2 calculations pass on paper, but readability under varying Nigerian ambient sunlight and low-cost smartphone panels remains unverified.
+| Role | Points to | Value | Job |
+|---|---|---|---|
+| Primary | primary/40 | `#32B1AA` | Brand accents, the title badge |
+| On primary | neutral/10 | `#191C1C` | Text on top of Primary |
+| Surface | neutral/98 | `#F8FAF8` | Page and card background |
+| On surface | neutral/10 | `#191C1C` | Normal text |
+| Error | status/error | `#BA1A1A` | Error messages |
+| Warning | status/warning | `#7A5900` | Warnings, e.g. "not yet quoted" |
+| Success | status/success | `#17643B` | Confirmed payments |
+| Field outline | neutral/40 | `#5C5F5E` | Borders on cards, tables and the order selector |
+| Focus indicator | primary/15 | `#134240` | Outline when a control has keyboard focus |
 
-## Order screen: added roles and prototype implementation
+## Contrast checks
 
-The demonstration screen (`index.html`) requires visible structural boundaries and keyboard focus indication. Note that the prototype does **not** contain an editable price input field (all order totals, balances, and payments are displayed as read-only demonstration text); the only interactive form control is the order selection `<select id="orderSelector">` element.
+Every pair the screen actually uses, calculated with the WCAG formula. Text needs 4.5:1; borders and focus outlines need 3:1.
 
-| Role | Primitive | Colour | Prototype use in `index.html` | Checked pair | Ratio |
-|---|---|---|---|---|---:|
-| Field outline | neutral/40 | #5C5F5E | 1px border on `#orderSelector`, card borders, table dividers, and subtext labels | Surface #F8FAF8 | 6.15:1 |
-| Focus indicator | primary/15 | #134240 | 2px `:focus-visible` outline around the `#orderSelector` dropdown control | Surface #F8FAF8 | 10.64:1 |
-| Focus indicator | primary/15 | #134240 | Outline contrast if placed adjacent to Primary fill | Primary #32B1AA | 4.26:1 |
+| Foreground on background | Ratio | Needs | Result |
+|---|---:|---:|---|
+| On primary on Primary | 6.54:1 | 4.5 | Pass |
+| On surface on Surface | 16.35:1 | 4.5 | Pass |
+| Error on Surface | 6.16:1 | 4.5 | Pass |
+| Warning on Surface | 6.15:1 | 4.5 | Pass |
+| Success on Surface | 6.85:1 | 4.5 | Pass |
+| Field outline on Surface | 6.15:1 | 3 | Pass |
+| Focus indicator on Surface | 10.64:1 | 3 | Pass |
+| Focus indicator next to Primary | 4.26:1 | 3 | Pass |
+| **White on Primary** | **2.62:1** | 4.5 | **Fail: not used** |
 
-In the implemented screen, `--color-role-field-outline` establishes clear card containers, divider lines, and dropdown borders at 6.15:1 contrast against Surface. When navigating via the <kbd>Tab</kbd> key, `:focus-visible` on `#orderSelector` triggers a 2px outline with 2px offset in `--color-role-focus-indicator`, providing a sharp 10.64:1 indicator against Surface. These roles are fully wired in CSS and tested, resolving earlier draft notes that marked their screen usage unchecked.
+White text on the sea green fails even the large-text minimum (3:1), so every piece of text on Primary uses dark On primary instead. That's why the title badge has dark text.
 
-## What the 18 positions provide
+These numbers only prove these specific pairs. They don't make the whole screen accessible, and colour is never the only signal: errors, warnings and payments always have words as well.
 
-Each of the five retained families has 18 numbered positions from 0 to 100. This gives several dark and light candidates from one palette: for example, the current light surface uses neutral/98 and its text uses neutral/10; primary/40 is the brand colour. Candidate dark surface neutral/10 with neutral/98 text also gives 16.35:1, and brand primary/40 with neutral/10 text gives 6.54:1. These two calculations show useful endpoints, not that all dark roles or states have been designed.
+Source: [WCAG 2.2, contrast minimum](https://www.w3.org/TR/WCAG22/#contrast-minimum)
 
-Eighteen positions were retained from the source palette to give room to select backgrounds, text and interactive states; the count is not proof that every necessary pair works or that every position is needed. Our custom primary numbers are palette labels, not Material HCT lightness measurements. The task asks us to justify the number for light and dark; a complete dark mapping, including functional colours and control states, still needs selection and testing before claiming dark-mode support. The PDF does not explicitly require building a complete dark screen.
+## Not done yet
 
-Correction: an earlier proposal incorrectly identified old-palette #00504C as the current primary/30. The current brand-anchored primary/30 is #268580; its contrast against #32B1AA is about 1.69:1. Focus indicator now aliases current primary/15 #134240, verified in Figma.
+- **Dark mode roles** aren't defined or checked. The tones support it; the mapping doesn't exist.
+- **Real-phone check.** The ratios are calculated, not tested on a cheap phone in sunlight.

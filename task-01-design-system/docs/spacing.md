@@ -1,35 +1,24 @@
-# Tee's Wardrobe — Spacing Tokens Specification
+# Spacing
 
-This document records the addition of the spacing token scale to the Tee's Wardrobe design system.
+My Figma export had colours, type and shadows, but no spacing. So I defined a spacing scale by hand in [`css/spacing.css`](../css/spacing.css). It isn't one of the required Task One deliverables; I added it because Task Two needs shared spacing for buttons and layout.
 
-The Task One Figma token export (`evidence/06-tokens-complete.json`) contained primitive and role colors, composite typography styles, and elevation shadows, but omitted spacing tokens. To provide a shared reference for layout spacing, margins, paddings, and gaps, this scale was defined in [`../css/spacing.css`](../css/spacing.css).
+| Token | rem | px (at 16px root) | Use for |
+|---|---|---:|---|
+| `--space-3xs` | 0.125 | 2 | Hairline dividers, border offsets |
+| `--space-2xs` | 0.25 | 4 | Badge padding, tight icon gaps |
+| `--space-xs` | 0.5 | 8 | Gaps between controls |
+| `--space-sm` | 0.75 | 12 | Padding inside form fields |
+| `--space-md` | 1 | 16 | Standard card padding, paragraph gaps |
+| `--space-lg` | 1.5 | 24 | Phone screen side margins |
+| `--space-xl` | 2 | 32 | Section headings |
+| `--space-2xl` | 3 | 48 | Separating major blocks |
 
----
+## Why these values
 
-## 1. Token Scale and Values
+- **Steps of 4px.** Every token except `3xs` is a multiple of 4, so things line up easily on a 412px phone screen. `3xs` (2px) is a deliberate exception for hairlines, where 4px is too thick.
+- **rem, not px.** If someone increases their phone's font size, spacing grows with the text instead of crowding it. That helps, but on its own it doesn't prove the layout survives zoom; that needs testing.
+- **Names instead of numbers.** Components pick `sm` or `md` rather than inventing 13px or 7px.
 
-| Token Name | Rem Value | Pixel Equivalent (at 16px root) | Intended Semantic Usage |
-|---|---|---|---|
-| `--space-3xs` | `0.125rem` | 2px | Hairline dividers, border offsets, micro gaps |
-| `--space-2xs` | `0.25rem` | 4px | Tag/badge padding, tight icon margins |
-| `--space-xs` | `0.5rem` | 8px | Control element gaps, compact list spacing |
-| `--space-sm` | `0.75rem` | 12px | Form field inner padding, compact card separation |
-| `--space-md` | `1rem` | 16px | Base grid unit, standard card padding, paragraph margins |
-| `--space-lg` | `1.5rem` | 24px | Mobile screen horizontal gutter, major card padding |
-| `--space-xl` | `2rem` | 32px | Section headers, hero container vertical padding |
-| `--space-2xl` | `3rem` | 48px | Primary layout block separation, footer top spacing |
+## Not used yet
 
-**Note on `--space-3xs`:** At 0.125rem, this token sits outside the 4px harmonic grid — it resolves to 2px at a 16px root. It was included as a hairline exception for dividers and border offsets where a full 4px step is too coarse, not as part of the regular grid rhythm.
-
----
-
-## 2. Why These Values Were Chosen
-
-1. **4px/8px Harmonic Grid**:
-   - Seven of the eight tokens are multiples of 4px, which aligns with common layout grid conventions used in mobile design (target viewports: 412px Android, 390px iOS). This makes it straightforward to keep elements visually aligned, though consistent spacing in production depends on components actually using the tokens rather than hardcoded values.
-
-2. **`rem` Units and Font Scaling**:
-   - Expressing spacing in `rem` units means padding and gap values are relative to the root font size. If the root font size changes — for example, because the user increases their browser's default font size — these spacing values will scale with it. This can support text resizing scenarios, but `rem` spacing alone does not prove WCAG 2.2 SC 1.4.4 (Resize Text) compliance; that criterion requires testing actual text and layout behaviour across zoom and font-size settings.
-
-3. **Named Token Vocabulary**:
-   - Defining eight named tokens from `3xs` to `2xl` gives components a shared vocabulary and reduces arbitrary one-off values (e.g. 7px, 13px) in component code. Whether spacing is truly consistent depends on whether components adopt the tokens.
+The Task One order screen doesn't load `spacing.css`; its spacing is still typed in by hand. See defect 3 in `defects.md`.
