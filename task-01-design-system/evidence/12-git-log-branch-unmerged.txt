@@ -1,0 +1,144 @@
+# Task One, Step 8: Unmerged Branch Evidence Log
+# Repository: Tee's Wardrobe (Ship & Found)
+# Target Branch: experiment/deliberate-token-regression
+# Base Branch: main
+# Status: Branch deletion completed and verified; pre-deletion graph and post-deletion state recorded.
+
+================================================================================
+1. EXPERIMENT COMMIT IDENTIFICATION & REPOSITORY GRAPH (PRE-DELETION)
+================================================================================
+
+$ git log -1 --format=fuller 48ed7647e3b7b073a98703a1015b0eb8381bbd35
+commit 48ed7647e3b7b073a98703a1015b0eb8381bbd35 (HEAD -> experiment/deliberate-token-regression)
+Author:     dunamis <okunowodunamis@gmail.com>
+AuthorDate: Thu Oct 29 09:41:38 2026 +0100
+Commit:     dunamis <okunowodunamis@gmail.com>
+CommitDate: Thu Oct 29 09:41:38 2026 +0100
+
+    Demonstrate broken design token reference
+
+$ git show --stat 48ed764
+commit 48ed7647e3b7b073a98703a1015b0eb8381bbd35 (HEAD -> experiment/deliberate-token-regression)
+Author: dunamis <okunowodunamis@gmail.com>
+Date:   Thu Oct 29 09:41:38 2026 +0100
+
+    Demonstrate broken design token reference
+
+ task-01-design-system/css/tokens.css               |  26 ++++++++++++---------
+ .../evidence/11-broken-referencing-explanation.txt |  17 ++++++++++++++
+ .../evidence/11-broken-referencing-fullwidth.png   | Bin 0 -> 154203 bytes
+ .../evidence/11-broken-referencing.png             | Bin 0 -> 148019 bytes
+ task-01-design-system/index.html                   |   8 +++----
+ 5 files changed, 36 insertions(+), 15 deletions(-)
+
+$ git log -n 5 --graph --oneline --all --decorate
+* 48ed764 (HEAD -> experiment/deliberate-token-regression) Demonstrate broken design token reference
+* cc604c5 (main) Add colour and typography evidence
+* 297519b Add business research and original before evidence
+* 5e82513 Update order screen and business brief
+* 9cfb008 (origin/main) Add order demo and design token converter
+
+================================================================================
+2. VERIFICATION OF NON-CONTAINMENT IN MAIN (BEFORE DELETION)
+================================================================================
+
+$ git branch --contains 48ed7647e3b7b073a98703a1015b0eb8381bbd35
+* experiment/deliberate-token-regression
+
+Note on branch listing:
+The command lists only 'experiment/deliberate-token-regression'. 'main' is NOT listed,
+confirming that no commit on 'main' contains or points to this commit.
+
+$ git merge-base --is-ancestor 48ed7647e3b7b073a98703a1015b0eb8381bbd35 main
+Exit status: 1
+
+Note on ancestry scope & limitations:
+The non-zero exit status (1) proves that commit 48ed764 is NOT an ancestor of main,
+meaning it cannot be reached by traversing backward along commit parent pointers
+from main's current tip (cc604c5).
+This proves topological non-incorporation of this specific commit into main's history
+at this point in time; it does not by itself prove branch deletion (recorded below)
+or rule out alternate mechanisms (such as cherry-picks with new hashes or manual file
+copying). Those possibilities are verified separately by git log inspection and git diff.
+
+================================================================================
+3. BRANCH DELETION & POST-DELETION VERIFICATION
+================================================================================
+
+--------------------------------------------------------------------------------
+A. Actual Branch Deletion Result (Transcribed)
+--------------------------------------------------------------------------------
+Command executed:
+$ git branch -D experiment/deliberate-token-regression
+
+Terminal output (transcribed directly from user execution):
+Deleted branch experiment/deliberate-token-regression (was 48ed764).
+
+--------------------------------------------------------------------------------
+B. Fresh Post-Deletion Git State & Verification
+--------------------------------------------------------------------------------
+
+1. Current active branch:
+$ git branch --show-current
+main
+(Exit status: 0)
+
+2. Remaining local branches:
+$ git branch -v
+* main cc604c5 [ahead 3] Add colour and typography evidence
+(Exit status: 0)
+
+3. Main branch commit history (tip intact at cc604c5):
+$ git log -n 5 --graph --oneline --decorate main
+* cc604c5 (HEAD -> main) Add colour and typography evidence
+* 297519b Add business research and original before evidence
+* 5e82513 Update order screen and business brief
+* 9cfb008 (origin/main) Add order demo and design token converter
+(Exit status: 0)
+
+4. Ancestry verification (is 48ed764 an ancestor of main?):
+$ git merge-base --is-ancestor 48ed7647e3b7b073a98703a1015b0eb8381bbd35 main
+(Exit status: 1)
+
+5. Branch containment verification:
+$ git branch --contains 48ed7647e3b7b073a98703a1015b0eb8381bbd35
+(No branches returned; output is empty)
+(Exit status: 0)
+
+================================================================================
+4. VERIFICATION SUMMARY & METHODOLOGICAL LIMITATIONS
+================================================================================
+
+Summary:
+- Pre-deletion logs (Sections 1 & 2) recorded that commit 48ed764 existed solely
+  on 'experiment/deliberate-token-regression' and was not an ancestor of 'main'.
+- Deletion was executed via 'git branch -D', removing the branch reference while
+  leaving 'main' unchanged at commit cc604c5.
+- Post-deletion verification confirms:
+  * 'experiment/deliberate-token-regression' no longer exists in local branches.
+  * 'main' remains at cc604c5, never incorporating commit 48ed764.
+  * 'git merge-base --is-ancestor 48ed764 main' yields exit status 1, confirming
+    commit 48ed764 was never merged as a parent or ancestor into main's commit graph.
+  * 'git branch --contains 48ed764' returns empty, confirming no remaining branch
+    references point to or descend from 48ed764.
+  * Clean baseline files (css/tokens.css and index.html) on main have zero diff
+    against HEAD.
+  * The three demonstration evidence files (11-broken-referencing.png,
+    11-broken-referencing-fullwidth.png, and 11-broken-referencing-explanation.txt)
+    are retained in task-01-design-system/evidence/ with exact bit-for-bit SHA-256
+    parity to their state in commit 48ed764.
+
+Methodological Limitations:
+1. Deletion Transcribing: The branch deletion was executed by the user directly
+   in their interactive terminal. The deletion command and output in Section 3.A
+   are transcribed from the actual terminal display reported by the user, not
+   captured directly by the tool runner.
+2. Dangling Commit Visibility: Commit 48ed764 continues to exist as an unreachable
+   (dangling) commit object in the local Git object store (.git/objects) and reflog
+   until pruned by 'git gc'. 'git branch --contains' returning empty confirms no named
+   branch reference points to it, but does not imply immediate database purge.
+3. Ancestry Check Scope vs. Alternate Changes: 'git merge-base --is-ancestor' proves
+   strictly that commit 48ed764 is absent from main's topological commit graph. It does
+   not, by itself, detect squash-merges, cherry-picks under a different hash, or manual
+   file copying. The absence of code regressions or broken colors on main is established
+   separately by clean 'git diff HEAD' outputs and SHA-256 file comparisons.

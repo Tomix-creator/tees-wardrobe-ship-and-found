@@ -1,0 +1,17 @@
+# Task One, Step 8: Deliberate Token-Reference Regression Explanation
+
+Branch: experiment/deliberate-token-regression
+Primary Evidence Image: task-01-design-system/evidence/11-broken-referencing.png (412 × 1547 px)
+Companion Full-Width Image: task-01-design-system/evidence/11-broken-referencing-fullwidth.png (432 × 1560 px)
+Original Brand Colour: #32B1AA (sRGB Sea Green, primary/40)
+Source Brand Colour Update: #7B2CBF (sRGB Royal Purple, primary/40)
+
+## Architectural Context of this Demonstration
+1. Prior to this experiment, task-01-design-system/index.html applied `--color-role-primary` across all brand-accented components (the header badge, the header underline, the table balance highlight, and the FAQ card borders).
+2. To demonstrate the contrast between a broken hardcoded role and a functioning palette-linked role on a single screen without destroying the baseline design system, this experiment deliberately introduced a secondary role (`--color-role-brand-accent`) pointing to `var(--color-primitive-brand-primary-40)`. The header underline, financial balance highlight, and FAQ borders were pointed to `--color-role-brand-accent`, while the brand title badge remained bound to `--color-role-primary`, which was severed from the palette and hardcoded to raw `#32B1AA`.
+3. In `css/tokens.css`, both the brand-source primitive (`--color-primitive-brand-brand-source`) and the palette primitive (`--color-primitive-brand-primary-40`) were explicitly changed during the experiment from `#32b1aaff` to `#7b2cbfff`; changing the source alone did not automatically regenerate or recompute the palette tones.
+
+## Three Required Sentences (Refined for Architectural Precision)
+1. For this experiment, we broke the token architecture by hardcoding the primary colour role (`--color-role-primary`) to a raw hex value (`#32B1AA`) rather than referencing its semantic palette alias (`var(--color-primitive-brand-primary-40)`), while simultaneously linking a demonstration accent role (`--color-role-brand-accent`) to the primitive palette.
+2. When both the brand-source value and the primary/40 palette value were updated in the stylesheet from sea green to royal purple (`#7B2CBF`), the correctly linked structural accents dynamically inherited the new brand shade, while the broken title badge remained marooned in the stale sea green.
+3. This discrepancy demonstrates that token references ensure linked values update synchronously and consistently across an interface; however, while references automate change propagation, they do not by themselves guarantee that every semantic mapping or contrast pairing is architecturally correct.
