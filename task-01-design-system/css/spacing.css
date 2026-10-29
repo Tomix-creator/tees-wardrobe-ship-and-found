@@ -1,0 +1,19 @@
+/* ==========================================================================
+   Tee’s Wardrobe Design System — Spacing Tokens
+   Shared token source for layout spacing, margins, paddings, and gaps.
+   Harmonic 4px/8px grid scale expressed in rem units for accessibility.
+   ========================================================================== */
+
+:root {
+  /* ------------------------------------------------------------------------
+     Spacing Scale
+     ------------------------------------------------------------------------ */
+  --space-3xs: 0.125rem; /* 2px  - Hairline dividers, micro gaps */
+  --space-2xs: 0.25rem;  /* 4px  - Compact badge/tag padding, tight inline items */
+  --space-xs:  0.5rem;   /* 8px  - Icon gaps, compact control spacing */
+  --space-sm:  0.75rem;  /* 12px - Form field inner padding, list item gaps */
+  --space-md:  1rem;     /* 16px - Base unit, standard card padding, component margins */
+  --space-lg:  1.5rem;   /* 24px - Mobile screen gutters, card separation */
+  --space-xl:  2rem;     /* 32px - Section headings, container spacing */
+  --space-2xl: 3rem;     /* 48px - Major layout block separation */
+}
