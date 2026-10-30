@@ -1,0 +1,25 @@
+
+> tees-wardrobe-app@0.1.0 dev
+> next dev -p 3000
+
+[1G[0K   [1m[38;2;173;127;168m▲ Next.js 15.3.9[39m[22m
+   - Local:        http://localhost:3000
+   - Network:      http://192.168.100.60:3000
+   - Environments: .env
+
+ [32m[1m✓[22m[39m Starting...
+ [32m[1m✓[22m[39m Ready in 3s
+ [37m[1m○[22m[39m Compiling /orders/new ...
+ [32m[1m✓[22m[39m Compiled /orders/new in 1458ms (718 modules)
+ GET /orders/new [32m200[39m in 2076ms
+ [37m[1m○[22m[39m Compiling /_not-found ...
+ [32m[1m✓[22m[39m Compiled /_not-found in 846ms (722 modules)
+ GET /.well-known/appspecific/com.chrome.devtools.json [33m404[39m in 1073ms
+ GET /sourceMap/assets/css/gdocs-overrides.css.map [33m404[39m in 184ms
+ GET /.well-known/appspecific/com.chrome.devtools.json [33m404[39m in 190ms
+ GET /sourceMap/assets/css/quillbot-fonts.css.map [33m404[39m in 183ms
+ [32m[1m✓[22m[39m Compiled /api/orders in 480ms (758 modules)
+[orders] write failed: PrismaClientKnownRequestError
+ POST /api/orders [31m500[39m in 883ms
+^C[?25h
+[1G[0K⠙[1G[0K
