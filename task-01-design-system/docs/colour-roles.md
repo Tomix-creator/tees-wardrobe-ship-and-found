@@ -16,7 +16,7 @@ The rebuilt primary tones are a straight-line blend, not Material's perceptual t
 
 ## Why 18 tones
 
-The plugin produced 18 tones per family: the 13 standard Material tones (0, 10, 20, 30, 40, 50, 60, 70, 80, 90, 95, 98, 99, 100) plus four in-between tones (5, 15, 25, 35). Evidence `01`, taken in Figma on 26 October, shows all 18 before anything else was changed.
+The plugin produced 18 tones per family: the 14 standard Material tones (0, 10, 20, 30, 40, 50, 60, 70, 80, 90, 95, 98, 99, 100) plus four in-between tones (5, 15, 25, 35). Evidence `01`, taken in Figma on 26 October, shows all 18 before anything else was changed.
 
 That's enough for light and dark from one source because each family runs from near-black to near-white:
 
