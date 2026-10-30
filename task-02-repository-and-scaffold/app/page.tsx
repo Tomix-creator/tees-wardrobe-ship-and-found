@@ -1,4 +1,5 @@
 import React from 'react';
+import Link from 'next/link';
 
 export default function HomePage() {
   return (
@@ -135,6 +136,13 @@ export default function HomePage() {
             </span>
           </div>
         </section>
+
+        {/* Action Row */}
+        <div style={{ marginBottom: 'var(--space-lg)' }}>
+          <Link href="/orders/new" className="btn btn-primary" style={{ display: 'inline-block' }}>
+            New order
+          </Link>
+        </div>
 
         {/* Planned Product Modules (Minimal Scaffold Stubs) */}
         <section

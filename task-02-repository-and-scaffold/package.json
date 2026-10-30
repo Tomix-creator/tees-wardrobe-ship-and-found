@@ -7,20 +7,25 @@
     "prebuild": "node scripts/check-tokens.js",
     "build": "next build",
     "start": "next start -p 3000",
+    "postinstall": "prisma generate",
     "sync:tokens": "node scripts/sync-tokens.js",
     "check:tokens": "node scripts/check-tokens.js"
   },
   "dependencies": {
-    "@prisma/client": "^7.10.1",
+    "@prisma/adapter-pg": "7.10.1",
+    "@prisma/client": "7.10.1",
     "next": "^15.3.9",
-    "prisma": "^8.0.0-rc.28",
+    "pg": "^8.13.0",
     "react": "^19.0.0",
     "react-dom": "^19.0.0"
   },
   "devDependencies": {
     "@types/node": "^20.14.0",
+    "@types/pg": "^8.11.0",
     "@types/react": "^19.0.0",
     "@types/react-dom": "^19.0.0",
+    "dotenv": "^16.4.0",
+    "prisma": "7.10.1",
     "typescript": "^5.4.5"
   }
 }
