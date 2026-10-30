@@ -1,0 +1,81 @@
+@import '../styles/tokens.css';
+@import '../styles/spacing.css';
+
+/* ==========================================================================
+   Tee’s Wardrobe — Global Styles
+   Consumes design tokens exclusively. No hardcoded colors or spacing.
+   ========================================================================== */
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  margin: 0;
+  padding: 0;
+  background-color: var(--color-role-surface);
+  color: var(--color-role-on-surface);
+  font-family: var(--type-body-large-font-family);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+/* Base button sizing in rem units per information design specification */
+button,
+.btn {
+  font-family: var(--type-label-large-font-family);
+  font-size: var(--type-label-large-font-size);
+  font-weight: var(--type-label-large-font-weight);
+  line-height: var(--type-label-large-line-height);
+  letter-spacing: var(--type-label-large-letter-spacing);
+  padding: var(--space-xs) var(--space-lg);
+  border-radius: var(--space-xs);
+  cursor: pointer;
+  border: 1px solid transparent;
+  transition: background-color 0.15s ease, border-color 0.15s ease, box-shadow 0.15s ease;
+}
+
+button:focus-visible,
+.btn:focus-visible,
+a:focus-visible {
+  outline: 2px solid var(--color-role-focus-indicator);
+  outline-offset: 2px;
+}
+
+.btn-primary {
+  background-color: var(--color-role-primary);
+  color: var(--color-role-on-primary);
+  border-color: var(--color-role-primary);
+  box-shadow: var(--shadow-soft);
+}
+
+.btn-primary:hover {
+  box-shadow: var(--shadow-medium);
+}
+
+.btn-outline {
+  background-color: transparent;
+  color: var(--color-role-on-surface);
+  border-color: var(--color-role-field-outline);
+}
+
+.btn-outline:hover {
+  background-color: var(--color-role-surface);
+  border-color: var(--color-role-on-surface);
+}
+
+/* Responsive container */
+.container {
+  width: 100%;
+  max-width: 480px;
+  margin: 0 auto;
+  padding: 0 var(--space-md);
+}

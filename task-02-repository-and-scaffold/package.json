@@ -1,0 +1,26 @@
+{
+  "name": "tees-wardrobe-app",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "next dev -p 3000",
+    "prebuild": "node scripts/check-tokens.js",
+    "build": "next build",
+    "start": "next start -p 3000",
+    "sync:tokens": "node scripts/sync-tokens.js",
+    "check:tokens": "node scripts/check-tokens.js"
+  },
+  "dependencies": {
+    "@prisma/client": "^7.10.1",
+    "next": "^15.3.9",
+    "prisma": "^8.0.0-rc.28",
+    "react": "^19.0.0",
+    "react-dom": "^19.0.0"
+  },
+  "devDependencies": {
+    "@types/node": "^20.14.0",
+    "@types/react": "^19.0.0",
+    "@types/react-dom": "^19.0.0",
+    "typescript": "^5.4.5"
+  }
+}
