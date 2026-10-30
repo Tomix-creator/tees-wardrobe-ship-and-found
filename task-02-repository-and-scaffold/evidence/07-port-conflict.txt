@@ -1,0 +1,20 @@
+[1m[7m%[27m[1m[0m                                                                                                                           [0m[27m[24m[Jmac@macs-MacBook-Pro task-02-repository-and-scaffold % [K[?2004h[7mnpm run dev[27m[11D[27mn[27mp[27mm[27m [27mr[27mu[27mn[27m [27md[27me[27mv[?2004l
+
+> tees-wardrobe-app@0.1.0 dev
+> next dev -p 3000
+
+[1G[0K [31m[1m⨯[22m[39m Failed to start server
+Error: listen EADDRINUSE: address already in use :::3000
+    at <unknown> (Error: listen EADDRINUSE: address already in use :::3000)
+    at new Promise (<anonymous>) {
+  code: [32m'EADDRINUSE'[39m,
+  errno: [33m-48[39m,
+  syscall: [32m'listen'[39m,
+  address: [32m'::'[39m,
+  port: [33m3000[39m
+}
+[?25h
+[1G[0K⠙[1G[0K[1m[7m%[27m[1m[0m                                                                                                                           [0m[27m[24m[Jmac@macs-MacBook-Pro task-02-repository-and-scaffold % [K[?2004h[7mlsof -nP -iTCP:3000 -sTCP:LISTEN[27m[32D[27ml[27ms[27mo[27mf[27m [27m-[27mn[27mP[27m [27m-[27mi[27mT[27mC[27mP[27m:[27m3[27m0[27m0[27m0[27m [27m-[27ms[27mT[27mC[27mP[27m:[27mL[27mI[27mS[27mT[27mE[27mN[?2004l
+COMMAND   PID USER   FD   TYPE             DEVICE SIZE/OFF NODE NAME
+node    41552  mac   17u  IPv6 0x7824d2a89efc8fb9      0t0  TCP *:3000 (LISTEN)
+[1m[7m%[27m[1m[0m                                                                                                                           [0m[27m[24m[Jmac@macs-MacBook-Pro task-02-repository-and-scaffold % [K[?2004h[7mexit[27m[27me[27mx[27mi[27mt[?2004l

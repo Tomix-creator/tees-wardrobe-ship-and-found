@@ -1,0 +1,27 @@
+[1m[7m%[27m[1m[0m                                                                                                                           [0m[27m[24m[Jmac@macs-MacBook-Pro task-02-repository-and-scaffold % [K[?2004h[7mnpm run dev[27m[11D[27mn[27mp[27mm[27m [27mr[27mu[27mn[27m [27md[27me[27mv[?2004l
+[1G[0K⠙[1G[0K
+> tees-wardrobe-app@0.1.0 dev
+> next dev -p 3000
+
+[1G[0K⠙[1G[0K   [1m[38;2;173;127;168m▲ Next.js 15.3.9[39m[22m
+   - Local:        http://localhost:3000
+   - Network:      http://192.168.100.60:3000
+
+ [32m[1m✓[22m[39m Starting...
+ [32m[1m✓[22m[39m Ready in 2.4s
+ [37m[1m○[22m[39m Compiling / ...
+ [32m[1m✓[22m[39m Compiled / in 2.1s (671 modules)
+ GET / [32m200[39m in 2450ms
+ GET / [32m200[39m in 55ms
+cat evidence/03-server-start.txt
+
+exit
+
+cat evidence/03-server-start.txt
+^C[?25h
+[1G[0K⠙[1G[0K[1mnpm[22m [96mnotice[39m
+[1mnpm[22m [96mnotice[39m New [31mmajor[39m version of npm available! [31m10.9.8[39m -> [34m12.2.1[39m
+[1mnpm[22m [96mnotice[39m Changelog: [34mhttps://github.com/npm/cli/releases/tag/v12.2.1[39m
+[1mnpm[22m [96mnotice[39m To update run: [4mnpm install -g npm@12.2.1[24m
+[1mnpm[22m [96mnotice[39m
+[1G[0K⠙[1G[0K[1m[7m%[27m[1m[0m                                                                                                                           [0m[27m[24m[Jmac@macs-MacBook-Pro task-02-repository-and-scaffold % [K[?2004h[7mexit[27m[27me[27mx[27mi[27mt[?2004l

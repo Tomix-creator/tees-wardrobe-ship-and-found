@@ -1,0 +1,66 @@
+================================================================================
+TEE’S WARDROBE — TASK TWO FIRST PAGE LOAD MEASUREMENT LOG
+================================================================================
+Generated: 2026-10-28
+Target URL: http://localhost:3000/
+Server: Next.js 15.3.9 Development Server (`next dev -p 3000`)
+Client: curl 8.7.1 (x86_64-apple-darwin24.0)
+
+--------------------------------------------------------------------------------
+1. FIRST REQUEST: ACTUAL COLD LOAD MEASUREMENT
+--------------------------------------------------------------------------------
+Command:
+curl -s -o /dev/null -w "HTTP_STATUS: %{http_code}\nTIME_NAMELOOKUP_SEC: %{time_namelookup}\nTIME_CONNECT_SEC: %{time_connect}\nTIME_PRETRANSFER_SEC: %{time_pretransfer}\nTIME_STARTTRANSFER_SEC: %{time_starttransfer}\nTIME_TOTAL_SEC: %{time_total}\nSIZE_DOWNLOAD_BYTES: %{size_download}\n" http://localhost:3000/
+
+Actual Measured Client Output:
+  HTTP_STATUS: 200
+  TIME_NAMELOOKUP_SEC: 0.000143  (0.14 ms)
+  TIME_CONNECT_SEC: 0.013279     (13.28 ms)
+  TIME_PRETRANSFER_SEC: 0.013425   (13.43 ms)
+  TIME_STARTTRANSFER_SEC: 33.871703 (33,871.70 ms — TTFB)
+  TIME_TOTAL_SEC: 33.918805      (33,918.81 ms — Total round-trip)
+  SIZE_DOWNLOAD_BYTES: 27317     (27.32 KB transferred HTML)
+
+Actual Server Console Output During Request:
+  ○ Compiling / ...
+  ✓ Compiled / in 29.5s (671 modules)
+  GET / 200 in 32506ms
+
+--------------------------------------------------------------------------------
+2. EXPLANATION: WHAT WAS MEASURED & COLD VS WARM LOAD
+--------------------------------------------------------------------------------
+- Type of Load: COLD LOAD.
+  This request was dispatched immediately after the development server completed its initial startup (`Ready in 10.9s`).
+  In Next.js development mode, routes are not compiled at server start; they undergo Just-In-Time (JIT) On-Demand Compilation when first requested by an incoming client HTTP connection.
+  
+- Breakdown of Cold Load Latency:
+  * DNS Resolution (Namelookup): 0.14 ms
+  * TCP Handshake (Connect): 13.28 ms
+  * Server-Side Processing: 32,506 ms (verified from server log `GET / 200 in 32506ms`).
+    - Verified: JIT module bundling and compilation took 29.5s (`Compiled / in 29.5s (671 modules)`).
+    - Unverified: The remaining difference of ~3,006 ms (32,506 ms - 29,500 ms) is assumed to include SSR HTML component rendering and stream response dispatch, but this specific sub-allocation is UNVERIFIED because no internal server-side performance profiler was attached.
+  * Time To First Byte (TTFB / starttransfer): 33,871.70 ms (verified from curl)
+  * Total Client Elapsed Time: 33,918.81 ms (verified from curl)
+
+
+--------------------------------------------------------------------------------
+3. COMPARISON: SUBSEQUENT WARM LOAD MEASUREMENT
+--------------------------------------------------------------------------------
+Command:
+curl -s -o /dev/null -w "HTTP_STATUS: %{http_code}\nTIME_NAMELOOKUP_SEC: %{time_namelookup}\nTIME_CONNECT_SEC: %{time_connect}\nTIME_STARTTRANSFER_SEC: %{time_starttransfer}\nTIME_TOTAL_SEC: %{time_total}\nSIZE_DOWNLOAD_BYTES: %{size_download}\n" http://localhost:3000/
+
+Actual Measured Client Output:
+  HTTP_STATUS: 200
+  TIME_NAMELOOKUP_SEC: 0.000072  (0.07 ms)
+  TIME_CONNECT_SEC: 0.000618     (0.62 ms)
+  TIME_STARTTRANSFER_SEC: 0.255818 (255.82 ms — TTFB)
+  TIME_TOTAL_SEC: 0.268260      (268.26 ms — Total round-trip)
+  SIZE_DOWNLOAD_BYTES: 27317
+
+Actual Server Console Output:
+  GET / 200 in 285ms
+
+- Cold vs Warm Difference:
+  * Cold Load: 33,918.81 ms (includes 29,500 ms module compilation)
+  * Warm Load: 268.26 ms (serves pre-compiled cached modules)
+  * Ratio: Warm load is ~126x faster than cold load.

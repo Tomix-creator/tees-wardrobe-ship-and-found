@@ -1,0 +1,33 @@
+[1m[7m%[27m[1m[0m                                                                                                                           [0m[27m[24m[Jmac@macs-MacBook-Pro task-02-repository-and-scaffold % [K[?2004h[7mdate[27m[27md[27ma[27mt[27me[?2004l
+Fri Oct 30 02:01:00 WAT 2026
+[1m[7m%[27m[1m[0m                                                                                                                           [0m[27m[24m[Jmac@macs-MacBook-Pro task-02-repository-and-scaffold % [K[?2004h[7mcd disposable-nested[27m[20D[27mc[27md[27m [27md[27mi[27ms[27mp[27mo[27ms[27ma[27mb[27ml[27me[27m-[27mn[27me[27ms[27mt[27me[27md[?2004l
+[1m[7m%[27m[1m[0m                                                                                                                           [0m[27m[24m[Jmac@macs-MacBook-Pro disposable-nested % [K[?2004h[7mls[27m[27ml[27ms[?2004l
+tees-app
+[1m[7m%[27m[1m[0m                                                                                                                           [0m[27m[24m[Jmac@macs-MacBook-Pro disposable-nested % [K[?2004hnnpm run dev[?2004l
+
+> tees-wardrobe-app@0.1.0 dev
+> next dev -p 3000
+
+[1G[0K   [1m[38;2;173;127;168m▲ Next.js 15.3.9[39m[22m
+   - Local:        http://localhost:3000
+   - Network:      http://192.168.100.60:3000
+
+ [32m[1m✓[22m[39m Starting...
+ [32m[1m✓[22m[39m Ready in 2.4s
+^C[?25h
+[1G[0K⠙[1G[0K[1m[7m%[27m[1m[0m                                                                                                                           [0m[27m[24m[Jmac@macs-MacBook-Pro disposable-nested % [K[?2004h[7mcd ..[27m[27mc[27md[27m [27m.[27m.[?2004l
+[1m[7m%[27m[1m[0m                                                                                                                           [0m[27m[24m[Jmac@macs-MacBook-Pro task-02-repository-and-scaffold % [K[?2004h[7mmv disposable-nested ../disposable-nested[27m[41D[27mm[27mv[27m [27md[27mi[27ms[27mp[27mo[27ms[27ma[27mb[27ml[27me[27m-[27mn[27me[27ms[27mt[27me[27md[27m [27m.[27m.[27m/[27md[27mi[27ms[27mp[27mo[27ms[27ma[27mb[27ml[27me[27m-[27mn[27me[27ms[27mt[27me[27md[?2004l
+[1m[7m%[27m[1m[0m                                                                                                                           [0m[27m[24m[Jmac@macs-MacBook-Pro task-02-repository-and-scaffold % [K[?2004h[7mcd ../disposable-nested[27m[23D[27mc[27md[27m [27m.[27m.[27m/[27md[27mi[27ms[27mp[27mo[27ms[27ma[27mb[27ml[27me[27m-[27mn[27me[27ms[27mt[27me[27md[?2004l
+[1m[7m%[27m[1m[0m                                                                                                                           [0m[27m[24m[Jmac@macs-MacBook-Pro disposable-nested % [K[?2004hlls[?2004l
+tees-app
+[1m[7m%[27m[1m[0m                                                                                                                           [0m[27m[24m[Jmac@macs-MacBook-Pro disposable-nested % [K[?2004hnnpm run dev[?2004l
+[1mnpm[22m [31merror[39m [94mcode[39m ENOENT
+[1mnpm[22m [31merror[39m [94msyscall[39m open
+[1mnpm[22m [31merror[39m [94mpath[39m /Users/mac/Desktop/tee's wardrobe /disposable-nested/package.json
+[1mnpm[22m [31merror[39m [94merrno[39m [33m-2[39m
+[1mnpm[22m [31merror[39m [94menoent[39m Could not read package.json: Error: ENOENT: no such file or directory, open '/Users/mac/Desktop/tee's wardrobe /disposable-nested/package.json'
+[1mnpm[22m [31merror[39m [94menoent[39m This is related to npm not being able to find a file.
+[1mnpm[22m [31merror[39m [94menoent[39m
+[1mnpm[22m [31merror[39m A complete log of this run can be found in: /Users/mac/.npm/_logs/2026-10-30T01_05_06_468Z-debug-0.log
+[1G[0K[1m[7m%[27m[1m[0m                                                                                                                           [0m[27m[24m[Jmac@macs-MacBook-Pro disposable-nested % [K[?2004h[7mcd ../task-02-repository-and-scaffold[27m[37D[27mc[27md[27m [27m.[27m.[27m/[27mt[27ma[27ms[27mk[27m-[27m0[27m2[27m-[27mr[27me[27mp[27mo[27ms[27mi[27mt[27mo[27mr[27my[27m-[27ma[27mn[27md[27m-[27ms[27mc[27ma[27mf[27mf[27mo[27ml[27md[?2004l
+[1m[7m%[27m[1m[0m                                                                                                                           [0m[27m[24m[Jmac@macs-MacBook-Pro task-02-repository-and-scaffold % [K[?2004heexit[?2004l

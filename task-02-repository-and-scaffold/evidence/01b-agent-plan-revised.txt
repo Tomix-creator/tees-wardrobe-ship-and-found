@@ -1,0 +1,106 @@
+# Tee’s Wardrobe — Task Two Revised Scaffolding Plan (Pre-Approval)
+
+Document: Task Two Revised Scaffolding Plan & Assumptions
+Date: 2026-10-28T11:16:09+01:00
+Target Stack: Next.js with TypeScript (App Router)
+Target Directory: task-02-repository-and-scaffold/
+Status: Revised pre-approval plan awaiting user sign-off. No application or database code built yet.
+
+---
+
+### 1. Summary of Understanding & Stack Revision
+
+1. **Technology Stack**:
+   - Modern **Next.js with TypeScript** (App Router).
+   - Designed to prepare for future Prisma ORM and PostgreSQL integration for Step 6 database diagnostics, while strictly **excluding** all database setup, Prisma schemas, or dynamic write forms during this initial scaffolding phase.
+2. **Business & Brand Context**:
+   - **Tee’s Wardrobe**: Bespoke and ready-to-wear fashion business (bubu gowns, two-piece sets, kimonos).
+   - Brand identity: Sea green anchor (`#32B1AA`, `primary/40`), no logo yet (using typographic wordmark per brief).
+   - The one thing that must work: Price separation (clothing vs. delivery quoted per location) and accurate balance calculation.
+3. **Correction to Typography Line-Height Description**:
+   - The initial scaffolding plan incorrectly stated that all 15 typography styles use a uniform 1.4x line-height multiplier.
+   - **Corrected Specification** (per `docs/type-scale.md` and `docs/divergences.md`):
+     - Display, Headline, Title, and Label styles use the **1.4x** multiplier (e.g. Display Large: 57px / 79.8px; Title Medium: 16px / 22.4px; Label Large: 14px / 19.6px).
+     - **Body styles deliberately diverge and do NOT all use the same multiplier**:
+       * `body/large`: 16px font size / **24px** line height (**1.5x** multiplier).
+       * `body/medium`: 14px font size / **22.4px** line height (**1.6x** multiplier).
+       * `body/small`: 12px font size / **19.2px** line height (**1.6x** multiplier).
+     - This variation provides necessary vertical breathing room for body copy without wasting space on large headings.
+
+---
+
+### 2. Project Directory & Proposed Files to Create
+
+The project scaffold will live in:
+`task-02-repository-and-scaffold/`
+
+Proposed files to create for the initial scaffold upon approval:
+1. `package.json`: Manifest configuring Next.js, React, React DOM, TypeScript, and developer tooling.
+2. `tsconfig.json`: TypeScript configuration with path aliases (`@/*`).
+3. `next.config.js`: Next.js configuration.
+4. `app/layout.tsx`: Root layout establishing semantic HTML structure (`<html lang="en">`, `<head>`, `<body>`), importing design tokens CSS, and defining information design metadata:
+   - Dynamic page title template (`Tee’s Wardrobe | %s`).
+   - Tagline under 10 words: *"Bespoke & ready-to-wear clothing tailored for you"*.
+   - Meta description and Open Graph tags.
+   - Favicon link.
+5. `app/page.tsx`: Minimal home screen server component:
+   - Semantic structure (`<header>`, `<main>`, `<nav>`, `<footer>`).
+   - Typographic brand wordmark in Headline Large / Display Small.
+   - Tagline and introductory service cards.
+   - Zero hardcoded styling.
+6. `app/globals.css`: Layout foundation, CSS reset, and body defaults referencing design token variables.
+7. `styles/tokens.css`: Direct import/copy of the verified design tokens compiled in Task One (`task-01-design-system/css/tokens.css`).
+8. `public/favicon.svg`: Minimal SVG brand icon based on `#32B1AA`.
+9. `README.md`: Basic run and development instructions.
+
+---
+
+### 3. Design Token Consumption Strategy
+
+- **Canonical Token Source**:
+  - The application will import the verified CSS tokens from [`task-01-design-system/css/tokens.css`](file:///Users/mac/Desktop/tee's%20wardrobe%20/task-01-design-system/css/tokens.css).
+- **Color Roles**:
+  - Layout and text elements will strictly reference semantic color roles: `--color-role-surface`, `--color-role-on-surface`, `--color-role-primary`, `--color-role-on-primary`, `--color-role-field-outline`, `--color-role-focus-indicator`, and status roles.
+  - No raw hex values, rgb() literals, or primitive color names (`--color-primitive-*`) will be used in application styles.
+- **Typography Utility Classes**:
+  - Elements will consume the 15 token classes (`.type-display-large`, `.type-headline-large`, `.type-title-medium`, etc.) or their corresponding CSS variables (`var(--type-*-font-family)`).
+- **Elevation Shadows**:
+  - Surface cards will apply `--elevation-shadow-soft`, `--elevation-shadow-medium`, or `--elevation-shadow-hard`, carrying the dark brand hue (`#0D2C2B`).
+
+---
+
+### 4. Handling Missing Spacing Tokens Without Invention
+
+- **Empirical Reality**:
+  - The Task One Figma token export (`06-tokens-complete.json`) and generated CSS (`tokens.css`) contain color primitives, color roles, text styles, and shadows. They **do not contain spacing tokens** (margins, paddings, gaps).
+- **Rule of Non-Invention**:
+  - We will **not** invent ungrounded custom tokens such as `--space-sm`, `--space-md`, or `--space-padding` in `tokens.css`.
+- **Implementation Strategy**:
+  - Spacing will be handled using standard CSS layout properties directly in rem units (e.g. `padding: 1.5rem`, `gap: 1rem`) within component stylesheets (`globals.css` or CSS modules).
+  - Button paddings will be defined in rem units (per assessment information design requirements), ensuring clean fluid scaling without fabricating unapproved design tokens.
+
+---
+
+### 5. Features Intentionally Left for Later Phases
+
+To avoid building the whole product during the scaffold phase, the following features are deliberately deferred:
+1. **Prisma ORM & PostgreSQL Database**:
+   - `prisma/schema.prisma`, migrations, and database connection strings are deferred until Step 6 of Task Two (the data persistence test).
+2. **Interactive Database Write Form**:
+   - Customer signup, booking, or order entry forms that persist records are deferred.
+3. **Authentication & Access Control**:
+   - User sign-in, session tokens, and role-based permissions (owner vs. helper) are deferred.
+4. **Order Calculation & Backend APIs**:
+   - Backend balance calculation logic, delivery quote workflows, and payment tracking APIs are deferred.
+5. **Dark Mode Switcher**:
+   - Dark mode toggle and overrides remain deferred as dark theme role mappings remain open in design system documentation.
+
+---
+
+### 6. Explicit List of Assumptions
+
+1. **Next.js App Router**: I assume the Next.js App Router (`app/` directory) with TypeScript is the intended architecture.
+2. **Local Token Copy**: I assume copying `task-01-design-system/css/tokens.css` into `task-02-repository-and-scaffold/styles/tokens.css` ensures portability across directories while maintaining strict fidelity to the Task One token definitions.
+3. **No Database Scaffolding Now**: I assume no `schema.prisma` file or `@prisma/client` package should be installed or configured in this initial commit, strictly keeping the scaffold minimal.
+4. **Static Demonstration Home Page**: I assume the initial home page is a presentation shell displaying brand identity and navigation entrypoints, with zero active form submissions.
+5. **Unstyled Original Plan Preserved**: I assume the original pre-approval plan in `task-02-repository-and-scaffold/evidence/01-agent-plan.txt` must remain completely intact as historical evidence.

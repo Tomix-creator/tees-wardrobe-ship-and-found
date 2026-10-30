@@ -1,0 +1,141 @@
+================================================================================
+TEE’S WARDROBE — TASK TWO REPOSITORY AND SCAFFOLD AUDIT LOG
+================================================================================
+Generated: 2026-10-28
+Repository: /Users/mac/Desktop/tee's wardrobe 
+Target Subdirectory: task-02-repository-and-scaffold/
+
+--------------------------------------------------------------------------------
+1. LIST OF CREATED AND CHANGED FILES
+--------------------------------------------------------------------------------
+
+A. Design System Shared Token Sources (Task One Directory)
+   1. task-01-design-system/css/spacing.css
+      - Status: CREATED (shared design-system source)
+      - Purpose: Introduces the missing design system spacing scale (--space-3xs to --space-2xl) based on a 4px/8px modular harmonic scale defined in rem units.
+   2. task-01-design-system/docs/spacing.md
+      - Status: CREATED (documentation)
+      - Purpose: Complete technical documentation of spacing token names, mathematical scale (2px to 48px), rem equivalents, accessibility/WCAG zoom rationale, and component usage rules.
+   *Note: task-01-design-system/evidence/06-tokens-complete.json and all existing Task One deliverables and test suites were strictly preserved unchanged (verify-tokens.js passes 112/112 tests).*
+
+B. Pre-Approval Evidence Files (Task Two Evidence)
+   3. task-02-repository-and-scaffold/evidence/01-agent-plan.txt
+      - Status: CREATED (evidence)
+      - Purpose: Verbatim, unedited pre-approval initial scaffolding plan and original assumptions as presented to the user.
+   4. task-02-repository-and-scaffold/evidence/01-agent-plan-revised.txt
+      - Status: CREATED (evidence)
+      - Purpose: Verbatim, unedited pre-approval revised Next.js with TypeScript plan and corrected line-height assumptions.
+   *Note: Both pre-approval plans remain strictly unchanged per instructions.*
+
+C. Token Parity & Synchronization Tooling
+   5. task-02-repository-and-scaffold/scripts/sync-tokens.js
+      - Status: CREATED (tooling script)
+      - Purpose: Repeatable synchronization script copying tokens.css and spacing.css from task-01-design-system/css/ to task-02-repository-and-scaffold/styles/.
+   6. task-02-repository-and-scaffold/scripts/check-tokens.js
+      - Status: CREATED (automated verification script)
+      - Purpose: Automated parity verification tool computing cryptographic SHA-256 hashes of both source files and local copies, asserting strict equality and exiting non-zero on any detected drift.
+   7. task-02-repository-and-scaffold/styles/tokens.css
+      - Status: CREATED (synced tracked copy)
+      - Purpose: Local copy of task-01-design-system/css/tokens.css for bundler isolation. SHA-256: 37bced97ee9dbe89332a7d813c47fa12d3b9e21558f647351365a2824691cdc3.
+   8. task-02-repository-and-scaffold/styles/spacing.css
+      - Status: CREATED (synced tracked copy)
+      - Purpose: Local copy of task-01-design-system/css/spacing.css for bundler isolation. SHA-256: 0201f644e3c3fca7a00cd6fd5a48f2e45f53de5cc455585e378932a3295534bc.
+
+D. Next.js with TypeScript Application Scaffold
+   9. task-02-repository-and-scaffold/package.json
+      - Status: MODIFIED (project manifest)
+      - Purpose: Defines project metadata, upgraded dependencies (Next.js 15.3.9, React 19.0.0, TypeScript 5.4.5), and lifecycle scripts (dev, prebuild, build, start, sync:tokens, check:tokens).
+  10. task-02-repository-and-scaffold/tsconfig.json
+      - Status: MODIFIED (compiler config)
+      - Purpose: TypeScript compiler configuration enforcing strict typing, target ES2017, Next.js JSX transform, and path alias mapping (@/* -> ./*).
+  11. task-02-repository-and-scaffold/next.config.mjs
+      - Status: CREATED (Next.js config)
+      - Purpose: Configures Next.js runtime settings with React strict mode enabled.
+  12. task-02-repository-and-scaffold/app/globals.css
+      - Status: CREATED (global styles)
+      - Purpose: Imports tokens.css and spacing.css, establishes CSS reset, token-driven button sizing in rem units, focus-visible outline, and responsive .container wrapper.
+  13. task-02-repository-and-scaffold/app/layout.tsx
+      - Status: CREATED (root layout)
+      - Purpose: Next.js root layout defining responsive viewport, SEO metadata, OpenGraph tags, locale, and favicon icon links.
+  14. task-02-repository-and-scaffold/app/page.tsx
+      - Status: MODIFIED (minimal home screen)
+      - Purpose: Minimal home screen shell built with semantic HTML, Inter typography tokens, .shadow-soft, and spacing tokens. All planned modules and controls are clearly labeled as planned stubs and rendered in disabled states with no active database or forms.
+  15. task-02-repository-and-scaffold/public/favicon.svg
+      - Status: CREATED (static asset)
+      - Purpose: Brand favicon SVG featuring brand primary color (#32B1AA).
+  16. task-02-repository-and-scaffold/README.md
+      - Status: MODIFIED (documentation)
+      - Purpose: Complete guide covering tech stack (Next.js 15, React 19, TypeScript), actual Task One shadow token values, automated prebuild parity checks, deferred features, and setup instructions.
+  17. task-02-repository-and-scaffold/.gitignore
+      - Status: MODIFIED (Git ignore rules)
+      - Purpose: Prevents node_modules, build outputs (.next, out, build), plain .env, and all local environment variable files (.env.local, .env.*) from being accidentally staged.
+  18. task-02-repository-and-scaffold/evidence/02-files-created.txt
+      - Status: CREATED (audit record)
+      - Purpose: This file; comprehensive audit of all created and changed files and architectural assumptions.
+  19. task-02-repository-and-scaffold/evidence/03-server-startup.txt
+      - Status: CREATED (evidence)
+      - Purpose: Verbatim capture of design token parity check, production build output (Next.js 15.3.9), server startup log (ready on port 3000 in 1904ms), and HTTP curl 200 OK headers.
+  20. task-02-repository-and-scaffold/evidence/03-server-start.txt
+      - Status: CREATED (evidence)
+      - Purpose: Genuine terminal output of Next.js development server startup (`npm run dev`), including port 3000 and ready time (10.9s).
+  21. task-02-repository-and-scaffold/evidence/04-first-load.txt
+      - Status: MODIFIED (evidence)
+      - Purpose: Genuine first cold page load latency measurement (HTTP 200, 33,918.81ms total / 32,506ms server execution, 671 modules compiled) with the ~3.0s SSR sub-allocation explicitly labeled as unverified, and comparison against warm load (268.26ms).
+  22. task-02-repository-and-scaffold/docs/scaffold-prompt.md
+      - Status: CREATED (documentation)
+      - Purpose: Records the original user draft prompt verbatim, the revised prompt sent to the agent, and an accurate explanation of changes and prompt engineering rationale.
+  23. task-02-repository-and-scaffold/evidence/05-nested-folder-error.txt
+      - Status: CREATED (diagnostic evidence)
+      - Purpose: Reproduces the nested-folder error where commands are run from the wrong directory level, capturing working directory, command, and complete npm ENOENT error output.
+  24. task-02-repository-and-scaffold/evidence/06-nested-folder-fixed.txt
+      - Status: MODIFIED (diagnostic evidence)
+      - Purpose: Demonstrates both recovery paths (changing directory vs. rescaffolding in-place) performed safely in a disposable demonstration directory, with verified assembly details and explicit qualification that npm test was not run.
+  25. task-02-repository-and-scaffold/evidence/07-port-conflict.txt
+      - Status: CREATED (diagnostic evidence)
+      - Purpose: Captures real Next.js EADDRINUSE collision output on isolated test port 3001, the diagnostic command (`lsof -nP -iTCP:3001 -sTCP:LISTEN`) used to identify the process, and its actual PID (83510).
+  26. task-02-repository-and-scaffold/evidence/08-port-conflict-resolved.txt
+      - Status: CREATED (diagnostic evidence)
+      - Purpose: Captures selective termination of PID 83510, port release verification, clean Next.js server startup on port 3001, successful HTTP 200 response headers, and verification that the live port 3000 server remained active throughout.
+  27. task-02-repository-and-scaffold/evidence/09-404-error.txt
+      - Status: CREATED (diagnostic evidence)
+      - Purpose: Captures real HTTP 404 Not Found routing failure on isolated test port 3002 in disposable copy, exact timing metrics (5,147.52ms total / 5,108.60ms TTFB), genuine Next.js server compilation log (`GET / 404 in 5123ms`), and diagnostic checklist.
+  28. task-02-repository-and-scaffold/evidence/10-404-resolved.txt
+      - Status: CREATED (diagnostic evidence)
+      - Purpose: Captures 404 recovery by restoring App Router leaf segment `app/page.tsx`, Next.js hot-recompilation log (compiled in 266ms), HTTP 200 OK headers, and timing metrics (515.80ms total / 503.99ms TTFB).
+  29. task-02-repository-and-scaffold/docs/performance-note.md
+      - Status: CREATED (documentation)
+      - Purpose: Analyzes first page load latency (cold load of 33,918.81ms vs warm load of 268.26ms) in plain language, explains JIT development compilation vs production pre-rendering, benchmarks against assessment targets, and explicitly classifies the unmeasured 3-second server rendering sub-allocation as unverified hypothesis.
+
+
+
+--------------------------------------------------------------------------------
+2. ARCHITECTURAL AND IMPLEMENTATION ASSUMPTIONS
+--------------------------------------------------------------------------------
+
+1. Technology Stack & Node.js Compatibility:
+   The installed Node.js version is v22.23.1. Next.js 14 is unsupported on this runtime. The application has been upgraded to Next.js 15.3.9 with React 19.0.0 and TypeScript 5.4.5, which are fully supported, actively maintained, and verified to compile with zero warnings or errors.
+
+2. Secret & Environment Protection:
+   Git ignore rules explicitly ignore plain .env, .env.local, .env.*.local, and .env.* to prevent any accidental staging of sensitive credentials. No real secrets were requested, created, or exposed.
+
+3. Automated Token Parity Enforcement:
+   The npm build script runs prebuild (node scripts/check-tokens.js) automatically before every build. It compares cryptographic SHA-256 hashes of tokens.css and spacing.css against their Task One sources, guaranteeing that drift triggers an immediate build failure.
+
+4. Shadow Token Names & Values:
+   The exact shadow tokens defined in Task One CSS are used in code and accurately documented in README.md:
+   - --shadow-soft: 0px 2px 8px 0px #0d2c2b1f
+   - --shadow-medium: 0px 6px 16px 0px #0d2c2b29
+   - --shadow-hard: 0px 10px 16px 0px #0d2c2b3d
+   Utility classes: .shadow-soft, .shadow-medium, .shadow-hard.
+
+5. Home Screen Minimal Scaffold Boundaries:
+   All future feature entrypoints (Order Tracking, Ready-to-Wear Catalog) are explicitly labeled as planned features with disabled controls and visible indicators stating that forms, databases, and customer records are not active in this scaffold.
+
+6. Version Control Discipline:
+   No files have been staged, committed, or pushed to Git. All changes are held in working tree state for user review.
+
+7. Port Conflict Diagnostic Isolation:
+   The port-conflict diagnostic was executed exclusively on isolated test port 3001 using a controlled disposable test process (PID 83510). The primary application server on port 3000 (task-1182) and the design-system server on port 8085 (task-133) were preserved continuously without interruption.
+
+8. 404 Route Diagnostic Isolation:
+   The 404 route diagnostic was executed exclusively in a disposable copy (`disposable-404-test`) on isolated test port 3002. The production project directory, its files, and live servers on ports 3000 and 8085 were undisturbed and verified active throughout.

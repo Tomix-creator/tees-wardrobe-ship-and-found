@@ -1,0 +1,71 @@
+================================================================================
+TEE’S WARDROBE — TASK TWO DIAGNOSTIC: 404 ROUTE RECOVERY EVIDENCE
+================================================================================
+Generated: 2026-10-28
+Diagnostic: Step 5.3 — 404 Route Recovery Demonstration
+Environment: Node.js v22.23.1, Next.js 15.3.9, React 19.0.0, macOS (Darwin)
+Isolated Test Port: 3002 (keeps live server on port 3000 completely undisturbed)
+Target: Disposable copy directory (`disposable-404-test/`)
+
+--------------------------------------------------------------------------------
+1. THE FIX: RESTORING CONVENTIONAL APP ROUTER LEAF SEGMENT
+--------------------------------------------------------------------------------
+To resolve the 404 Not Found error, the misplaced/misnamed component was restored
+to its mandatory App Router filename: `page.tsx`.
+
+Command Executed:
+$ mv "disposable-404-test/app/index.tsx" "disposable-404-test/app/page.tsx"
+
+Result:
+File `app/page.tsx` is now present in the route root, matching the App Router
+convention for `GET /`.
+
+--------------------------------------------------------------------------------
+2. SERVER RECOMPILATION & HOT-RELOAD LOG
+--------------------------------------------------------------------------------
+Working Directory: /Users/mac/Desktop/tee's wardrobe /disposable-404-test
+Command: npx next dev -p 3002
+
+Actual Server Terminal Output During Recovery:
+ ✓ Compiled in 419ms (654 modules)
+ ✓ Compiled / in 266ms (659 modules)
+ GET / 200 in 504ms
+ HEAD / 200 in 8ms
+
+The Next.js 15 development server immediately detected the new route leaf,
+re-compiled the routing tree in 419ms, compiled the home page in 266ms, and
+served the request with HTTP 200 OK.
+
+--------------------------------------------------------------------------------
+3. VERIFICATION COMMAND & EXACT TIMING METRICS
+--------------------------------------------------------------------------------
+Command Executed:
+$ curl -w "\n--- METRICS ---\nHTTP_CODE: %{http_code}\nTIME_NAMELOOKUP: %{time_namelookup}s\nTIME_CONNECT: %{time_connect}s\nTIME_APPCONNECT: %{time_appconnect}s\nTIME_PRETRANSFER: %{time_pretransfer}s\nTIME_STARTTRANSFER: %{time_starttransfer}s\nTIME_TOTAL: %{time_total}s\nSPEED_DOWNLOAD: %{speed_download} B/s\nSIZE_DOWNLOAD: %{size_download} bytes\n" -i http://localhost:3002/
+
+Actual HTTP Response Headers Received:
+HTTP/1.1 200 OK
+Vary: RSC, Next-Router-State-Tree, Next-Router-Prefetch, Next-Router-Segment-Prefetch, Accept-Encoding
+Cache-Control: no-store, must-revalidate
+X-Powered-By: Next.js
+Content-Type: text/html; charset=utf-8
+Date: Wed, 28 Oct 2026 15:16:36 GMT
+Connection: keep-alive
+Keep-Alive: timeout=5
+
+Measured Timing Breakdown:
+- HTTP Status Code: 200 OK
+- Time to Connect: 0.25 ms (0.000255s)
+- Time to First Byte (TTFB): 503.99 ms (0.503990s)
+- Total Round-Trip Time: 515.80 ms (0.515798s)
+- Download Speed: 53,472 B/s
+- Response Payload Size: 27,581 bytes (full Tee’s Wardrobe home screen HTML & RSC payload)
+
+--------------------------------------------------------------------------------
+4. POST-DIAGNOSTIC CLEANUP & SYSTEM INTEGRITY
+--------------------------------------------------------------------------------
+1. Test server on port 3002 was stopped gracefully.
+2. Disposable test directory (`disposable-404-test/`) was removed.
+3. Live production development server on port 3000 (task-1182) and design-system
+   server on port 8085 (task-133) were verified continuously active and responsive:
+   $ curl -sI http://localhost:3000
+   HTTP/1.1 200 OK

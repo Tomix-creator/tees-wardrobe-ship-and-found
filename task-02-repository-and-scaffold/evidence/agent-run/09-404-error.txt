@@ -1,0 +1,88 @@
+================================================================================
+TEE’S WARDROBE — TASK TWO DIAGNOSTIC: 404 ROUTE ERROR EVIDENCE
+================================================================================
+Generated: 2026-10-28
+Diagnostic: Step 5.3 — 404 Route Failure Demonstration
+Environment: Node.js v22.23.1, Next.js 15.3.9, React 19.0.0, macOS (Darwin)
+Isolated Test Port: 3002 (keeps live server on port 3000 completely undisturbed)
+Target: Disposable copy directory (`disposable-404-test/`)
+
+--------------------------------------------------------------------------------
+1. FAILURE CONDITION & EXACT COMMAND
+--------------------------------------------------------------------------------
+To test a genuine 404 routing failure without risking production files, the scaffold
+was run in a disposable demonstration directory where the root page was named
+`app/index.tsx` instead of `app/page.tsx` (a classic Pages Router vs App Router convention mismatch).
+
+Command Executed:
+$ curl -w "\n--- METRICS ---\nHTTP_CODE: %{http_code}\nTIME_NAMELOOKUP: %{time_namelookup}s\nTIME_CONNECT: %{time_connect}s\nTIME_APPCONNECT: %{time_appconnect}s\nTIME_PRETRANSFER: %{time_pretransfer}s\nTIME_STARTTRANSFER: %{time_starttransfer}s\nTIME_TOTAL: %{time_total}s\nSPEED_DOWNLOAD: %{speed_download} B/s\nSIZE_DOWNLOAD: %{size_download} bytes\n" -i http://localhost:3002/
+
+--------------------------------------------------------------------------------
+2. RESPONSE STATUS & TIMING METRICS
+--------------------------------------------------------------------------------
+Actual HTTP Response Headers:
+HTTP/1.1 404 Not Found
+Cache-Control: no-store, must-revalidate
+Vary: RSC, Next-Router-State-Tree, Next-Router-Prefetch, Next-Router-Segment-Prefetch, Accept-Encoding
+X-Powered-By: Next.js
+Content-Type: text/html; charset=utf-8
+Date: Wed, 28 Oct 2026 15:15:25 GMT
+Connection: keep-alive
+Keep-Alive: timeout=5
+
+Measured Timing Breakdown:
+- HTTP Status Code: 404 Not Found
+- Time to Connect: 0.21 ms (0.000209s)
+- Time to First Byte (TTFB): 5,108.60 ms (5.108599s)
+- Total Round-Trip Time: 5,147.52 ms (5.147520s)
+- Response Payload Size: 14,252 bytes (Next.js default 404 HTML shell)
+
+--------------------------------------------------------------------------------
+3. GENUINE SERVER TERMINAL OUTPUT
+--------------------------------------------------------------------------------
+Working Directory: /Users/mac/Desktop/tee's wardrobe /disposable-404-test
+Command: npx next dev -p 3002
+
+Actual Server Log Output:
+   ▲ Next.js 15.3.9
+   - Local:        http://localhost:3002
+   - Network:      http://192.168.100.60:3002
+
+ ✓ Starting...
+ ✓ Ready in 3s
+ ○ Compiling /_not-found ...
+ ✓ Compiled /_not-found in 4.7s (670 modules)
+ GET / 404 in 5123ms
+
+--------------------------------------------------------------------------------
+4. DIAGNOSTIC INSPECTION & ROOT CAUSE EXPLANATION
+--------------------------------------------------------------------------------
+What Was Checked In Order Before Asking For Help:
+
+1. Server Terminal Output:
+   Checked the active process log. Saw `○ Compiling /_not-found ...` followed by
+   `GET / 404 in 5123ms`. This confirmed the server was operational and processing
+   HTTP requests, but could not resolve a component for route `/`.
+
+2. HTTP Status & Headers:
+   Executed `curl -sI http://localhost:3002/`. The response header confirmed
+   `HTTP/1.1 404 Not Found`, ruling out network disconnection or port blockage.
+
+3. Directory Structure Inspection:
+   Inspected the route files inside `app/`:
+   $ ls -la disposable-404-test/app
+   Found `layout.tsx` and `index.tsx`, but NO `page.tsx`.
+
+4. Framework Architectural Rule Verification:
+   Consulted Next.js App Router conventions:
+   - In Next.js Pages Router (legacy), `pages/index.tsx` was the root page.
+   - In Next.js App Router (`app/`), route endpoints MUST be named `page.tsx`
+     (or `page.jsx`/`page.js`).
+   - A file named `index.tsx` inside an `app/` directory is treated as an unrouted
+     internal file, not a route leaf.
+
+Actual Cause:
+Because no `page.tsx` existed in the root of `app/`, the App Router router tree
+contained no match for path `/`. Next.js automatically fell back to its internal
+`/_not-found` boundary, compiled 670 modules for the error view, and returned
+an HTTP 404 status.

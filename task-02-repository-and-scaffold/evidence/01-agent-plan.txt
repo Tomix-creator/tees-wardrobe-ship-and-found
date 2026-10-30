@@ -1,0 +1,102 @@
+### 1. Summary of Understanding
+
+From reading the project background documents ([`docs/business-brief.md`](file:///Users/mac/Desktop/tee's%20wardrobe%20/task-01-design-system/docs/business-brief.md), [`docs/business-research.md`](file:///Users/mac/Desktop/tee's%20wardrobe%20/task-01-design-system/docs/business-research.md)) and the design system specification ([`docs/type-scale.md`](file:///Users/mac/Desktop/tee's%20wardrobe%20/task-01-design-system/docs/type-scale.md), [`docs/colour-roles.md`](file:///Users/mac/Desktop/tee's%20wardrobe%20/task-01-design-system/docs/colour-roles.md), [`docs/shadows.md`](file:///Users/mac/Desktop/tee's%20wardrobe%20/task-01-design-system/docs/shadows.md), [`css/tokens.css`](file:///Users/mac/Desktop/tee's%20wardrobe%20/task-01-design-system/css/tokens.css), and [`evidence/06-tokens-complete.json`](file:///Users/mac/Desktop/tee's%20wardrobe%20/task-01-design-system/evidence/06-tokens-complete.json)), I understand:
+
+1. **The Business & Audience**:
+   - **Tee’s Wardrobe** is a bespoke and ready-to-wear fashion business selling bubu gowns, two-piece sets, and kimonos.
+   - The owner operates alone; current record-keeping is split between a paper notebook and WhatsApp chats.
+   - Customers interact on mobile devices (smartphones) via direct messages. The interface must feel clear, trustworthy, fast, and simple to use on mobile phones.
+2. **The Non-Negotiable Calculation Rule**:
+   - Clothing prices exclude delivery charges.
+   - Delivery is quoted per location and agreed prior to payment; unquoted delivery fees must remain visibly marked **“awaiting quote” / “not yet quoted”** and must **never** be treated or displayed as zero (₦0.00) or free.
+   - Core remaining balance formula:  
+     $$\text{Remaining Balance} = \text{Agreed Clothing Price} - \text{Confirmed Payments}$$
+3. **Design System Source of Truth**:
+   - **Brand Anchor**: Sea green (`#32B1AA`), pinned at `primary/40`.
+   - **Tonal Primitives**: 94 primitive colors across Brand, Primary, Secondary, Tertiary, Neutral, Neutral Variant, and Status families.
+   - **Semantic Color Roles**: 9 light roles (`Primary`, `On Primary`, `Surface`, `On Surface`, `Error`, `Warning`, `Success`, `Field Outline`, `Focus Indicator`). UI code must use `--color-role-*`; raw hex and primitive colors are prohibited in layout styles.
+   - **Typography**: 15 styles structured under 5 roles (Display, Headline, Title, Body, Label) using the **Inter** family with a uniform $1.4\times$ line-height formula and compact letter spacing (-4% on Display Large).
+   - **Shadows**: Soft, Medium, and Hard drop shadows tinted with dark brand hue `#0D2C2B` (`primary/10`) rather than neutral black.
+4. **Scope Constraint for this Step**:
+   - Build **only** the basic project setup and a minimal home screen frame.
+   - Do **not** build the whole product, full order-entry forms, database schemas, or checkout flows in this pass.
+
+---
+
+### 2. Disagreements & Questions for Your Clarification
+
+Before writing code, I identified two architectural ambiguities between the Task One artifacts and the Task Two assessment specification:
+
+1. **Target Directory**:
+   - In `Ship-and-Found-Five-Tasks.pdf` (Page 14), Task Two deliverables live in a new directory: `task-02-repository-and-scaffold/`.
+   - The existing project is currently housed in `task-01-design-system/`.
+   - **Question**: Should this scaffold be created in a new sibling directory `task-02-repository-and-scaffold/` (matching the assessment PDF structure), or inside another path?
+2. **Server & Tech Stack**:
+   - Task Two requires running a development server, measuring millisecond response times, testing port conflicts, simulating 404s, and later adding a database write form.
+   - **Question**: Would you prefer a lightweight Node.js/Express server serving clean HTML/CSS backed by `tokens.css`, or a pure static dev server (noting the assessment warns that static live servers cannot handle dynamic database writes later)?
+
+---
+
+### 3. Proposed Scaffolding Plan (Upon Your Approval)
+
+Once you approve the target directory and stack:
+
+1. **Step 1: Project Foundation & Structure**:
+   - Initialize the chosen folder structure.
+   - Copy or symlink the verified design tokens stylesheet ([`tokens.css`](file:///Users/mac/Desktop/tee's%20wardrobe%20/task-01-design-system/css/tokens.css)) so the application shares the exact token source of truth.
+   - Configure a minimal package manifest / server entrypoint.
+2. **Step 2: Minimal Home Screen Shell**:
+   - Create a clean home screen page with semantic HTML5 (`<header>`, `<main>`, `<nav>`, `<footer>`).
+   - Include the 5 information design head requirements (dynamic page title, concise tagline under 10 words: *"Bespoke & ready-to-wear clothing tailored for you"*, meta description, Open Graph tags, and favicon link).
+   - Render the brand identity ("Tee’s Wardrobe", no logo yet per brief) using Display/Headline typography tokens.
+   - Include a greeting and an introductory framing card linking to upcoming sections (e.g., "Track Order", "Browse Ready-to-Wear", "Custom Fitting").
+3. **Step 3: Strict Design Token Styling**:
+   - Apply only design system classes and CSS custom properties (`var(--color-role-*)`, `.type-*`, `var(--space-*)`, `var(--elevation-*)`).
+   - Zero hardcoded colors or arbitrary pixel font sizes.
+4. **Step 4: Layout & Focus Verification at 412px**:
+   - Verify layout stability at mobile viewport width (412px) with zero horizontal overflow.
+   - Verify keyboard focus ring using `--color-role-focus-indicator`.
+   - Run a raw-value grep check to confirm zero hardcoded hex/rgb values exist in markup or page styles.
+
+---
+
+### 4. Explicit List of Assumptions
+
+I am making the following explicit assumptions:
+1. **No Logo Asset**: Per [`docs/business-brief.md`](file:///Users/mac/Desktop/tee's%20wardrobe%20/task-01-design-system/docs/business-brief.md#L18), Tee’s Wardrobe has no logo yet; I assume a typographic wordmark using `Headline Large` / `Display Small` is the correct brand representation.
+2. **Design Tokens Inheritance**: I assume [`task-01-design-system/css/tokens.css`](file:///Users/mac/Desktop/tee's%20wardrobe%20/task-01-design-system/css/tokens.css) is the canonical compiled CSS token source to import into the scaffold.
+3. **Typography Loading**: I assume the Inter font family should be loaded via a standard local fallback stack (`'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif`) as defined in `tokens.css`.
+4. **Light Theme Baseline**: I assume the minimal home screen will render in light mode, as dark mode role mappings are documented as unfinished in [`docs/colour-roles.md`](file:///Users/mac/Desktop/tee's%20wardrobe%20/task-01-design-system/docs/colour-roles.md#L3).
+5. **No Database Writes in Initial Frame**: I assume no database schemas, tables, or backend models should be created during this initial scaffolding step, strictly preserving the boundary of building only the project frame and home screen.
+
+---
+
+### 5. List of Files Proposed to Be Created
+
+Upon your approval:
+- `task-02-repository-and-scaffold/package.json` (server/project scripts)
+- `task-02-repository-and-scaffold/server.js` (minimal HTTP server supporting logging and ports)
+- `task-02-repository-and-scaffold/public/index.html` (minimal home screen)
+- `task-02-repository-and-scaffold/public/css/tokens.css` (imported design tokens)
+- `task-02-repository-and-scaffold/public/css/home.css` (page layout utilizing tokens)
+
+*(Note: Currently, **zero** files have been created or modified).*
+
+---
+
+### 6. Self-Audit Against Instructions
+
+| Instruction Requirement | Self-Audit Result |
+|---|---|
+| 1. Read background docs and design system | **Pass**: Read `business-brief.md`, `business-research.md`, `type-scale.md`, `colour-roles.md`, `shadows.md`, `tokens.css`, and `06-tokens-complete.json`. |
+| 2. Explain understanding and proposed plan | **Pass**: Documented above in Sections 1 & 3. |
+| 3. Wait for approval before creating or changing files | **Pass**: No project files created, edited, staged, or committed. Execution paused for your sign-off. |
+| 4. Treat documents/tokens as single source of truth | **Pass**: Anchored all rules and values to project files. |
+| 5. Ask when documents disagree | **Pass**: Surfaced directory structure and server stack questions in Section 2. |
+| 6. Use design tokens, no hardcoded styling | **Pass**: Planned strictly with `--color-role-*` and `.type-*` tokens. |
+| 7. Build only basic setup and minimal home screen | **Pass**: Outlined foundation and shell only; excluded database, cart, and full product features. |
+| 8. List files to create and assumptions made | **Pass**: Documented in Sections 4 & 5. |
+
+---
+
+**Awaiting your approval and feedback on the target directory and stack before creating any files.**
