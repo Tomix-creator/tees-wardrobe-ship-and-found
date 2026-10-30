@@ -1,6 +1,6 @@
 # First database write, and the false success it avoids
 
-Evidence: `11-write-succeeded.txt`, `11a`–`11c` (201 screenshots), `12-database-rows.txt`, `13-write-failed.txt`, `13a-first-attempt-wrong-tab.txt`, `13b-network-500.png`, `13c-rows-after-failure.txt`. All recorded on 30 October 2026.
+Evidence: `11-write-succeeded-logs.txt`, `11a`–`11c` (201 screenshots), `12-database-rows.txt` and `.png`, `13-write-failed-logs.txt`, `13a-first-attempt-wrong-tab.txt`, `13b-network-500.png`, `13c-rows-after-failure.txt`. All recorded on 30 October 2026.
 
 ## What a false success is
 
@@ -28,6 +28,16 @@ Order 1 was slower because Next.js compiled the API route on first use (910 ms).
 2. I submitted "femi test 2 · agbada · 50000 · 2500".
 3. The page showed **"Could not save the order"** in red. The Network tab showed **500** (`13b`). The log showed `[orders] write failed: PrismaClientKnownRequestError`, the error name only, with no customer details or connection string.
 4. I switched PostgreSQL back on and queried the table (`13c`): still 4 rows, no "femi test 2".
+
+## How a demo reviewer would have been fooled
+
+In a demo you see the screen, not the database. If the form had shown "Order saved" straight after clicking, without waiting for the server, the demo would look identical whether the database worked or not: same green message, same smooth flow. A reviewer clicking through would sign it off.
+
+What would give it away is only behind the screen:
+- the server log would show no `201` (a `500`, or no `POST /api/orders` at all);
+- the table would have no new row.
+
+That's why the evidence here is the log and the table, not the page. I broke the connection by stopping PostgreSQL, which is the same as pointing the URL at nothing: the app had no database to talk to.
 
 ## The 30-second check
 
