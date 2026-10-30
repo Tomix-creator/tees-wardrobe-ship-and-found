@@ -31,6 +31,8 @@ yarn-error.log*
 .env.*
 !.env.example
 
+# Generated Prisma Client
+/generated/prisma/
 
 # TypeScript
 *.tsbuildinfo
