@@ -15,3 +15,6 @@ coverage/
 
 # Logs
 *.log
+
+# Throwaway test folders (e.g. the nested-folder experiment)
+disposable-*/
