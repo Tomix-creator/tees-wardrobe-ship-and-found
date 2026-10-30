@@ -8,7 +8,7 @@ Tee told me her brand colour is sea green. My first guess was the standard web "
 
 1. **Generated in Figma.** I entered `#32B1AA` into the **Material Theme Builder** plugin. It produced five tonal families (primary, secondary, tertiary, neutral, neutral variant) with 18 tones each.
 2. **Before pinning** ([`01`](../evidence/01-palette-before-pin.png)): the plugin put `#006A65` at primary 40, a darker, duller teal. Tee's colour was absorbed and didn't appear anywhere in the primary column.
-3. **After pinning** ([`02`](../evidence/02-palette-after-pin.png), plus `02b`–`02e` for the other families): I put `#32B1AA` exactly at primary 40 and rebuilt the other primary tones around it. Tones 0–35 blend from black towards sea green; tones 50–100 blend from sea green towards white. The primary column is now visibly brighter and recognisably Tee's colour instead of a muted dark teal.
+3. **After pinning** ([`02`](../evidence/02-palette-after-pin.png), plus `02b`–`02e` for the other families): I put `#32B1AA` exactly at primary 40 and rebuilt the other primary tones around it with a script ([`scripts/palette/`](../scripts/palette/)). Tones 0–35 blend from black towards sea green; tones 50–100 blend from sea green towards white. The primary column is now visibly brighter and recognisably Tee's colour instead of a muted dark teal.
 
 The other four families were kept as the plugin generated them. Evidence `01` only shows the primary column, so I can't prove from saved images alone that the other families stayed identical.
 

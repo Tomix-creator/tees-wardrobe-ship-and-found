@@ -1,0 +1,1289 @@
+{
+  "$description": "PROPOSED brand-anchored primitives. Only primary shades differ from the preserved baseline. Custom sRGB black-brand-white scale with exact #32B1AA at slot 40; numbers are custom positions, not measured Material HCT tones. Other color families and brand source are unchanged. No semantic roles or aliases are changed. Review in Figma before using.",
+  "brand": {
+    "source": {
+      "$type": "color",
+      "$description": "Owner-approved brand source. This is separate from the generated primary tone 40.",
+      "$value": {
+        "colorSpace": "srgb",
+        "components": [
+          0.19607843137254902,
+          0.6941176470588235,
+          0.6666666666666666
+        ],
+        "alpha": 1,
+        "hex": "#32B1AA"
+      }
+    }
+  },
+  "primary": {
+    "0": {
+      "$type": "color",
+      "$description": "Custom brand scale slot 0; sRGB mixing through black at 0, exact brand at 40, white at 100. Slot is not a Material HCT tone.",
+      "$value": {
+        "colorSpace": "srgb",
+        "components": [
+          0,
+          0,
+          0
+        ],
+        "alpha": 1,
+        "hex": "#000000"
+      }
+    },
+    "5": {
+      "$type": "color",
+      "$description": "Custom brand scale slot 5; sRGB mixing through black at 0, exact brand at 40, white at 100. Slot is not a Material HCT tone.",
+      "$value": {
+        "colorSpace": "srgb",
+        "components": [
+          0.023529411764705882,
+          0.08627450980392157,
+          0.08235294117647059
+        ],
+        "alpha": 1,
+        "hex": "#061615"
+      }
+    },
+    "10": {
+      "$type": "color",
+      "$description": "Custom brand scale slot 10; sRGB mixing through black at 0, exact brand at 40, white at 100. Slot is not a Material HCT tone.",
+      "$value": {
+        "colorSpace": "srgb",
+        "components": [
+          0.050980392156862744,
+          0.17254901960784313,
+          0.16862745098039217
+        ],
+        "alpha": 1,
+        "hex": "#0D2C2B"
+      }
+    },
+    "15": {
+      "$type": "color",
+      "$description": "Custom brand scale slot 15; sRGB mixing through black at 0, exact brand at 40, white at 100. Slot is not a Material HCT tone.",
+      "$value": {
+        "colorSpace": "srgb",
+        "components": [
+          0.07450980392156863,
+          0.25882352941176473,
+          0.25098039215686274
+        ],
+        "alpha": 1,
+        "hex": "#134240"
+      }
+    },
+    "20": {
+      "$type": "color",
+      "$description": "Custom brand scale slot 20; sRGB mixing through black at 0, exact brand at 40, white at 100. Slot is not a Material HCT tone.",
+      "$value": {
+        "colorSpace": "srgb",
+        "components": [
+          0.09803921568627451,
+          0.34901960784313724,
+          0.3333333333333333
+        ],
+        "alpha": 1,
+        "hex": "#195955"
+      }
+    },
+    "25": {
+      "$type": "color",
+      "$description": "Custom brand scale slot 25; sRGB mixing through black at 0, exact brand at 40, white at 100. Slot is not a Material HCT tone.",
+      "$value": {
+        "colorSpace": "srgb",
+        "components": [
+          0.12156862745098039,
+          0.43529411764705883,
+          0.41568627450980394
+        ],
+        "alpha": 1,
+        "hex": "#1F6F6A"
+      }
+    },
+    "30": {
+      "$type": "color",
+      "$description": "Custom brand scale slot 30; sRGB mixing through black at 0, exact brand at 40, white at 100. Slot is not a Material HCT tone.",
+      "$value": {
+        "colorSpace": "srgb",
+        "components": [
+          0.14901960784313725,
+          0.5215686274509804,
+          0.5019607843137255
+        ],
+        "alpha": 1,
+        "hex": "#268580"
+      }
+    },
+    "35": {
+      "$type": "color",
+      "$description": "Custom brand scale slot 35; sRGB mixing through black at 0, exact brand at 40, white at 100. Slot is not a Material HCT tone.",
+      "$value": {
+        "colorSpace": "srgb",
+        "components": [
+          0.17254901960784313,
+          0.6078431372549019,
+          0.5843137254901961
+        ],
+        "alpha": 1,
+        "hex": "#2C9B95"
+      }
+    },
+    "40": {
+      "$type": "color",
+      "$description": "Custom brand scale slot 40; sRGB mixing through black at 0, exact brand at 40, white at 100. Slot is not a Material HCT tone.",
+      "$value": {
+        "colorSpace": "srgb",
+        "components": [
+          0.19607843137254902,
+          0.6941176470588235,
+          0.6666666666666666
+        ],
+        "alpha": 1,
+        "hex": "#32B1AA"
+      }
+    },
+    "50": {
+      "$type": "color",
+      "$description": "Custom brand scale slot 50; sRGB mixing through black at 0, exact brand at 40, white at 100. Slot is not a Material HCT tone.",
+      "$value": {
+        "colorSpace": "srgb",
+        "components": [
+          0.32941176470588235,
+          0.7450980392156863,
+          0.7215686274509804
+        ],
+        "alpha": 1,
+        "hex": "#54BEB8"
+      }
+    },
+    "60": {
+      "$type": "color",
+      "$description": "Custom brand scale slot 60; sRGB mixing through black at 0, exact brand at 40, white at 100. Slot is not a Material HCT tone.",
+      "$value": {
+        "colorSpace": "srgb",
+        "components": [
+          0.4627450980392157,
+          0.796078431372549,
+          0.7764705882352941
+        ],
+        "alpha": 1,
+        "hex": "#76CBC6"
+      }
+    },
+    "70": {
+      "$type": "color",
+      "$description": "Custom brand scale slot 70; sRGB mixing through black at 0, exact brand at 40, white at 100. Slot is not a Material HCT tone.",
+      "$value": {
+        "colorSpace": "srgb",
+        "components": [
+          0.6,
+          0.8470588235294118,
+          0.8352941176470589
+        ],
+        "alpha": 1,
+        "hex": "#99D8D5"
+      }
+    },
+    "80": {
+      "$type": "color",
+      "$description": "Custom brand scale slot 80; sRGB mixing through black at 0, exact brand at 40, white at 100. Slot is not a Material HCT tone.",
+      "$value": {
+        "colorSpace": "srgb",
+        "components": [
+          0.7333333333333333,
+          0.8980392156862745,
+          0.8901960784313725
+        ],
+        "alpha": 1,
+        "hex": "#BBE5E3"
+      }
+    },
+    "90": {
+      "$type": "color",
+      "$description": "Custom brand scale slot 90; sRGB mixing through black at 0, exact brand at 40, white at 100. Slot is not a Material HCT tone.",
+      "$value": {
+        "colorSpace": "srgb",
+        "components": [
+          0.8666666666666667,
+          0.9490196078431372,
+          0.9450980392156862
+        ],
+        "alpha": 1,
+        "hex": "#DDF2F1"
+      }
+    },
+    "95": {
+      "$type": "color",
+      "$description": "Custom brand scale slot 95; sRGB mixing through black at 0, exact brand at 40, white at 100. Slot is not a Material HCT tone.",
+      "$value": {
+        "colorSpace": "srgb",
+        "components": [
+          0.9333333333333333,
+          0.9764705882352941,
+          0.9725490196078431
+        ],
+        "alpha": 1,
+        "hex": "#EEF9F8"
+      }
+    },
+    "98": {
+      "$type": "color",
+      "$description": "Custom brand scale slot 98; sRGB mixing through black at 0, exact brand at 40, white at 100. Slot is not a Material HCT tone.",
+      "$value": {
+        "colorSpace": "srgb",
+        "components": [
+          0.9725490196078431,
+          0.9882352941176471,
+          0.9882352941176471
+        ],
+        "alpha": 1,
+        "hex": "#F8FCFC"
+      }
+    },
+    "99": {
+      "$type": "color",
+      "$description": "Custom brand scale slot 99; sRGB mixing through black at 0, exact brand at 40, white at 100. Slot is not a Material HCT tone.",
+      "$value": {
+        "colorSpace": "srgb",
+        "components": [
+          0.9882352941176471,
+          0.996078431372549,
+          0.996078431372549
+        ],
+        "alpha": 1,
+        "hex": "#FCFEFE"
+      }
+    },
+    "100": {
+      "$type": "color",
+      "$description": "Custom brand scale slot 100; sRGB mixing through black at 0, exact brand at 40, white at 100. Slot is not a Material HCT tone.",
+      "$value": {
+        "colorSpace": "srgb",
+        "components": [
+          1,
+          1,
+          1
+        ],
+        "alpha": 1,
+        "hex": "#FFFFFF"
+      }
+    }
+  },
+  "secondary": {
+    "0": {
+      "$type": "color",
+      "$description": "Unmodified Material Theme Builder export: secondary tone 0.",
+      "$value": {
+        "colorSpace": "srgb",
+        "components": [
+          0,
+          0,
+          0
+        ],
+        "alpha": 1,
+        "hex": "#000000"
+      }
+    },
+    "5": {
+      "$type": "color",
+      "$description": "Unmodified Material Theme Builder export: secondary tone 5.",
+      "$value": {
+        "colorSpace": "srgb",
+        "components": [
+          0,
+          0.0784313725490196,
+          0.07450980392156863
+        ],
+        "alpha": 1,
+        "hex": "#001413"
+      }
+    },
+    "10": {
+      "$type": "color",
+      "$description": "Unmodified Material Theme Builder export: secondary tone 10.",
+      "$value": {
+        "colorSpace": "srgb",
+        "components": [
+          0.03137254901960784,
+          0.12156862745098039,
+          0.11764705882352941
+        ],
+        "alpha": 1,
+        "hex": "#081F1E"
+      }
+    },
+    "15": {
+      "$type": "color",
+      "$description": "Unmodified Material Theme Builder export: secondary tone 15.",
+      "$value": {
+        "colorSpace": "srgb",
+        "components": [
+          0.07450980392156863,
+          0.1607843137254902,
+          0.1568627450980392
+        ],
+        "alpha": 1,
+        "hex": "#132928"
+      }
+    },
+    "20": {
+      "$type": "color",
+      "$description": "Unmodified Material Theme Builder export: secondary tone 20.",
+      "$value": {
+        "colorSpace": "srgb",
+        "components": [
+          0.11764705882352941,
+          0.20392156862745098,
+          0.19607843137254902
+        ],
+        "alpha": 1,
+        "hex": "#1E3432"
+      }
+    },
+    "25": {
+      "$type": "color",
+      "$description": "Unmodified Material Theme Builder export: secondary tone 25.",
+      "$value": {
+        "colorSpace": "srgb",
+        "components": [
+          0.1607843137254902,
+          0.24705882352941178,
+          0.24313725490196078
+        ],
+        "alpha": 1,
+        "hex": "#293F3E"
+      }
+    },
+    "30": {
+      "$type": "color",
+      "$description": "Unmodified Material Theme Builder export: secondary tone 30.",
+      "$value": {
+        "colorSpace": "srgb",
+        "components": [
+          0.20784313725490197,
+          0.29411764705882354,
+          0.28627450980392155
+        ],
+        "alpha": 1,
+        "hex": "#354B49"
+      }
+    },
+    "35": {
+      "$type": "color",
+      "$description": "Unmodified Material Theme Builder export: secondary tone 35.",
+      "$value": {
+        "colorSpace": "srgb",
+        "components": [
+          0.25098039215686274,
+          0.3411764705882353,
+          0.3333333333333333
+        ],
+        "alpha": 1,
+        "hex": "#405755"
+      }
+    },
+    "40": {
+      "$type": "color",
+      "$description": "Unmodified Material Theme Builder export: secondary tone 40.",
+      "$value": {
+        "colorSpace": "srgb",
+        "components": [
+          0.2980392156862745,
+          0.38823529411764707,
+          0.3764705882352941
+        ],
+        "alpha": 1,
+        "hex": "#4C6360"
+      }
+    },
+    "50": {
+      "$type": "color",
+      "$description": "Unmodified Material Theme Builder export: secondary tone 50.",
+      "$value": {
+        "colorSpace": "srgb",
+        "components": [
+          0.39215686274509803,
+          0.48627450980392156,
+          0.4745098039215686
+        ],
+        "alpha": 1,
+        "hex": "#647C79"
+      }
+    },
+    "60": {
+      "$type": "color",
+      "$description": "Unmodified Material Theme Builder export: secondary tone 60.",
+      "$value": {
+        "colorSpace": "srgb",
+        "components": [
+          0.49411764705882355,
+          0.5843137254901961,
+          0.5764705882352941
+        ],
+        "alpha": 1,
+        "hex": "#7E9593"
+      }
+    },
+    "70": {
+      "$type": "color",
+      "$description": "Unmodified Material Theme Builder export: secondary tone 70.",
+      "$value": {
+        "colorSpace": "srgb",
+        "components": [
+          0.596078431372549,
+          0.6901960784313725,
+          0.6784313725490196
+        ],
+        "alpha": 1,
+        "hex": "#98B0AD"
+      }
+    },
+    "80": {
+      "$type": "color",
+      "$description": "Unmodified Material Theme Builder export: secondary tone 80.",
+      "$value": {
+        "colorSpace": "srgb",
+        "components": [
+          0.7019607843137254,
+          0.796078431372549,
+          0.7843137254901961
+        ],
+        "alpha": 1,
+        "hex": "#B3CBC8"
+      }
+    },
+    "90": {
+      "$type": "color",
+      "$description": "Unmodified Material Theme Builder export: secondary tone 90.",
+      "$value": {
+        "colorSpace": "srgb",
+        "components": [
+          0.8117647058823529,
+          0.9098039215686274,
+          0.8941176470588236
+        ],
+        "alpha": 1,
+        "hex": "#CFE8E4"
+      }
+    },
+    "95": {
+      "$type": "color",
+      "$description": "Unmodified Material Theme Builder export: secondary tone 95.",
+      "$value": {
+        "colorSpace": "srgb",
+        "components": [
+          0.8666666666666667,
+          0.9647058823529412,
+          0.9529411764705882
+        ],
+        "alpha": 1,
+        "hex": "#DDF6F3"
+      }
+    },
+    "98": {
+      "$type": "color",
+      "$description": "Unmodified Material Theme Builder export: secondary tone 98.",
+      "$value": {
+        "colorSpace": "srgb",
+        "components": [
+          0.8980392156862745,
+          1,
+          0.984313725490196
+        ],
+        "alpha": 1,
+        "hex": "#E5FFFB"
+      }
+    },
+    "99": {
+      "$type": "color",
+      "$description": "Unmodified Material Theme Builder export: secondary tone 99.",
+      "$value": {
+        "colorSpace": "srgb",
+        "components": [
+          0.9490196078431372,
+          1,
+          0.9921568627450981
+        ],
+        "alpha": 1,
+        "hex": "#F2FFFD"
+      }
+    },
+    "100": {
+      "$type": "color",
+      "$description": "Unmodified Material Theme Builder export: secondary tone 100.",
+      "$value": {
+        "colorSpace": "srgb",
+        "components": [
+          1,
+          1,
+          1
+        ],
+        "alpha": 1,
+        "hex": "#FFFFFF"
+      }
+    }
+  },
+  "tertiary": {
+    "0": {
+      "$type": "color",
+      "$description": "Unmodified Material Theme Builder export: tertiary tone 0.",
+      "$value": {
+        "colorSpace": "srgb",
+        "components": [
+          0,
+          0,
+          0
+        ],
+        "alpha": 1,
+        "hex": "#000000"
+      }
+    },
+    "5": {
+      "$type": "color",
+      "$description": "Unmodified Material Theme Builder export: tertiary tone 5.",
+      "$value": {
+        "colorSpace": "srgb",
+        "components": [
+          0,
+          0.07058823529411765,
+          0.13725490196078433
+        ],
+        "alpha": 1,
+        "hex": "#001223"
+      }
+    },
+    "10": {
+      "$type": "color",
+      "$description": "Unmodified Material Theme Builder export: tertiary tone 10.",
+      "$value": {
+        "colorSpace": "srgb",
+        "components": [
+          0.01568627450980392,
+          0.11372549019607843,
+          0.19607843137254902
+        ],
+        "alpha": 1,
+        "hex": "#041D32"
+      }
+    },
+    "15": {
+      "$type": "color",
+      "$description": "Unmodified Material Theme Builder export: tertiary tone 15.",
+      "$value": {
+        "colorSpace": "srgb",
+        "components": [
+          0.06274509803921569,
+          0.15294117647058825,
+          0.23529411764705882
+        ],
+        "alpha": 1,
+        "hex": "#10273C"
+      }
+    },
+    "20": {
+      "$type": "color",
+      "$description": "Unmodified Material Theme Builder export: tertiary tone 20.",
+      "$value": {
+        "colorSpace": "srgb",
+        "components": [
+          0.10980392156862745,
+          0.19607843137254902,
+          0.2823529411764706
+        ],
+        "alpha": 1,
+        "hex": "#1C3248"
+      }
+    },
+    "25": {
+      "$type": "color",
+      "$description": "Unmodified Material Theme Builder export: tertiary tone 25.",
+      "$value": {
+        "colorSpace": "srgb",
+        "components": [
+          0.1568627450980392,
+          0.23921568627450981,
+          0.3254901960784314
+        ],
+        "alpha": 1,
+        "hex": "#283D53"
+      }
+    },
+    "30": {
+      "$type": "color",
+      "$description": "Unmodified Material Theme Builder export: tertiary tone 30.",
+      "$value": {
+        "colorSpace": "srgb",
+        "components": [
+          0.2,
+          0.2823529411764706,
+          0.37254901960784315
+        ],
+        "alpha": 1,
+        "hex": "#33485F"
+      }
+    },
+    "35": {
+      "$type": "color",
+      "$description": "Unmodified Material Theme Builder export: tertiary tone 35.",
+      "$value": {
+        "colorSpace": "srgb",
+        "components": [
+          0.24705882352941178,
+          0.32941176470588235,
+          0.4196078431372549
+        ],
+        "alpha": 1,
+        "hex": "#3F546B"
+      }
+    },
+    "40": {
+      "$type": "color",
+      "$description": "Unmodified Material Theme Builder export: tertiary tone 40.",
+      "$value": {
+        "colorSpace": "srgb",
+        "components": [
+          0.29411764705882354,
+          0.3764705882352941,
+          0.47058823529411764
+        ],
+        "alpha": 1,
+        "hex": "#4B6078"
+      }
+    },
+    "50": {
+      "$type": "color",
+      "$description": "Unmodified Material Theme Builder export: tertiary tone 50.",
+      "$value": {
+        "colorSpace": "srgb",
+        "components": [
+          0.39215686274509803,
+          0.4745098039215686,
+          0.5725490196078431
+        ],
+        "alpha": 1,
+        "hex": "#647992"
+      }
+    },
+    "60": {
+      "$type": "color",
+      "$description": "Unmodified Material Theme Builder export: tertiary tone 60.",
+      "$value": {
+        "colorSpace": "srgb",
+        "components": [
+          0.49019607843137253,
+          0.5764705882352941,
+          0.6745098039215687
+        ],
+        "alpha": 1,
+        "hex": "#7D93AC"
+      }
+    },
+    "70": {
+      "$type": "color",
+      "$description": "Unmodified Material Theme Builder export: tertiary tone 70.",
+      "$value": {
+        "colorSpace": "srgb",
+        "components": [
+          0.592156862745098,
+          0.6784313725490196,
+          0.7843137254901961
+        ],
+        "alpha": 1,
+        "hex": "#97ADC8"
+      }
+    },
+    "80": {
+      "$type": "color",
+      "$description": "Unmodified Material Theme Builder export: tertiary tone 80.",
+      "$value": {
+        "colorSpace": "srgb",
+        "components": [
+          0.7019607843137254,
+          0.788235294117647,
+          0.8941176470588236
+        ],
+        "alpha": 1,
+        "hex": "#B3C9E4"
+      }
+    },
+    "90": {
+      "$type": "color",
+      "$description": "Unmodified Material Theme Builder export: tertiary tone 90.",
+      "$value": {
+        "colorSpace": "srgb",
+        "components": [
+          0.8156862745098039,
+          0.8941176470588236,
+          1
+        ],
+        "alpha": 1,
+        "hex": "#D0E4FF"
+      }
+    },
+    "95": {
+      "$type": "color",
+      "$description": "Unmodified Material Theme Builder export: tertiary tone 95.",
+      "$value": {
+        "colorSpace": "srgb",
+        "components": [
+          0.9137254901960784,
+          0.9450980392156862,
+          1
+        ],
+        "alpha": 1,
+        "hex": "#E9F1FF"
+      }
+    },
+    "98": {
+      "$type": "color",
+      "$description": "Unmodified Material Theme Builder export: tertiary tone 98.",
+      "$value": {
+        "colorSpace": "srgb",
+        "components": [
+          0.9725490196078431,
+          0.9764705882352941,
+          1
+        ],
+        "alpha": 1,
+        "hex": "#F8F9FF"
+      }
+    },
+    "99": {
+      "$type": "color",
+      "$description": "Unmodified Material Theme Builder export: tertiary tone 99.",
+      "$value": {
+        "colorSpace": "srgb",
+        "components": [
+          0.9882352941176471,
+          0.9882352941176471,
+          1
+        ],
+        "alpha": 1,
+        "hex": "#FCFCFF"
+      }
+    },
+    "100": {
+      "$type": "color",
+      "$description": "Unmodified Material Theme Builder export: tertiary tone 100.",
+      "$value": {
+        "colorSpace": "srgb",
+        "components": [
+          1,
+          1,
+          1
+        ],
+        "alpha": 1,
+        "hex": "#FFFFFF"
+      }
+    }
+  },
+  "neutral": {
+    "0": {
+      "$type": "color",
+      "$description": "Unmodified Material Theme Builder export: neutral tone 0.",
+      "$value": {
+        "colorSpace": "srgb",
+        "components": [
+          0,
+          0,
+          0
+        ],
+        "alpha": 1,
+        "hex": "#000000"
+      }
+    },
+    "5": {
+      "$type": "color",
+      "$description": "Unmodified Material Theme Builder export: neutral tone 5.",
+      "$value": {
+        "colorSpace": "srgb",
+        "components": [
+          0.054901960784313725,
+          0.07058823529411765,
+          0.06666666666666667
+        ],
+        "alpha": 1,
+        "hex": "#0E1211"
+      }
+    },
+    "10": {
+      "$type": "color",
+      "$description": "Unmodified Material Theme Builder export: neutral tone 10.",
+      "$value": {
+        "colorSpace": "srgb",
+        "components": [
+          0.09803921568627451,
+          0.10980392156862745,
+          0.10980392156862745
+        ],
+        "alpha": 1,
+        "hex": "#191C1C"
+      }
+    },
+    "15": {
+      "$type": "color",
+      "$description": "Unmodified Material Theme Builder export: neutral tone 15.",
+      "$value": {
+        "colorSpace": "srgb",
+        "components": [
+          0.13725490196078433,
+          0.14901960784313725,
+          0.14901960784313725
+        ],
+        "alpha": 1,
+        "hex": "#232626"
+      }
+    },
+    "20": {
+      "$type": "color",
+      "$description": "Unmodified Material Theme Builder export: neutral tone 20.",
+      "$value": {
+        "colorSpace": "srgb",
+        "components": [
+          0.1803921568627451,
+          0.19215686274509805,
+          0.18823529411764706
+        ],
+        "alpha": 1,
+        "hex": "#2E3130"
+      }
+    },
+    "25": {
+      "$type": "color",
+      "$description": "Unmodified Material Theme Builder export: neutral tone 25.",
+      "$value": {
+        "colorSpace": "srgb",
+        "components": [
+          0.2235294117647059,
+          0.23529411764705882,
+          0.23137254901960785
+        ],
+        "alpha": 1,
+        "hex": "#393C3B"
+      }
+    },
+    "30": {
+      "$type": "color",
+      "$description": "Unmodified Material Theme Builder export: neutral tone 30.",
+      "$value": {
+        "colorSpace": "srgb",
+        "components": [
+          0.26666666666666666,
+          0.2784313725490196,
+          0.2784313725490196
+        ],
+        "alpha": 1,
+        "hex": "#444747"
+      }
+    },
+    "35": {
+      "$type": "color",
+      "$description": "Unmodified Material Theme Builder export: neutral tone 35.",
+      "$value": {
+        "colorSpace": "srgb",
+        "components": [
+          0.3137254901960784,
+          0.3254901960784314,
+          0.3215686274509804
+        ],
+        "alpha": 1,
+        "hex": "#505352"
+      }
+    },
+    "40": {
+      "$type": "color",
+      "$description": "Unmodified Material Theme Builder export: neutral tone 40.",
+      "$value": {
+        "colorSpace": "srgb",
+        "components": [
+          0.3607843137254902,
+          0.37254901960784315,
+          0.3686274509803922
+        ],
+        "alpha": 1,
+        "hex": "#5C5F5E"
+      }
+    },
+    "50": {
+      "$type": "color",
+      "$description": "Unmodified Material Theme Builder export: neutral tone 50.",
+      "$value": {
+        "colorSpace": "srgb",
+        "components": [
+          0.4588235294117647,
+          0.47058823529411764,
+          0.4666666666666667
+        ],
+        "alpha": 1,
+        "hex": "#757877"
+      }
+    },
+    "60": {
+      "$type": "color",
+      "$description": "Unmodified Material Theme Builder export: neutral tone 60.",
+      "$value": {
+        "colorSpace": "srgb",
+        "components": [
+          0.5568627450980392,
+          0.5686274509803921,
+          0.5647058823529412
+        ],
+        "alpha": 1,
+        "hex": "#8E9190"
+      }
+    },
+    "70": {
+      "$type": "color",
+      "$description": "Unmodified Material Theme Builder export: neutral tone 70.",
+      "$value": {
+        "colorSpace": "srgb",
+        "components": [
+          0.6627450980392157,
+          0.6745098039215687,
+          0.6705882352941176
+        ],
+        "alpha": 1,
+        "hex": "#A9ACAB"
+      }
+    },
+    "80": {
+      "$type": "color",
+      "$description": "Unmodified Material Theme Builder export: neutral tone 80.",
+      "$value": {
+        "colorSpace": "srgb",
+        "components": [
+          0.7725490196078432,
+          0.7803921568627451,
+          0.7764705882352941
+        ],
+        "alpha": 1,
+        "hex": "#C5C7C6"
+      }
+    },
+    "90": {
+      "$type": "color",
+      "$description": "Unmodified Material Theme Builder export: neutral tone 90.",
+      "$value": {
+        "colorSpace": "srgb",
+        "components": [
+          0.8823529411764706,
+          0.8901960784313725,
+          0.8862745098039215
+        ],
+        "alpha": 1,
+        "hex": "#E1E3E2"
+      }
+    },
+    "95": {
+      "$type": "color",
+      "$description": "Unmodified Material Theme Builder export: neutral tone 95.",
+      "$value": {
+        "colorSpace": "srgb",
+        "components": [
+          0.9372549019607843,
+          0.9450980392156862,
+          0.9411764705882353
+        ],
+        "alpha": 1,
+        "hex": "#EFF1F0"
+      }
+    },
+    "98": {
+      "$type": "color",
+      "$description": "Unmodified Material Theme Builder export: neutral tone 98.",
+      "$value": {
+        "colorSpace": "srgb",
+        "components": [
+          0.9725490196078431,
+          0.9803921568627451,
+          0.9725490196078431
+        ],
+        "alpha": 1,
+        "hex": "#F8FAF8"
+      }
+    },
+    "99": {
+      "$type": "color",
+      "$description": "Unmodified Material Theme Builder export: neutral tone 99.",
+      "$value": {
+        "colorSpace": "srgb",
+        "components": [
+          0.984313725490196,
+          0.9921568627450981,
+          0.984313725490196
+        ],
+        "alpha": 1,
+        "hex": "#FBFDFB"
+      }
+    },
+    "100": {
+      "$type": "color",
+      "$description": "Unmodified Material Theme Builder export: neutral tone 100.",
+      "$value": {
+        "colorSpace": "srgb",
+        "components": [
+          1,
+          1,
+          1
+        ],
+        "alpha": 1,
+        "hex": "#FFFFFF"
+      }
+    }
+  },
+  "neutral-variant": {
+    "0": {
+      "$type": "color",
+      "$description": "Unmodified Material Theme Builder export: neutral-variant tone 0.",
+      "$value": {
+        "colorSpace": "srgb",
+        "components": [
+          0,
+          0,
+          0
+        ],
+        "alpha": 1,
+        "hex": "#000000"
+      }
+    },
+    "5": {
+      "$type": "color",
+      "$description": "Unmodified Material Theme Builder export: neutral-variant tone 5.",
+      "$value": {
+        "colorSpace": "srgb",
+        "components": [
+          0.0392156862745098,
+          0.07058823529411765,
+          0.07058823529411765
+        ],
+        "alpha": 1,
+        "hex": "#0A1212"
+      }
+    },
+    "10": {
+      "$type": "color",
+      "$description": "Unmodified Material Theme Builder export: neutral-variant tone 10.",
+      "$value": {
+        "colorSpace": "srgb",
+        "components": [
+          0.08235294117647059,
+          0.11372549019607843,
+          0.10980392156862745
+        ],
+        "alpha": 1,
+        "hex": "#151D1C"
+      }
+    },
+    "15": {
+      "$type": "color",
+      "$description": "Unmodified Material Theme Builder export: neutral-variant tone 15.",
+      "$value": {
+        "colorSpace": "srgb",
+        "components": [
+          0.12156862745098039,
+          0.15294117647058825,
+          0.14901960784313725
+        ],
+        "alpha": 1,
+        "hex": "#1F2726"
+      }
+    },
+    "20": {
+      "$type": "color",
+      "$description": "Unmodified Material Theme Builder export: neutral-variant tone 20.",
+      "$value": {
+        "colorSpace": "srgb",
+        "components": [
+          0.1607843137254902,
+          0.19607843137254902,
+          0.19215686274509805
+        ],
+        "alpha": 1,
+        "hex": "#293231"
+      }
+    },
+    "25": {
+      "$type": "color",
+      "$description": "Unmodified Material Theme Builder export: neutral-variant tone 25.",
+      "$value": {
+        "colorSpace": "srgb",
+        "components": [
+          0.20392156862745098,
+          0.23921568627450981,
+          0.23529411764705882
+        ],
+        "alpha": 1,
+        "hex": "#343D3C"
+      }
+    },
+    "30": {
+      "$type": "color",
+      "$description": "Unmodified Material Theme Builder export: neutral-variant tone 30.",
+      "$value": {
+        "colorSpace": "srgb",
+        "components": [
+          0.25098039215686274,
+          0.2823529411764706,
+          0.2784313725490196
+        ],
+        "alpha": 1,
+        "hex": "#404847"
+      }
+    },
+    "35": {
+      "$type": "color",
+      "$description": "Unmodified Material Theme Builder export: neutral-variant tone 35.",
+      "$value": {
+        "colorSpace": "srgb",
+        "components": [
+          0.29411764705882354,
+          0.32941176470588235,
+          0.3254901960784314
+        ],
+        "alpha": 1,
+        "hex": "#4B5453"
+      }
+    },
+    "40": {
+      "$type": "color",
+      "$description": "Unmodified Material Theme Builder export: neutral-variant tone 40.",
+      "$value": {
+        "colorSpace": "srgb",
+        "components": [
+          0.3411764705882353,
+          0.3764705882352941,
+          0.37254901960784315
+        ],
+        "alpha": 1,
+        "hex": "#57605F"
+      }
+    },
+    "50": {
+      "$type": "color",
+      "$description": "Unmodified Material Theme Builder export: neutral-variant tone 50.",
+      "$value": {
+        "colorSpace": "srgb",
+        "components": [
+          0.4392156862745098,
+          0.4745098039215686,
+          0.47058823529411764
+        ],
+        "alpha": 1,
+        "hex": "#707978"
+      }
+    },
+    "60": {
+      "$type": "color",
+      "$description": "Unmodified Material Theme Builder export: neutral-variant tone 60.",
+      "$value": {
+        "colorSpace": "srgb",
+        "components": [
+          0.5372549019607843,
+          0.5764705882352941,
+          0.5686274509803921
+        ],
+        "alpha": 1,
+        "hex": "#899391"
+      }
+    },
+    "70": {
+      "$type": "color",
+      "$description": "Unmodified Material Theme Builder export: neutral-variant tone 70.",
+      "$value": {
+        "colorSpace": "srgb",
+        "components": [
+          0.6431372549019608,
+          0.6784313725490196,
+          0.6705882352941176
+        ],
+        "alpha": 1,
+        "hex": "#A4ADAB"
+      }
+    },
+    "80": {
+      "$type": "color",
+      "$description": "Unmodified Material Theme Builder export: neutral-variant tone 80.",
+      "$value": {
+        "colorSpace": "srgb",
+        "components": [
+          0.7490196078431373,
+          0.7843137254901961,
+          0.7803921568627451
+        ],
+        "alpha": 1,
+        "hex": "#BFC8C7"
+      }
+    },
+    "90": {
+      "$type": "color",
+      "$description": "Unmodified Material Theme Builder export: neutral-variant tone 90.",
+      "$value": {
+        "colorSpace": "srgb",
+        "components": [
+          0.8588235294117647,
+          0.8941176470588236,
+          0.8862745098039215
+        ],
+        "alpha": 1,
+        "hex": "#DBE4E2"
+      }
+    },
+    "95": {
+      "$type": "color",
+      "$description": "Unmodified Material Theme Builder export: neutral-variant tone 95.",
+      "$value": {
+        "colorSpace": "srgb",
+        "components": [
+          0.9176470588235294,
+          0.9529411764705882,
+          0.9450980392156862
+        ],
+        "alpha": 1,
+        "hex": "#EAF3F1"
+      }
+    },
+    "98": {
+      "$type": "color",
+      "$description": "Unmodified Material Theme Builder export: neutral-variant tone 98.",
+      "$value": {
+        "colorSpace": "srgb",
+        "components": [
+          0.9490196078431372,
+          0.984313725490196,
+          0.9764705882352941
+        ],
+        "alpha": 1,
+        "hex": "#F2FBF9"
+      }
+    },
+    "99": {
+      "$type": "color",
+      "$description": "Unmodified Material Theme Builder export: neutral-variant tone 99.",
+      "$value": {
+        "colorSpace": "srgb",
+        "components": [
+          0.9607843137254902,
+          0.996078431372549,
+          0.9882352941176471
+        ],
+        "alpha": 1,
+        "hex": "#F5FEFC"
+      }
+    },
+    "100": {
+      "$type": "color",
+      "$description": "Unmodified Material Theme Builder export: neutral-variant tone 100.",
+      "$value": {
+        "colorSpace": "srgb",
+        "components": [
+          1,
+          1,
+          1
+        ],
+        "alpha": 1,
+        "hex": "#FFFFFF"
+      }
+    }
+  }
+}
