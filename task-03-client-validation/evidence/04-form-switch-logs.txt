@@ -1,0 +1,28 @@
+Server log while switching between the three forms
+Date: 31 October 2026, about 23:15
+Branch: feature/task-03-auth-pages (dev server: npm run dev, Next.js 15.3.9, port 3000)
+
+What I did:
+1. Cleared the dev server's terminal (Command Palette -> "Terminal: Clear").
+2. In Chrome, opened http://localhost:3000/account once (pressed Enter one time).
+3. Without reloading, switched between Sign up, Log in and Forgot password 12 times,
+   using the links under each form. The address bar changed each time
+   (?form=signup / ?form=login / ?form=reset), see 03-url-states.png.
+4. Copied everything in the terminal.
+
+The complete server log after all 12 switches:
+
+ GET /account 200 in 128ms
+
+What it shows:
+- One request: the first page load. The 12 switches added no lines at all, so
+  the browser asked the server for nothing and the page never reloaded.
+- No session: the app has no logins or sessions yet (that is Task Four), so
+  there is no session that could be created. What the log proves is that
+  switching forms makes no server request of any kind.
+
+For comparison, before the change each form was its own page, so every switch
+was a full page request, for example (from my terminal earlier the same evening):
+ GET /signup 200 in 125ms
+ GET /login 200 in 986ms
+ GET /reset-password 200 in 375ms
