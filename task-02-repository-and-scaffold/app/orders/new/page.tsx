@@ -1,7 +1,6 @@
 "use client";
 
 import React, { useState } from "react";
-import Link from "next/link";
 
 export default function NewOrderPage() {
   const [customerName, setCustomerName] = useState("");
@@ -96,22 +95,6 @@ export default function NewOrderPage() {
 
   return (
     <div className="container" style={{ paddingTop: "var(--space-xl)", paddingBottom: "var(--space-2xl)" }}>
-      <nav style={{ marginBottom: "var(--space-lg)" }}>
-        <Link
-          href="/"
-          className="type-label-medium"
-          style={{
-            color: "var(--color-role-on-surface)",
-            textDecoration: "underline",
-            display: "inline-flex",
-            alignItems: "center",
-            gap: "var(--space-3xs)",
-          }}
-        >
-          &larr; Back to home
-        </Link>
-      </nav>
-
       <header style={{ marginBottom: "var(--space-lg)" }}>
         <h1
           className="type-headline-large"
