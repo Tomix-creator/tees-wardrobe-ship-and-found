@@ -1,165 +1,160 @@
-# Tee’s Wardrobe — Task Two Application Scaffold
+# Tee’s Wardrobe: Task Two, scaffold and first database write
 
-Initial application scaffold for **Tee’s Wardrobe**, built with **Next.js 15** (v15.3.9), **React 19** (v19.0.0), and **TypeScript** (v5.4.5) using the Next.js App Router architecture on Node.js v22.
+## What this is
 
----
+An order book for Tee’s Wardrobe, a small bespoke clothing business, that lets Tee record a customer's order once, and must never say an order was saved when it wasn't.
 
-## 1. Scope & Purpose
+## The task in four minutes
 
-This repository scaffold implements the foundational client frame and minimal home screen for Tee’s Wardrobe. Per the scaffolding phase requirements:
-- **Included**: Next.js App Router setup, TypeScript configuration, design token integration, harmonic spacing scale, accessible minimal home screen shell, and automated token parity verification.
-- **Intentionally Deferred**: Database persistence (Prisma ORM, PostgreSQL), order submission forms, inventory management, customer measurements database, and authentication / role-based access control (RBAC). Note: `package.json` already lists `prisma` and `@prisma/client`, at mismatched versions (8 pre-release vs 7); nothing uses them yet, and they get fixed in Step 6.
-- **Home Screen Controls**: All feature entrypoint buttons (Order Tracking, Catalog) are explicitly labeled as planned features and rendered in a disabled state. No active database or form submission logic is present in this scaffold.
+**What the task was:** scaffold a real app from my Task One design system using an AI agent, break it three ways and recover, make it write to a database, prove it can't fake a save, use Git branches and pull requests properly, and apply information design to the home page.
 
----
+**What I built:** a Next.js app with one working feature, a "New order" form that saves to PostgreSQL. It shows "Order saved" only when the server replies 201 with the new row's id.
 
-## 2. Design System Integration & Token Management
+**What I decided:**
+- A blank delivery fee is stored as empty, not 0, so "awaiting a quote" can't become "free delivery".
+- The server checks every field, because the browser can't be trusted.
+- The home page offers one button instead of three, because two of them led to features that don't exist.
 
-Colours, type and spacing come from the Tee’s Wardrobe design system's CSS variables: there are no hex colours in `app/`. A few pixel values remain: 1px borders, the 2px focus outline and its offset, and a 480px maximum width in `app/globals.css:78`.
+**What I got wrong** is written up in [`docs/false-success.md`](docs/false-success.md), [`docs/information-design.md`](docs/information-design.md) and [`docs/defects.md`](docs/defects.md). For example:
+- I typed the "stop the database" command into the busy server tab, so my first false-success test didn't test anything.
+- I trusted an agent's word count.
+- I let an agent run a build while my dev server was running, which crashed it.
 
-### Design Tokens & Shadow Names
-- Colors and typography are loaded from the Task One design token stylesheet (`tokens.css`).
-- Shadows use the exact token values and names from the Task One CSS:
-  - `--shadow-soft`: `0px 2px 8px 0px #0d2c2b1f`
-  - `--shadow-medium`: `0px 6px 16px 0px #0d2c2b29`
-  - `--shadow-hard`: `0px 10px 16px 0px #0d2c2b3d`
-- Associated utility classes `.shadow-soft`, `.shadow-medium`, and `.shadow-hard` are provided.
+## Status
 
-### Spacing Scale
-Because Task One had no spacing tokens, an 8-step harmonic spacing scale rooted in a 4px/8px modular grid was introduced at `task-01-design-system/css/spacing.css` and documented in `task-01-design-system/docs/spacing.md`:
-- `--space-3xs`: `0.125rem` (2px) — hairline borders, fine indicators
-- `--space-2xs`: `0.25rem` (4px) — badge padding, tight element gaps
-- `--space-xs`: `0.5rem` (8px) — base grid unit, icon gaps, compact button padding
-- `--space-sm`: `0.75rem` (12px) — intermediate element separation
-- `--space-md`: `1rem` (16px) — standard card padding, component margins
-- `--space-lg`: `1.5rem` (24px) — section headers, major card padding
-- `--space-xl`: `2rem` (32px) — page section gaps, header offsets
-- `--space-2xl`: `3rem` (48px) — bottom page gutter, container separation
+| | |
+|---|---|
+| **Finished** | Scaffold from the Task One tokens (Steps 1–3). Server start and first load measured (Step 4). Three breakages recovered (Step 5). Order form saving to PostgreSQL, with the false success disproved (Step 6). Hand-drawn working tree (Step 8). Three branches merged through pull requests, plus one deleted unmerged (Step 9). Information design and responsive heading (Step 10) |
+| **Half done** | This README has been rewritten to match my evidence, and I rehearsed the setup steps from a fresh clone, but it **hasn't yet been tested on another person** (Step 7). The result will go in `docs/readme-test.md` |
+| **Not started** | Viewing, editing or deleting orders. Logins. Deployment. Those belong to later tasks |
 
-### Token Synchronization & Parity Enforcement
-Next.js CSS bundlers require stylesheets imported by `@import` in `globals.css` to reside within the application module tree (`styles/`). To maintain the Task One stylesheets as the single source of truth without relying on brittle relative paths across directories:
-1. `styles/tokens.css` and `styles/spacing.css` are tracked copies synchronized directly from `../task-01-design-system/css/`.
-2. **`npm run sync:tokens`** (`scripts/sync-tokens.js`): Copies `tokens.css` and `spacing.css` from `task-01-design-system/css/` to `styles/`.
-3. **`npm run check:tokens`** (`scripts/check-tokens.js`): Computes cryptographic SHA-256 hashes of both source files and local copies. It asserts identical checksums and fails with exit code 1 if any drift occurs.
-4. **Automated Build Check**: `npm run build` runs `prebuild` which automatically executes `node scripts/check-tokens.js`. If token copies ever drift from the canonical Task One stylesheets, the build aborts immediately.
+Pull requests: [#1 order form](https://github.com/Tomix-creator/tees-wardrobe-ship-and-found/pull/1) · [#2 working tree](https://github.com/Tomix-creator/tees-wardrobe-ship-and-found/pull/2) · [#3 information design](https://github.com/Tomix-creator/tees-wardrobe-ship-and-found/pull/3)
 
+## The stack, with reasons
 
----
+| Choice | Why this, rather than the alternative |
+|---|---|
+| **Next.js 15 (App Router) + React 19** | The form page and the API that saves it live in one project. The agent's first plan offered an Express server or a plain static server ([`evidence/01-agent-plan.txt`](evidence/01-agent-plan.txt)). A static server can't save anything to a database, and Express would have meant building and connecting two projects myself |
+| **TypeScript** | With Prisma's generated types, a wrong field name (`price` instead of `priceNaira`) fails before the code runs, instead of in front of Tee |
+| **PostgreSQL 17** | A database server that refuses bad data by itself (a missing name, a price too big for its column). SQLite would be simpler to set up, but it's a single file and is far more forgiving about types. PostgreSQL is what a deployed version would run on |
+| **Prisma 7.10.1** | Builds the table from a short schema file and keeps a history of changes as migrations. Both Prisma packages are pinned to the same version, because the scaffold shipped them mismatched (8 pre-release vs 7) |
+| **CSS variables from Task One** | Colour, type and spacing come from `styles/tokens.css` and `styles/spacing.css`. These are copies of the Task One files, and `npm run build` refuses to run if they drift ([`scripts/check-tokens.js`](scripts/check-tokens.js)). A UI library would have brought its own design instead of mine |
 
-## 3. Project Structure
+## Getting started
 
-```
-task-02-repository-and-scaffold/
-├── app/
-│   ├── globals.css         # Global CSS importing tokens.css and spacing.css, reset & buttons
-│   ├── layout.tsx          # Root Next.js layout, SEO metadata, viewport, OpenGraph
-│   └── page.tsx            # Minimal home screen shell consuming design system tokens
-├── docs/
-│   ├── performance-note.md # Step 4 analysis of cold vs warm load, JIT compilation, and gaps
-│   └── scaffold-prompt.md  # Step 3 prompt engineering record (original draft, revised, rationale)
-├── evidence/
-│   ├── 01-agent-plan.txt           # Pre-approval initial plan (proposed Node.js/Express or static server)
-│   ├── 01-agent-plan-revised.txt   # Pre-approval revised plan (aligned to Next.js with TypeScript)
-│   ├── 02-files-created.txt        # Comprehensive audit log of created files & assumptions
-│   ├── 03-server-startup.txt       # Initial server build, token parity verification & port 3000 startup
-│   ├── 03-server-start.txt         # Dev server startup log on port 3000 (Ready in 10.9s)
-│   ├── 04-first-load.txt           # First cold load (33.9s) vs warm load (268ms) latency log
-│   ├── 05-nested-folder-error.txt  # Step 5.1 diagnostic: ENOENT error when run from parent folder
-│   ├── 06-nested-folder-fixed.txt  # Step 5.1 recovery: cd into app vs root assembly demonstration
-│   ├── 07-port-conflict.txt        # Step 5.2 diagnostic: EADDRINUSE on test port 3001 (PID 83510)
-│   ├── 08-port-conflict-resolved.txt# Step 5.2 recovery: process termination & clean restart
-│   ├── 09-404-error.txt            # Step 5.3 diagnostic: App Router 404 error log & latency on port 3002
-│   └── 10-404-resolved.txt         # Step 5.3 recovery: restoration of app/page.tsx & hot-reload verification
-├── public/
-│   └── favicon.svg         # Brand SVG icon (Sea Green #32B1AA)
-├── scripts/
-│   ├── check-tokens.js     # Automated SHA-256 parity verification script
-│   └── sync-tokens.js      # Repeatable token synchronization script
-├── styles/
-│   ├── spacing.css         # Synced copy of Task One spacing scale
-│   └── tokens.css          # Synced copy of Task One design tokens
-├── next.config.mjs         # Next.js configuration
-├── package.json            # Node package manifest and scripts
-├── README.md               # Scaffold documentation
-└── tsconfig.json           # TypeScript configuration with @/* alias
-```
+Tested from a fresh clone on 31 October 2026 (macOS, Node 22.23.1, npm 10.9.8, PostgreSQL 17.11 from Homebrew).
 
----
+**You need:** [Node.js](https://nodejs.org) 18.18 or newer, Git, and PostgreSQL. On a Mac with [Homebrew](https://brew.sh):
 
-## 4. Getting Started
-
-### Prerequisites
-- Node.js >= 18.18.0 (tested on Node v22.23.1)
-- npm >= 9.0.0
-
-### Installation & Verification
 ```bash
-# 1. Install dependencies
-npm install
-
-# 2. Verify design token parity against Task One source of truth
-npm run check:tokens
-
-# 3. Start local development server (port 3000)
-npm run dev
-
-# 4. Create production build
-npm run build
+brew install postgresql@17
 ```
 
----
+**1. Get the code and go into the Task Two folder**
 
-## 5. Planning & Prompt Documentation
+```bash
+git clone https://github.com/Tomix-creator/tees-wardrobe-ship-and-found.git
+```
+```bash
+cd tees-wardrobe-ship-and-found/task-02-repository-and-scaffold
+```
 
-- **Initial Scaffolding Plan (`evidence/01-agent-plan.txt`)**:
-  The agent originally drafted a plan proposing a lightweight Node.js/Express server or a pure static dev server (`server.js` and `public/index.html`), noting that static live servers could not handle dynamic database writes later.
-- **Revised Plan (`evidence/01-agent-plan-revised.txt`)**:
-  Upon user direction, the agent aligned the stack with Next.js 15 App Router and TypeScript 5, while locking design system parity and preserving non-negotiable calculation rules.
-- **Prompt Refinement (`docs/scaffold-prompt.md`)**:
-  Documents the human author's original draft verbatim, the tightened prompt dispatched to the agent, and the prompt engineering rationale (structural segmentation, technical phrasing, gating execution on plan approval).
+Every command below runs from this folder. If you're in the wrong folder, `npm` says it can't find `package.json` (see [`docs/nested-folder.md`](docs/nested-folder.md)).
 
----
+**2. Start PostgreSQL and create the database**
 
-## 6. Performance Instrumentation & Qualifications (Step 4)
+```bash
+brew services start postgresql@17
+```
+```bash
+createdb tees_wardrobe
+```
 
-Initial page load measurements for `http://localhost:3000/` were captured directly using `curl` and server logs (`evidence/04-first-load.txt` and `docs/performance-note.md`):
+**3. Create your `.env` file. Do this before `npm install`**
 
-- **Cold Load**: Total elapsed time of **`33,918.81 ms`** (TTFB `33,871.70 ms`). The Next.js console verified that **29.5 seconds** was spent on on-demand Just-In-Time (JIT) compilation of 671 modules upon the first incoming request (`✓ Compiled / in 29.5s (671 modules)`).
-- **Warm Load**: Total elapsed time of **`268.26 ms`** (TTFB `255.82 ms`), serving pre-compiled in-memory modules (~126x faster than cold load).
-- **Honest Qualifications**:
-  1. *Production Differences*: Production builds compile ahead-of-time before deployment, eliminating development JIT compilation overhead during request handling. However, we cannot claim that production will eliminate *exactly* 29.5 seconds, as production bundling, minification, tree-shaking, and server execution environments have different performance dynamics.
-  2. *Hardware Attribution*: No system profiler, disk I/O benchmark, or CPU tracing tool was attached. Any attribution of latency to specific local hardware bottlenecks is an unverified assumption.
-  3. *Server Rendering Gap*: An unexplained difference of ~3,006 ms exists between the logged 29.5s compilation and the 32,506 ms server processing time. Attributing this specific duration to server-side HTML rendering is an unmeasured hypothesis, not a proven fact.
+```bash
+cp .env.example .env
+```
 
----
+Open `.env` and replace `USER` with your Mac username (type `whoami` in the terminal to see it). Or do both in one go:
 
-## 7. Diagnostic Breakages & Recoveries (Step 5)
+```bash
+sed -i '' "s/USER/$(whoami)/" .env
+```
 
-Step 5 diagnostics were executed in disposable environments to preserve the production project and running servers:
+`npm install` reads this file. Without it, the install stops with `Cannot resolve environment variable: DATABASE_URL`.
 
-### 5.1 Nested Folder / Wrong Directory
-- **Failure**: Running `npm run dev` from an outer directory lacking `package.json` produced an immediate `ENOENT` failure (`evidence/05-nested-folder-error.txt`).
-- **Recovery 1**: Navigating into the application directory (`cd disposable-nested-test/nested-app`) and starting the server on port 3001 compiled and served HTTP 200 OK (`evidence/06-nested-folder-fixed.txt`).
-- **Recovery 2**: Demonstrating that files residing at root `./` resolve the directory problem, compiling and serving HTTP 200 OK cleanly.
-- **Qualification of Proof**: Recovery 2 was demonstrated in a disposable test folder by copying verified project files and symlinking `node_modules` from `task-02-repository-and-scaffold/`. It demonstrated directory resolution at `./`; it did not execute an autonomous agent CLI rescaffold from scratch. Furthermore, `npm test` was not run because `package.json` does not define a test script.
+**4. Install, and create the table**
 
-### 5.2 Port Collision (`EADDRINUSE`)
-- **Failure**: Starting a Next.js server on occupied port 3001 triggered an `EADDRINUSE` collision (`evidence/07-port-conflict.txt`).
-- **Investigation**: Executed `lsof -nP -iTCP:3001 -sTCP:LISTEN` to identify the conflicting process (PID 83510).
-- **Recovery**: Selectively stopped PID 83510 with `kill 83510`, verified port release, and cleanly started Next.js on port 3001 (`evidence/08-port-conflict-resolved.txt`). The live application on port 3000 remained untouched.
+```bash
+npm install
+```
+```bash
+npx prisma migrate deploy
+```
 
-### 5.3 404 Routing Failure
-- **Failure**: Removing leaf route segment `app/page.tsx` produced a clean Next.js 404 Not Found response (`evidence/09-404-error.txt`).
-- **Recovery**: Restoring `app/page.tsx` triggered hot-recompilation in 266ms, restoring HTTP 200 OK (`evidence/10-404-resolved.txt`).
+`npm install` may report security advisories. They're known and listed under Known defects. Don't run `npm audit fix`, because it can upgrade packages in ways that break the app.
 
----
+The migrate step should finish with `All migrations have been successfully applied.`
 
-## 8. What is Still Unfinished (Steps 6–10)
+**5. Run it**
 
-The following Task Two assessment items remain open:
-1. **Step 6: Database Integration**: Implementing Prisma ORM, configuring PostgreSQL credentials (kept out of Git via `.env`), schema migrations, and a database write entry form.
-2. **Step 7: External Tested README**: Running setup instructions cleanly from scratch on a clean environment.
-3. **Step 8: Information Architecture Tree**: Creating a hand-drawn or diagrammed visual navigation tree (`docs/tree.png` or `docs/tree.pdf`).
-4. **Step 9: Git Branching & Pull Request**: Creating a Git feature branch, committing changes, pushing, and documenting pull request review.
-5. **Step 10: Information Design Evidence & Viva Answers**: Mobile viewport screenshots (`evidence/11-mobile-view.png`, `evidence/12-desktop-view.png`, `evidence/13-focus-visible.png`) and drafting the 15 viva assessment answers (`docs/viva-answers.md`).
+```bash
+npm run dev
+```
 
+Open http://localhost:3000, click **New order**, and save one. The page should say **Order saved (#1)**.
+
+**6. Check it really saved.** Don't trust the screen. In a second terminal tab, from the same folder:
+
+```bash
+psql tees_wardrobe -c 'SELECT id, "customerName", "createdAt" FROM "Order";'
+```
+
+Your order should be there, with the time you clicked Save.
+
+**If port 3000 is busy** (`EADDRINUSE`): find what's using it with `lsof -nP -iTCP:3000 -sTCP:LISTEN`, then stop it if it's yours (see [`evidence/07-port-conflict.txt`](evidence/07-port-conflict.txt) and [`evidence/08-port-conflict-resolved.txt`](evidence/08-port-conflict-resolved.txt)).
+
+## Environment variables
+
+| Name | Required | What it's for |
+|---|---|---|
+| `DATABASE_URL` | Yes | How the app and Prisma reach PostgreSQL: user, host, port and database name. Also read by `npm install`, because it generates the database client |
+| `NEXT_PUBLIC_SITE_URL` | No | The site's public address, used to build full links for social-media previews. Defaults to `http://localhost:3000` |
+
+The real values live only in `.env`, which Git ignores. [`.env.example`](.env.example) shows the shape with a placeholder.
+
+## What this deliberately does not do
+
+- **No logins.** Anyone who can reach the app can add orders. That's acceptable on my own Mac, not on the internet. Authentication comes in a later task.
+- **No list, edit or delete of orders.** Step 6 asked for one proven write. Reading the orders back is in `psql`, on purpose, so the evidence is the database rather than the screen.
+- **No checks in the browser.** Every rule is checked by the server, which proves the server checks work. Browser-side checks are Task Three.
+- **No order tracking or catalog.** They were on the scaffold's home page as "Planned" buttons. I removed them, because buttons that lead nowhere teach Tee not to trust the app.
+- **Not deployed.** It runs on `localhost` only, so link previews couldn't be tested.
+
+## Known defects
+
+All of these are real and were checked on my machine. Full details are in [`docs/defects.md`](docs/defects.md).
+
+1. **A huge price gives the wrong error.** `app/api/orders/route.ts` lines 47–53 check that the price is a whole number above 0, but not that it fits the database column (maximum 2,147,483,647). `99999999999` gets a 500 "Could not save the order" instead of a 400 explaining the problem.
+2. **Three dependency advisories.** `npm audit` reports 1 critical (`next`) and 2 high (`postcss`, `sharp`). They're not fixed because `npm audit fix` can break the app; I'd do it on its own branch and re-run the evidence.
+3. **No authentication.** See `app/api/orders/route.ts`, and "What this deliberately does not do" above.
+4. **The form has no browser-side checks.** In `app/orders/new/page.tsx`, every mistake costs a round trip to the server.
+5. **Repeated code.** The delivery-fee error message is repeated four times in `app/api/orders/route.ts` (lines 83, 99, 109, 119), and `app/orders/new/page.tsx` hardcodes `opacity: 0.7` for the disabled button.
+6. **`npm install` needs `.env` first.** `prisma.config.ts` line 7 requires `DATABASE_URL` just to generate the client. The steps above work around it by creating `.env` first. A better fix is to make the config not require it.
+
+## Where the evidence is
+
+| Step | Write-up | Evidence |
+|---|---|---|
+| 1–3 Scaffold and models | [`scaffold-prompt.md`](docs/scaffold-prompt.md), [`model-choices.md`](docs/model-choices.md) | `01`, `01b`, `02` |
+| 4 First load | [`performance-note.md`](docs/performance-note.md) | `03`, `04`: port 3000, first load 2,459 ms, reload 60 ms |
+| 5 Three breakages | [`nested-folder.md`](docs/nested-folder.md), [`404-diagnosis.md`](docs/404-diagnosis.md) | `05`–`10`: wrong folder (ENOENT), port 3000 in use by PID 41552, 404 after renaming `page.tsx` |
+| 6 Database and false success | [`false-success.md`](docs/false-success.md) | `11`–`13c` |
+| 7 README test | `readme-test.md` (to do) | |
+| 8 Working tree | [`working-tree.md`](docs/working-tree.md) | `14` |
+| 9 Branches | (PR links above) | `15b`, and `15` after the final merge |
+| 10 Information design | [`information-design.md`](docs/information-design.md) | `16`–`20` |
+| Interview | [`interview-answers.md`](docs/interview-answers.md) | |
+
+`evidence/agent-run/` holds the agent's own first attempt at Steps 3–5, on the same Mac. I kept it to show what it claimed, but the numbers I stand behind are the ones I recorded myself, in the main `evidence/` folder.

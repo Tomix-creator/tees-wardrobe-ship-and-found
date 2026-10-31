@@ -20,7 +20,8 @@ Each one is real, checked on 30 October 2026, with where it lives and what it wo
 
 - **Where:** `README.md` lines 61–72 and 123–153: port 3001, PID 83510, a 33,918 ms cold load, and old evidence names.
 - **What happens:** my evidence (recorded by hand) shows port 3000, PID 41552 and a 2,459 ms first load. The README contradicts the evidence.
-- **Cost:** a README claiming things the evidence doesn't show is an automatic fail. **Must be rewritten before submission** (planned for Step 7).
+- **Cost:** a README claiming things the evidence doesn't show is an automatic fail.
+- **Status (31 Oct):** rewritten to match my evidence, with the setup steps rehearsed from a fresh clone. The Step 7 test on a real person is still to do, so this stays open until then.
 
 ## 4. Three dependency security advisories
 
