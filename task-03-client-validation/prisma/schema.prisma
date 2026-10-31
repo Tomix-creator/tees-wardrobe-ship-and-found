@@ -1,0 +1,26 @@
+generator client {
+  provider = "prisma-client"
+  output   = "../generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+model Order {
+  id               Int      @id @default(autoincrement())
+  customerName     String
+  garment          String
+  priceNaira       Int
+  deliveryFeeNaira Int?
+  createdAt        DateTime @default(now())
+}
+
+model Customer {
+  id        Int      @id @default(autoincrement())
+  fullName  String
+  email     String   @unique
+  phone     String?
+  createdAt DateTime @default(now())
+}
+
