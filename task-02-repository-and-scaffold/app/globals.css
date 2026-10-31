@@ -26,6 +26,13 @@ body {
 a {
   color: inherit;
   text-decoration: none;
+  cursor: pointer;
+  transition: color 0.15s ease;
+}
+
+a:not(.btn):hover {
+  color: var(--color-role-focus-indicator);
+  text-decoration: underline;
 }
 
 /* Base button sizing in rem units per information design specification */
@@ -58,6 +65,7 @@ a:focus-visible {
 }
 
 .btn-primary:hover {
+  border-color: var(--color-role-focus-indicator);
   box-shadow: var(--shadow-medium);
 }
 
