@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useCallback, useEffect, useState } from "react";
+import React, { useCallback, useEffect, useRef, useState } from "react";
 import { useSearchParams } from "next/navigation";
 import Link from "next/link";
 import {
@@ -30,7 +30,7 @@ function isFormKey(value: string | null): value is FormKey {
 }
 
 // ---------------------------------------------------------------------------
-// Shared styles (mirrors /orders/new exactly)
+// Shared styles
 // ---------------------------------------------------------------------------
 
 const fieldStyle: React.CSSProperties = {
@@ -61,9 +61,8 @@ function inputStyle(hasError: boolean): React.CSSProperties {
 }
 
 /**
- * Applied to every form-switching button ("Sign up", "Log in",
- * "Forgot password?"). Uses explicit token values so the size is consistent
- * regardless of what font the parent element carries.
+ * Applied to every form-switching button ("Sign up", "Log in", "Forgot password?").
+ * Uses explicit token values so the size is consistent regardless of parent font context.
  */
 const linkBtnStyle: React.CSSProperties = {
   background: "none",
@@ -79,17 +78,61 @@ const linkBtnStyle: React.CSSProperties = {
   letterSpacing: "var(--type-body-small-letter-spacing)",
 };
 
+/**
+ * Visually hides content while keeping it in the accessibility tree.
+ * Uses clip rather than display:none or visibility:hidden, which silence screen readers.
+ */
+const visuallyHidden: React.CSSProperties = {
+  position: "absolute",
+  width: "1px",
+  height: "1px",
+  padding: 0,
+  margin: "-1px",
+  overflow: "hidden",
+  clip: "rect(0,0,0,0)",
+  whiteSpace: "nowrap",
+  borderWidth: 0,
+};
+
 // ---------------------------------------------------------------------------
-// FieldError — renders a validation message under a field
+// CautionIcon — warning triangle, hidden from assistive technology
 // ---------------------------------------------------------------------------
 
-function FieldError({ msg }: { msg: string | null }) {
+function CautionIcon() {
+  return (
+    <svg
+      aria-hidden="true"
+      focusable="false"
+      viewBox="0 0 16 16"
+      width="1em"
+      height="1em"
+      fill="currentColor"
+      style={{ flexShrink: 0, verticalAlign: "-0.1em" }}
+    >
+      {/* Bootstrap exclamation-triangle-fill path */}
+      <path d="M8.982 1.566a1.13 1.13 0 0 0-1.96 0L.165 13.233c-.457.778.091 1.767.98 1.767h13.713c.889 0 1.438-.99.98-1.767L8.982 1.566zM8 5c.535 0 .954.462.9.995l-.35 3.507a.552.552 0 0 1-1.1 0L7.1 5.995A.905.905 0 0 1 8 5zm.002 6a1 1 0 1 1 0 2 1 1 0 0 1 0-2z" />
+    </svg>
+  );
+}
+
+// ---------------------------------------------------------------------------
+// FieldError — renders a validation message with caution icon
+// ---------------------------------------------------------------------------
+
+function FieldError({ id, msg }: { id: string; msg: string | null }) {
   if (!msg) return null;
   return (
     <span
+      id={id}
       className="type-body-small"
-      style={{ color: "var(--color-role-error)" }}
+      style={{
+        color: "var(--color-role-error)",
+        display: "flex",
+        alignItems: "center",
+        gap: "0.3em",
+      }}
     >
+      <CautionIcon />
       {msg}
     </span>
   );
@@ -121,8 +164,8 @@ export default function AccountForms() {
   useEffect(() => {
     const titles: Record<FormKey, string> = {
       signup: "Create account | Tee\u2019s Wardrobe",
-      login: "Log in | Tee\u2019s Wardrobe",
-      reset: "Reset password | Tee\u2019s Wardrobe",
+      login:  "Log in | Tee\u2019s Wardrobe",
+      reset:  "Reset password | Tee\u2019s Wardrobe",
     };
     document.title = titles[form];
   }, [form]);
@@ -139,8 +182,8 @@ export default function AccountForms() {
       style={{ paddingTop: "var(--space-xl)", paddingBottom: "var(--space-2xl)" }}
     >
       {form === "signup" && <SignupForm switchForm={switchForm} />}
-      {form === "login" && <LoginForm switchForm={switchForm} />}
-      {form === "reset" && <ResetForm switchForm={switchForm} />}
+      {form === "login"  && <LoginForm  switchForm={switchForm} />}
+      {form === "reset"  && <ResetForm  switchForm={switchForm} />}
     </div>
   );
 }
@@ -159,57 +202,55 @@ type SignupErrors = {
 };
 
 const SIGNUP_ERRORS_CLEAR: SignupErrors = {
-  fullName: null,
-  email: null,
-  phone: null,
-  password: null,
-  agreedToTerms: null,
-  isAdult: null,
+  fullName: null, email: null, phone: null,
+  password: null, agreedToTerms: null, isAdult: null,
 };
 
 function SignupForm({ switchForm }: { switchForm: (f: FormKey) => void }) {
-  const [fullName, setFullName] = useState("");
-  const [email, setEmail] = useState("");
-  const [phone, setPhone] = useState("");
-  const [password, setPassword] = useState("");
+  const [fullName, setFullName]         = useState("");
+  const [email, setEmail]               = useState("");
+  const [phone, setPhone]               = useState("");
+  const [password, setPassword]         = useState("");
   const [showPassword, setShowPassword] = useState(false);
   const [agreedToTerms, setAgreedToTerms] = useState(false);
-  const [isAdult, setIsAdult] = useState(false);
+  const [isAdult, setIsAdult]           = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
-  const [errors, setErrors] = useState<SignupErrors>(SIGNUP_ERRORS_CLEAR);
-  // Track whether the user has typed at least one character in the email field.
-  const [emailDirty, setEmailDirty] = useState(false);
+  const [errors, setErrors]             = useState<SignupErrors>(SIGNUP_ERRORS_CLEAR);
+  const [emailDirty, setEmailDirty]     = useState(false);
+  const [liveMsg, setLiveMsg]           = useState("");
   const [statusMessage, setStatusMessage] = useState<{
     type: "success" | "error";
     text: string;
   } | null>(null);
 
-  /** Run all validators for a single named field and return the result. */
+  // Refs for focus management on failed submit.
+  const fullNameRef      = useRef<HTMLInputElement>(null);
+  const emailRef         = useRef<HTMLInputElement>(null);
+  const phoneRef         = useRef<HTMLInputElement>(null);
+  const passwordRef      = useRef<HTMLInputElement>(null);
+  const agreedToTermsRef = useRef<HTMLInputElement>(null);
+  const isAdultRef       = useRef<HTMLInputElement>(null);
+
+  /** Run all validators for a single named field. */
   function validateField(field: keyof SignupErrors): string | null {
     switch (field) {
-      case "fullName":
-        return requiredFullName(fullName) ?? fullNameFormat(fullName);
-      case "email":
-        return requiredEmail(email) ?? emailFormat(email);
-      case "phone":
-        return requiredPhone(phone) ?? phoneFormat(phone);
-      case "password":
-        return requiredPassword(password) ?? passwordRules(password);
-      case "agreedToTerms":
-        return requiredTerms(agreedToTerms);
-      case "isAdult":
-        return requiredAdult(isAdult);
+      case "fullName":      return requiredFullName(fullName)   ?? fullNameFormat(fullName);
+      case "email":         return requiredEmail(email)         ?? emailFormat(email);
+      case "phone":         return requiredPhone(phone)         ?? phoneFormat(phone);
+      case "password":      return requiredPassword(password)   ?? passwordRules(password);
+      case "agreedToTerms": return requiredTerms(agreedToTerms);
+      case "isAdult":       return requiredAdult(isAdult);
     }
   }
 
-  /** Validate a text input field on blur and update its error. */
+  /** Blur handler for text inputs — validates and updates that field's error. */
   function handleBlur(field: "fullName" | "email" | "phone" | "password") {
     setErrors((prev) => ({ ...prev, [field]: validateField(field) }));
   }
 
   /**
-   * Email onChange: real-time validation after the first keystroke.
-   * Before the first keystroke, no error is shown while the user types.
+   * Email onChange: shows validation in real time after the first keystroke.
+   * Before the first character no error is surfaced while the user types.
    */
   function handleEmailChange(value: string) {
     setEmail(value);
@@ -229,21 +270,45 @@ function SignupForm({ switchForm }: { switchForm: (f: FormKey) => void }) {
 
     // Validate every field at once.
     const allErrors: SignupErrors = {
-      fullName: requiredFullName(fullName) ?? fullNameFormat(fullName),
-      email: requiredEmail(email) ?? emailFormat(email),
-      phone: requiredPhone(phone) ?? phoneFormat(phone),
-      password: requiredPassword(password) ?? passwordRules(password),
+      fullName:      requiredFullName(fullName)   ?? fullNameFormat(fullName),
+      email:         requiredEmail(email)         ?? emailFormat(email),
+      phone:         requiredPhone(phone)         ?? phoneFormat(phone),
+      password:      requiredPassword(password)  ?? passwordRules(password),
       agreedToTerms: requiredTerms(agreedToTerms),
-      isAdult: requiredAdult(isAdult),
+      isAdult:       requiredAdult(isAdult),
     };
     setErrors(allErrors);
-    if (Object.values(allErrors).some(Boolean)) return;
 
-    // All valid — build cleaned body. Password is intentionally excluded.
+    const errorCount = Object.values(allErrors).filter(Boolean).length;
+    if (errorCount > 0) {
+      // Announce error count. Clear first so the live region fires even when
+      // the count is the same as the previous failed attempt.
+      setLiveMsg("");
+      const noun = errorCount === 1 ? "problem" : "problems";
+      setTimeout(
+        () => setLiveMsg(`${errorCount} ${noun}: please fix the highlighted fields.`),
+        0
+      );
+      // Focus the first invalid field in visual order.
+      const focusOrder: Array<[string | null, React.RefObject<HTMLInputElement | null>]> = [
+        [allErrors.fullName,      fullNameRef],
+        [allErrors.email,         emailRef],
+        [allErrors.phone,         phoneRef],
+        [allErrors.password,      passwordRef],
+        [allErrors.agreedToTerms, agreedToTermsRef],
+        [allErrors.isAdult,       isAdultRef],
+      ];
+      for (const [err, ref] of focusOrder) {
+        if (err) { ref.current?.focus(); break; }
+      }
+      return;
+    }
+
+    // All valid — send cleaned values. Password is intentionally excluded.
     const body = {
       fullName: cleanFullName(fullName),
-      email: cleanEmail(email),
-      phone: cleanPhone(phone) || null,
+      email:    cleanEmail(email),
+      phone:    cleanPhone(phone) || null,
     };
 
     setIsSubmitting(true);
@@ -261,15 +326,12 @@ function SignupForm({ switchForm }: { switchForm: (f: FormKey) => void }) {
           type: "success",
           text: `Account created! Your customer ID is #${data.id}.`,
         });
-        setFullName("");
-        setEmail("");
-        setPhone("");
-        setPassword("");
-        setShowPassword(false);
-        setAgreedToTerms(false);
-        setIsAdult(false);
+        setFullName(""); setEmail(""); setPhone("");
+        setPassword(""); setShowPassword(false);
+        setAgreedToTerms(false); setIsAdult(false);
         setErrors(SIGNUP_ERRORS_CLEAR);
         setEmailDirty(false);
+        setLiveMsg("");
       } else {
         const errorText =
           data && typeof data.error === "string"
@@ -289,6 +351,11 @@ function SignupForm({ switchForm }: { switchForm: (f: FormKey) => void }) {
 
   return (
     <>
+      {/* Assertive live region — visually hidden, announced by screen readers on submit failure. */}
+      <div aria-live="assertive" aria-atomic="true" style={visuallyHidden}>
+        {liveMsg}
+      </div>
+
       <header style={{ marginBottom: "var(--space-lg)" }}>
         <h1
           className="type-headline-large"
@@ -302,11 +369,7 @@ function SignupForm({ switchForm }: { switchForm: (f: FormKey) => void }) {
         </h1>
         <p
           className="type-body-small"
-          style={{
-            margin: 0,
-            marginTop: "var(--space-3xs)",
-            color: "var(--color-role-field-outline)",
-          }}
+          style={{ margin: 0, marginTop: "var(--space-3xs)", color: "var(--color-role-field-outline)" }}
         >
           Sign up to track your order balance with Tee&rsquo;s Wardrobe.
         </p>
@@ -332,14 +395,19 @@ function SignupForm({ switchForm }: { switchForm: (f: FormKey) => void }) {
           </label>
           <input
             id="fullName"
+            ref={fullNameRef}
             type="text"
             autoComplete="name"
+            aria-required="true"
+            {...(errors.fullName
+              ? { "aria-describedby": "su-fullName-error", "aria-invalid": true }
+              : {})}
             value={fullName}
             onChange={(e) => setFullName(e.target.value)}
             onBlur={() => handleBlur("fullName")}
             style={inputStyle(!!errors.fullName)}
           />
-          <FieldError msg={errors.fullName} />
+          <FieldError id="su-fullName-error" msg={errors.fullName} />
         </div>
 
         {/* Email */}
@@ -353,14 +421,19 @@ function SignupForm({ switchForm }: { switchForm: (f: FormKey) => void }) {
           </label>
           <input
             id="su-email"
+            ref={emailRef}
             type="email"
             autoComplete="email"
+            aria-required="true"
+            {...(errors.email
+              ? { "aria-describedby": "su-email-error", "aria-invalid": true }
+              : {})}
             value={email}
             onChange={(e) => handleEmailChange(e.target.value)}
             onBlur={() => handleBlur("email")}
             style={inputStyle(!!errors.email)}
           />
-          <FieldError msg={errors.email} />
+          <FieldError id="su-email-error" msg={errors.email} />
         </div>
 
         {/* Phone */}
@@ -374,14 +447,19 @@ function SignupForm({ switchForm }: { switchForm: (f: FormKey) => void }) {
           </label>
           <input
             id="phone"
+            ref={phoneRef}
             type="tel"
             autoComplete="tel"
+            aria-required="true"
+            {...(errors.phone
+              ? { "aria-describedby": "su-phone-error", "aria-invalid": true }
+              : {})}
             value={phone}
             onChange={(e) => setPhone(e.target.value)}
             onBlur={() => handleBlur("phone")}
             style={inputStyle(!!errors.phone)}
           />
-          <FieldError msg={errors.phone} />
+          <FieldError id="su-phone-error" msg={errors.phone} />
         </div>
 
         {/* Password with show/hide toggle */}
@@ -396,8 +474,13 @@ function SignupForm({ switchForm }: { switchForm: (f: FormKey) => void }) {
           <div style={{ position: "relative" }}>
             <input
               id="su-password"
+              ref={passwordRef}
               type={showPassword ? "text" : "password"}
               autoComplete="new-password"
+              aria-required="true"
+              {...(errors.password
+                ? { "aria-describedby": "su-password-error", "aria-invalid": true }
+                : {})}
               value={password}
               onChange={(e) => setPassword(e.target.value)}
               onBlur={() => handleBlur("password")}
@@ -426,7 +509,7 @@ function SignupForm({ switchForm }: { switchForm: (f: FormKey) => void }) {
               {showPassword ? "Hide" : "Show"}
             </button>
           </div>
-          <FieldError msg={errors.password} />
+          <FieldError id="su-password-error" msg={errors.password} />
         </div>
 
         {/* Checkboxes */}
@@ -438,48 +521,65 @@ function SignupForm({ switchForm }: { switchForm: (f: FormKey) => void }) {
             gap: "var(--space-sm)",
           }}
         >
+          {/* Terms — link moved out of the label, placed immediately below it */}
           <div>
             <div
-              style={{
-                display: "flex",
-                alignItems: "flex-start",
-                gap: "var(--space-xs)",
-              }}
+              style={{ display: "flex", alignItems: "flex-start", gap: "var(--space-xs)" }}
             >
               <input
                 id="agreedToTerms"
+                ref={agreedToTermsRef}
                 type="checkbox"
                 checked={agreedToTerms}
                 onChange={(e) => setAgreedToTerms(e.target.checked)}
+                aria-required="true"
+                {...(errors.agreedToTerms
+                  ? { "aria-describedby": "su-terms-error", "aria-invalid": true }
+                  : {})}
                 style={{ marginTop: "0.2em", flexShrink: 0 }}
               />
-              <label
-                htmlFor="agreedToTerms"
-                className="type-body-small"
-                style={{ color: "var(--color-role-on-surface)", cursor: "pointer" }}
-              >
-                I agree to the{" "}
-                <Link href="/terms" style={{ color: "inherit" }}>
-                  Terms and Privacy Notice
+              <div>
+                <label
+                  htmlFor="agreedToTerms"
+                  className="type-body-small"
+                  style={{
+                    color: "var(--color-role-on-surface)",
+                    cursor: "pointer",
+                    display: "block",
+                  }}
+                >
+                  I agree to the Terms and Privacy Notice
+                </label>
+                <Link
+                  href="/terms"
+                  className="type-body-small"
+                  style={{
+                    color: "var(--color-role-on-surface)",
+                    textDecoration: "underline",
+                  }}
+                >
+                  Read the Terms and Privacy Notice
                 </Link>
-              </label>
+              </div>
             </div>
-            <FieldError msg={errors.agreedToTerms} />
+            <FieldError id="su-terms-error" msg={errors.agreedToTerms} />
           </div>
 
+          {/* Age */}
           <div>
             <div
-              style={{
-                display: "flex",
-                alignItems: "flex-start",
-                gap: "var(--space-xs)",
-              }}
+              style={{ display: "flex", alignItems: "flex-start", gap: "var(--space-xs)" }}
             >
               <input
                 id="isAdult"
+                ref={isAdultRef}
                 type="checkbox"
                 checked={isAdult}
                 onChange={(e) => setIsAdult(e.target.checked)}
+                aria-required="true"
+                {...(errors.isAdult
+                  ? { "aria-describedby": "su-adult-error", "aria-invalid": true }
+                  : {})}
                 style={{ marginTop: "0.2em", flexShrink: 0 }}
               />
               <label
@@ -490,7 +590,7 @@ function SignupForm({ switchForm }: { switchForm: (f: FormKey) => void }) {
                 I am 18 or older
               </label>
             </div>
-            <FieldError msg={errors.isAdult} />
+            <FieldError id="su-adult-error" msg={errors.isAdult} />
           </div>
         </div>
 
@@ -558,34 +658,49 @@ function SignupForm({ switchForm }: { switchForm: (f: FormKey) => void }) {
 type LoginErrors = { email: string | null; password: string | null };
 
 function LoginForm({ switchForm }: { switchForm: (f: FormKey) => void }) {
-  const [email, setEmail] = useState("");
+  const [email, setEmail]       = useState("");
   const [password, setPassword] = useState("");
-  const [errors, setErrors] = useState<LoginErrors>({
-    email: null,
-    password: null,
-  });
+  const [errors, setErrors]     = useState<LoginErrors>({ email: null, password: null });
+  const [liveMsg, setLiveMsg]   = useState("");
 
-  // Blur: show only the empty-field error for login (format checked on submit).
+  const emailRef    = useRef<HTMLInputElement>(null);
+  const passwordRef = useRef<HTMLInputElement>(null);
+
+  // Blur: empty-field check only (format is deferred to submit).
   function handleBlur(field: "email" | "password") {
-    if (field === "email") {
+    if (field === "email")
       setErrors((prev) => ({ ...prev, email: requiredEmail(email) }));
-    } else {
+    else
       setErrors((prev) => ({ ...prev, password: requiredPassword(password) }));
-    }
   }
 
   function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
-    // Email: required + format on submit. Password: required only.
-    const emailErr = requiredEmail(email) ?? emailFormat(email);
+    const emailErr    = requiredEmail(email) ?? emailFormat(email);
     const passwordErr = requiredPassword(password);
     setErrors({ email: emailErr, password: passwordErr });
-    if (emailErr || passwordErr) return;
+
+    const errorCount = [emailErr, passwordErr].filter(Boolean).length;
+    if (errorCount > 0) {
+      setLiveMsg("");
+      const noun = errorCount === 1 ? "problem" : "problems";
+      setTimeout(
+        () => setLiveMsg(`${errorCount} ${noun}: please fix the highlighted fields.`),
+        0
+      );
+      if (emailErr)    { emailRef.current?.focus();    return; }
+      if (passwordErr) { passwordRef.current?.focus(); return; }
+      return;
+    }
     alert("Not built yet");
   }
 
   return (
     <>
+      <div aria-live="assertive" aria-atomic="true" style={visuallyHidden}>
+        {liveMsg}
+      </div>
+
       <header style={{ marginBottom: "var(--space-lg)" }}>
         <h1
           className="type-headline-large"
@@ -599,11 +714,7 @@ function LoginForm({ switchForm }: { switchForm: (f: FormKey) => void }) {
         </h1>
         <p
           className="type-body-small"
-          style={{
-            margin: 0,
-            marginTop: "var(--space-3xs)",
-            color: "var(--color-role-field-outline)",
-          }}
+          style={{ margin: 0, marginTop: "var(--space-3xs)", color: "var(--color-role-field-outline)" }}
         >
           Sign in to view your order balance with Tee&rsquo;s Wardrobe.
         </p>
@@ -628,14 +739,19 @@ function LoginForm({ switchForm }: { switchForm: (f: FormKey) => void }) {
           </label>
           <input
             id="li-email"
+            ref={emailRef}
             type="email"
             autoComplete="email"
+            aria-required="true"
+            {...(errors.email
+              ? { "aria-describedby": "li-email-error", "aria-invalid": true }
+              : {})}
             value={email}
             onChange={(e) => setEmail(e.target.value)}
             onBlur={() => handleBlur("email")}
             style={inputStyle(!!errors.email)}
           />
-          <FieldError msg={errors.email} />
+          <FieldError id="li-email-error" msg={errors.email} />
         </div>
 
         <div style={fieldStyle}>
@@ -648,14 +764,19 @@ function LoginForm({ switchForm }: { switchForm: (f: FormKey) => void }) {
           </label>
           <input
             id="li-password"
+            ref={passwordRef}
             type="password"
             autoComplete="current-password"
+            aria-required="true"
+            {...(errors.password
+              ? { "aria-describedby": "li-password-error", "aria-invalid": true }
+              : {})}
             value={password}
             onChange={(e) => setPassword(e.target.value)}
             onBlur={() => handleBlur("password")}
             style={inputStyle(!!errors.password)}
           />
-          <FieldError msg={errors.password} />
+          <FieldError id="li-password-error" msg={errors.password} />
         </div>
 
         <div
@@ -701,12 +822,13 @@ function LoginForm({ switchForm }: { switchForm: (f: FormKey) => void }) {
 // ---------------------------------------------------------------------------
 
 function ResetForm({ switchForm }: { switchForm: (f: FormKey) => void }) {
-  const [email, setEmail] = useState("");
-  const [errors, setErrors] = useState<{ email: string | null }>({
-    email: null,
-  });
+  const [email, setEmail]     = useState("");
+  const [errors, setErrors]   = useState<{ email: string | null }>({ email: null });
+  const [liveMsg, setLiveMsg] = useState("");
 
-  // Blur: show only the empty-field error (format checked on submit).
+  const emailRef = useRef<HTMLInputElement>(null);
+
+  // Blur: empty-field check only (format is deferred to submit).
   function handleBlur() {
     setErrors({ email: requiredEmail(email) });
   }
@@ -715,12 +837,21 @@ function ResetForm({ switchForm }: { switchForm: (f: FormKey) => void }) {
     e.preventDefault();
     const emailErr = requiredEmail(email) ?? emailFormat(email);
     setErrors({ email: emailErr });
-    if (emailErr) return;
+    if (emailErr) {
+      setLiveMsg("");
+      setTimeout(() => setLiveMsg("1 problem: please fix the highlighted fields."), 0);
+      emailRef.current?.focus();
+      return;
+    }
     alert("Not built yet");
   }
 
   return (
     <>
+      <div aria-live="assertive" aria-atomic="true" style={visuallyHidden}>
+        {liveMsg}
+      </div>
+
       <header style={{ marginBottom: "var(--space-lg)" }}>
         <h1
           className="type-headline-large"
@@ -734,11 +865,7 @@ function ResetForm({ switchForm }: { switchForm: (f: FormKey) => void }) {
         </h1>
         <p
           className="type-body-small"
-          style={{
-            margin: 0,
-            marginTop: "var(--space-3xs)",
-            color: "var(--color-role-field-outline)",
-          }}
+          style={{ margin: 0, marginTop: "var(--space-3xs)", color: "var(--color-role-field-outline)" }}
         >
           Enter your email address and we&rsquo;ll send you a reset link.
         </p>
@@ -763,14 +890,19 @@ function ResetForm({ switchForm }: { switchForm: (f: FormKey) => void }) {
           </label>
           <input
             id="rp-email"
+            ref={emailRef}
             type="email"
             autoComplete="email"
+            aria-required="true"
+            {...(errors.email
+              ? { "aria-describedby": "rp-email-error", "aria-invalid": true }
+              : {})}
             value={email}
             onChange={(e) => setEmail(e.target.value)}
             onBlur={handleBlur}
             style={inputStyle(!!errors.email)}
           />
-          <FieldError msg={errors.email} />
+          <FieldError id="rp-email-error" msg={errors.email} />
         </div>
 
         <div style={{ marginTop: "var(--space-lg)" }}>
