@@ -3,6 +3,21 @@
 import React, { useCallback, useEffect, useState } from "react";
 import { useSearchParams } from "next/navigation";
 import Link from "next/link";
+import {
+  cleanEmail,
+  cleanFullName,
+  cleanPhone,
+  emailFormat,
+  fullNameFormat,
+  passwordRules,
+  phoneFormat,
+  requiredAdult,
+  requiredEmail,
+  requiredFullName,
+  requiredPassword,
+  requiredPhone,
+  requiredTerms,
+} from "@/lib/validation";
 
 // ---------------------------------------------------------------------------
 // Types
@@ -25,16 +40,25 @@ const fieldStyle: React.CSSProperties = {
   marginBottom: "var(--space-md)",
 };
 
-const inputStyle: React.CSSProperties = {
+const baseInputStyle: React.CSSProperties = {
   width: "100%",
   padding: "var(--space-xs) var(--space-sm)",
   backgroundColor: "var(--color-role-surface)",
   color: "var(--color-role-on-surface)",
-  border: "1px solid var(--color-role-field-outline)",
   borderRadius: "var(--space-xs)",
   fontSize: "var(--type-body-large-font-size)",
   fontFamily: "inherit",
 };
+
+/** Returns an input style with a valid or error border. */
+function inputStyle(hasError: boolean): React.CSSProperties {
+  return {
+    ...baseInputStyle,
+    border: hasError
+      ? "1px solid var(--color-role-error)"
+      : "1px solid var(--color-role-field-outline)",
+  };
+}
 
 /**
  * Applied to every form-switching button ("Sign up", "Log in",
@@ -54,6 +78,22 @@ const linkBtnStyle: React.CSSProperties = {
   lineHeight: "var(--type-body-small-line-height)",
   letterSpacing: "var(--type-body-small-letter-spacing)",
 };
+
+// ---------------------------------------------------------------------------
+// FieldError — renders a validation message under a field
+// ---------------------------------------------------------------------------
+
+function FieldError({ msg }: { msg: string | null }) {
+  if (!msg) return null;
+  return (
+    <span
+      className="type-body-small"
+      style={{ color: "var(--color-role-error)" }}
+    >
+      {msg}
+    </span>
+  );
+}
 
 // ---------------------------------------------------------------------------
 // Main client component
@@ -109,6 +149,24 @@ export default function AccountForms() {
 // Sign-up form
 // ---------------------------------------------------------------------------
 
+type SignupErrors = {
+  fullName: string | null;
+  email: string | null;
+  phone: string | null;
+  password: string | null;
+  agreedToTerms: string | null;
+  isAdult: string | null;
+};
+
+const SIGNUP_ERRORS_CLEAR: SignupErrors = {
+  fullName: null,
+  email: null,
+  phone: null,
+  password: null,
+  agreedToTerms: null,
+  isAdult: null,
+};
+
 function SignupForm({ switchForm }: { switchForm: (f: FormKey) => void }) {
   const [fullName, setFullName] = useState("");
   const [email, setEmail] = useState("");
@@ -118,26 +176,82 @@ function SignupForm({ switchForm }: { switchForm: (f: FormKey) => void }) {
   const [agreedToTerms, setAgreedToTerms] = useState(false);
   const [isAdult, setIsAdult] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [errors, setErrors] = useState<SignupErrors>(SIGNUP_ERRORS_CLEAR);
+  // Track whether the user has typed at least one character in the email field.
+  const [emailDirty, setEmailDirty] = useState(false);
   const [statusMessage, setStatusMessage] = useState<{
     type: "success" | "error";
     text: string;
   } | null>(null);
 
+  /** Run all validators for a single named field and return the result. */
+  function validateField(field: keyof SignupErrors): string | null {
+    switch (field) {
+      case "fullName":
+        return requiredFullName(fullName) ?? fullNameFormat(fullName);
+      case "email":
+        return requiredEmail(email) ?? emailFormat(email);
+      case "phone":
+        return requiredPhone(phone) ?? phoneFormat(phone);
+      case "password":
+        return requiredPassword(password) ?? passwordRules(password);
+      case "agreedToTerms":
+        return requiredTerms(agreedToTerms);
+      case "isAdult":
+        return requiredAdult(isAdult);
+    }
+  }
+
+  /** Validate a text input field on blur and update its error. */
+  function handleBlur(field: "fullName" | "email" | "phone" | "password") {
+    setErrors((prev) => ({ ...prev, [field]: validateField(field) }));
+  }
+
+  /**
+   * Email onChange: real-time validation after the first keystroke.
+   * Before the first keystroke, no error is shown while the user types.
+   */
+  function handleEmailChange(value: string) {
+    setEmail(value);
+    const nowDirty = emailDirty || value.length > 0;
+    if (!emailDirty && value.length > 0) setEmailDirty(true);
+    if (nowDirty) {
+      setErrors((prev) => ({
+        ...prev,
+        email: requiredEmail(value) ?? emailFormat(value),
+      }));
+    }
+  }
+
   async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
-    setIsSubmitting(true);
     setStatusMessage(null);
 
-    // password, agreedToTerms and isAdult are intentionally not sent to the server.
+    // Validate every field at once.
+    const allErrors: SignupErrors = {
+      fullName: requiredFullName(fullName) ?? fullNameFormat(fullName),
+      email: requiredEmail(email) ?? emailFormat(email),
+      phone: requiredPhone(phone) ?? phoneFormat(phone),
+      password: requiredPassword(password) ?? passwordRules(password),
+      agreedToTerms: requiredTerms(agreedToTerms),
+      isAdult: requiredAdult(isAdult),
+    };
+    setErrors(allErrors);
+    if (Object.values(allErrors).some(Boolean)) return;
+
+    // All valid — build cleaned body. Password is intentionally excluded.
+    const body = {
+      fullName: cleanFullName(fullName),
+      email: cleanEmail(email),
+      phone: cleanPhone(phone) || null,
+    };
+
+    setIsSubmitting(true);
     try {
       const response = await fetch("/api/signup", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          fullName: fullName.trim(),
-          email: email.trim(),
-          phone: phone.trim() || null,
-        }),
+        body: JSON.stringify(body),
       });
 
       const data = await response.json().catch(() => null);
@@ -154,6 +268,8 @@ function SignupForm({ switchForm }: { switchForm: (f: FormKey) => void }) {
         setShowPassword(false);
         setAgreedToTerms(false);
         setIsAdult(false);
+        setErrors(SIGNUP_ERRORS_CLEAR);
+        setEmailDirty(false);
       } else {
         const errorText =
           data && typeof data.error === "string"
@@ -220,8 +336,10 @@ function SignupForm({ switchForm }: { switchForm: (f: FormKey) => void }) {
             autoComplete="name"
             value={fullName}
             onChange={(e) => setFullName(e.target.value)}
-            style={inputStyle}
+            onBlur={() => handleBlur("fullName")}
+            style={inputStyle(!!errors.fullName)}
           />
+          <FieldError msg={errors.fullName} />
         </div>
 
         {/* Email */}
@@ -238,12 +356,14 @@ function SignupForm({ switchForm }: { switchForm: (f: FormKey) => void }) {
             type="email"
             autoComplete="email"
             value={email}
-            onChange={(e) => setEmail(e.target.value)}
-            style={inputStyle}
+            onChange={(e) => handleEmailChange(e.target.value)}
+            onBlur={() => handleBlur("email")}
+            style={inputStyle(!!errors.email)}
           />
+          <FieldError msg={errors.email} />
         </div>
 
-        {/* Phone — required; "(optional)" removed */}
+        {/* Phone */}
         <div style={fieldStyle}>
           <label
             htmlFor="phone"
@@ -258,8 +378,10 @@ function SignupForm({ switchForm }: { switchForm: (f: FormKey) => void }) {
             autoComplete="tel"
             value={phone}
             onChange={(e) => setPhone(e.target.value)}
-            style={inputStyle}
+            onBlur={() => handleBlur("phone")}
+            style={inputStyle(!!errors.phone)}
           />
+          <FieldError msg={errors.phone} />
         </div>
 
         {/* Password with show/hide toggle */}
@@ -278,7 +400,8 @@ function SignupForm({ switchForm }: { switchForm: (f: FormKey) => void }) {
               autoComplete="new-password"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
-              style={{ ...inputStyle, paddingRight: "4.5rem" }}
+              onBlur={() => handleBlur("password")}
+              style={{ ...inputStyle(!!errors.password), paddingRight: "4.5rem" }}
             />
             <button
               type="button"
@@ -303,45 +426,71 @@ function SignupForm({ switchForm }: { switchForm: (f: FormKey) => void }) {
               {showPassword ? "Hide" : "Show"}
             </button>
           </div>
+          <FieldError msg={errors.password} />
         </div>
 
         {/* Checkboxes */}
-        <div style={{ marginBottom: "var(--space-md)", display: "flex", flexDirection: "column", gap: "var(--space-sm)" }}>
-          <div style={{ display: "flex", alignItems: "flex-start", gap: "var(--space-xs)" }}>
-            <input
-              id="agreedToTerms"
-              type="checkbox"
-              checked={agreedToTerms}
-              onChange={(e) => setAgreedToTerms(e.target.checked)}
-              style={{ marginTop: "0.2em", flexShrink: 0 }}
-            />
-            <label
-              htmlFor="agreedToTerms"
-              className="type-body-small"
-              style={{ color: "var(--color-role-on-surface)", cursor: "pointer" }}
+        <div
+          style={{
+            marginBottom: "var(--space-md)",
+            display: "flex",
+            flexDirection: "column",
+            gap: "var(--space-sm)",
+          }}
+        >
+          <div>
+            <div
+              style={{
+                display: "flex",
+                alignItems: "flex-start",
+                gap: "var(--space-xs)",
+              }}
             >
-              I agree to the{" "}
-              <Link href="/terms" style={{ color: "inherit" }}>
-                Terms and Privacy Notice
-              </Link>
-            </label>
+              <input
+                id="agreedToTerms"
+                type="checkbox"
+                checked={agreedToTerms}
+                onChange={(e) => setAgreedToTerms(e.target.checked)}
+                style={{ marginTop: "0.2em", flexShrink: 0 }}
+              />
+              <label
+                htmlFor="agreedToTerms"
+                className="type-body-small"
+                style={{ color: "var(--color-role-on-surface)", cursor: "pointer" }}
+              >
+                I agree to the{" "}
+                <Link href="/terms" style={{ color: "inherit" }}>
+                  Terms and Privacy Notice
+                </Link>
+              </label>
+            </div>
+            <FieldError msg={errors.agreedToTerms} />
           </div>
 
-          <div style={{ display: "flex", alignItems: "flex-start", gap: "var(--space-xs)" }}>
-            <input
-              id="isAdult"
-              type="checkbox"
-              checked={isAdult}
-              onChange={(e) => setIsAdult(e.target.checked)}
-              style={{ marginTop: "0.2em", flexShrink: 0 }}
-            />
-            <label
-              htmlFor="isAdult"
-              className="type-body-small"
-              style={{ color: "var(--color-role-on-surface)", cursor: "pointer" }}
+          <div>
+            <div
+              style={{
+                display: "flex",
+                alignItems: "flex-start",
+                gap: "var(--space-xs)",
+              }}
             >
-              I am 18 or older
-            </label>
+              <input
+                id="isAdult"
+                type="checkbox"
+                checked={isAdult}
+                onChange={(e) => setIsAdult(e.target.checked)}
+                style={{ marginTop: "0.2em", flexShrink: 0 }}
+              />
+              <label
+                htmlFor="isAdult"
+                className="type-body-small"
+                style={{ color: "var(--color-role-on-surface)", cursor: "pointer" }}
+              >
+                I am 18 or older
+              </label>
+            </div>
+            <FieldError msg={errors.isAdult} />
           </div>
         </div>
 
@@ -406,12 +555,32 @@ function SignupForm({ switchForm }: { switchForm: (f: FormKey) => void }) {
 // Login form
 // ---------------------------------------------------------------------------
 
+type LoginErrors = { email: string | null; password: string | null };
+
 function LoginForm({ switchForm }: { switchForm: (f: FormKey) => void }) {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [errors, setErrors] = useState<LoginErrors>({
+    email: null,
+    password: null,
+  });
+
+  // Blur: show only the empty-field error for login (format checked on submit).
+  function handleBlur(field: "email" | "password") {
+    if (field === "email") {
+      setErrors((prev) => ({ ...prev, email: requiredEmail(email) }));
+    } else {
+      setErrors((prev) => ({ ...prev, password: requiredPassword(password) }));
+    }
+  }
 
   function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
+    // Email: required + format on submit. Password: required only.
+    const emailErr = requiredEmail(email) ?? emailFormat(email);
+    const passwordErr = requiredPassword(password);
+    setErrors({ email: emailErr, password: passwordErr });
+    if (emailErr || passwordErr) return;
     alert("Not built yet");
   }
 
@@ -463,8 +632,10 @@ function LoginForm({ switchForm }: { switchForm: (f: FormKey) => void }) {
             autoComplete="email"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
-            style={inputStyle}
+            onBlur={() => handleBlur("email")}
+            style={inputStyle(!!errors.email)}
           />
+          <FieldError msg={errors.email} />
         </div>
 
         <div style={fieldStyle}>
@@ -481,8 +652,10 @@ function LoginForm({ switchForm }: { switchForm: (f: FormKey) => void }) {
             autoComplete="current-password"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
-            style={inputStyle}
+            onBlur={() => handleBlur("password")}
+            style={inputStyle(!!errors.password)}
           />
+          <FieldError msg={errors.password} />
         </div>
 
         <div
@@ -529,9 +702,20 @@ function LoginForm({ switchForm }: { switchForm: (f: FormKey) => void }) {
 
 function ResetForm({ switchForm }: { switchForm: (f: FormKey) => void }) {
   const [email, setEmail] = useState("");
+  const [errors, setErrors] = useState<{ email: string | null }>({
+    email: null,
+  });
+
+  // Blur: show only the empty-field error (format checked on submit).
+  function handleBlur() {
+    setErrors({ email: requiredEmail(email) });
+  }
 
   function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
+    const emailErr = requiredEmail(email) ?? emailFormat(email);
+    setErrors({ email: emailErr });
+    if (emailErr) return;
     alert("Not built yet");
   }
 
@@ -583,8 +767,10 @@ function ResetForm({ switchForm }: { switchForm: (f: FormKey) => void }) {
             autoComplete="email"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
-            style={inputStyle}
+            onBlur={handleBlur}
+            style={inputStyle(!!errors.email)}
           />
+          <FieldError msg={errors.email} />
         </div>
 
         <div style={{ marginTop: "var(--space-lg)" }}>
