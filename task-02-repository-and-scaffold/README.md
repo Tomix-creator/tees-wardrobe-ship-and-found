@@ -25,7 +25,7 @@ An order book for Tee’s Wardrobe, a small bespoke clothing business, that lets
 | | |
 |---|---|
 | **Finished** | Scaffold from the Task One tokens (Steps 1–3). Server start and first load measured (Step 4). Three breakages recovered (Step 5). Order form saving to PostgreSQL, with the false success disproved (Step 6). Hand-drawn working tree (Step 8). Three branches merged through pull requests, plus one deleted unmerged (Step 9). Information design and responsive heading (Step 10) |
-| **Half done** | This README has been rewritten to match my evidence, and I rehearsed the setup steps from a fresh clone, but it **hasn't yet been tested on another person** (Step 7). The result will go in `docs/readme-test.md` |
+| **Half done** | The README test on another person (Step 7). My tester got as far as `npm install` and was blocked by their internet connection. It also found three problems in these instructions, now fixed. They haven't yet reached a running app (`docs/readme-test.md`) |
 | **Not started** | Viewing, editing or deleting orders. Logins. Deployment. Those belong to later tasks |
 
 Pull requests: [#1 order form](https://github.com/Tomix-creator/tees-wardrobe-ship-and-found/pull/1) · [#2 working tree](https://github.com/Tomix-creator/tees-wardrobe-ship-and-found/pull/2) · [#3 information design](https://github.com/Tomix-creator/tees-wardrobe-ship-and-found/pull/3)
@@ -76,11 +76,13 @@ createdb tees_wardrobe
 cp .env.example .env
 ```
 
-Open `.env` and replace `USER` with your Mac username (type `whoami` in the terminal to see it). Or do both in one go:
+Then put your Mac username into it. **Copy this command exactly, without changing any part of it.** `USER` is the word it looks for, and `$(whoami)` fills in your username for you:
 
 ```bash
 sed -i '' "s/USER/$(whoami)/" .env
 ```
+
+(My tester replaced `USER` in this command with their own username. The command then silently changed nothing.)
 
 `npm install` reads this file. Without it, the install stops with `Cannot resolve environment variable: DATABASE_URL`.
 
@@ -93,9 +95,13 @@ npm install
 npx prisma migrate deploy
 ```
 
+**If `npm install` prints red `npm error` lines, stop here.** Don't run the next command. `ETIMEDOUT` means your internet connection dropped. Check it, then run `npm install` again until it finishes with no `npm error` lines.
+
 `npm install` may report security advisories. They're known and listed under Known defects. Don't run `npm audit fix`, because it can upgrade packages in ways that break the app.
 
 The migrate step should finish with `All migrations have been successfully applied.`
+
+**If it asks `Need to install the following packages… Ok to proceed?`, type `n`.** It means `npm install` didn't finish. Saying yes downloads a different, pre-release version of Prisma (`8.0.0-rc`) instead of the 7.10.1 this app is pinned to. Go back and run `npm install` again.
 
 **5. Run it**
 
@@ -151,7 +157,7 @@ All of these are real and were checked on my machine. Full details are in [`docs
 | 4 First load | [`performance-note.md`](docs/performance-note.md) | `03`, `04`: port 3000, first load 2,459 ms, reload 60 ms |
 | 5 Three breakages | [`nested-folder.md`](docs/nested-folder.md), [`404-diagnosis.md`](docs/404-diagnosis.md) | `05`–`10`: wrong folder (ENOENT), port 3000 in use by PID 41552, 404 after renaming `page.tsx` |
 | 6 Database and false success | [`false-success.md`](docs/false-success.md) | `11`–`13c` |
-| 7 README test | `readme-test.md` (to do) | |
+| 7 README test | [`readme-test.md`](docs/readme-test.md) | `21`, `21b` |
 | 8 Working tree | [`working-tree.md`](docs/working-tree.md) | `14` |
 | 9 Branches | (PR links above) | `15b`, and `15` after the final merge |
 | 10 Information design | [`information-design.md`](docs/information-design.md) | `16`–`20` |
