@@ -349,14 +349,6 @@ function SignupForm({ switchForm }: { switchForm: (f: FormKey) => void }) {
     }
   }
 
-  const isFormValid =
-    (requiredFullName(fullName) ?? fullNameFormat(fullName)) === null &&
-    (requiredEmail(email) ?? emailFormat(email)) === null &&
-    (requiredPhone(phone) ?? phoneFormat(phone)) === null &&
-    (requiredPassword(password) ?? passwordRules(password)) === null &&
-    agreedToTerms &&
-    isAdult;
-
   return (
     <>
       {/* Assertive live region — visually hidden, announced by screen readers on submit failure. */}
@@ -456,7 +448,7 @@ function SignupForm({ switchForm }: { switchForm: (f: FormKey) => void }) {
           <input
             id="phone"
             ref={phoneRef}
-            type="number"
+            type="tel"
             autoComplete="tel"
             aria-required="true"
             {...(errors.phone
@@ -603,21 +595,19 @@ function SignupForm({ switchForm }: { switchForm: (f: FormKey) => void }) {
         </div>
 
         {/* Submit */}
-        {isFormValid && (
-          <div style={{ marginTop: "var(--space-lg)" }}>
-            <button
-              type="submit"
-              className="btn btn-primary"
-              disabled={isSubmitting}
-              style={{
-                opacity: isSubmitting ? 0.7 : 1,
-                cursor: isSubmitting ? "not-allowed" : "pointer",
-              }}
-            >
-              {isSubmitting ? "Creating account\u2026" : "Create account"}
-            </button>
-          </div>
-        )}
+        <div style={{ marginTop: "var(--space-lg)" }}>
+          <button
+            type="submit"
+            className="btn btn-primary"
+            disabled={isSubmitting}
+            style={{
+              opacity: isSubmitting ? 0.7 : 1,
+              cursor: isSubmitting ? "not-allowed" : "pointer",
+            }}
+          >
+            {isSubmitting ? "Creating account\u2026" : "Create account"}
+          </button>
+        </div>
 
         {statusMessage && (
           <div
