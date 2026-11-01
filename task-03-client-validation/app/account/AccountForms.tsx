@@ -266,6 +266,7 @@ function SignupForm({ switchForm }: { switchForm: (f: FormKey) => void }) {
 
   async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
+    if (isSubmitting) return;
     setStatusMessage(null);
 
     // Validate every field at once.
@@ -348,6 +349,14 @@ function SignupForm({ switchForm }: { switchForm: (f: FormKey) => void }) {
       setIsSubmitting(false);
     }
   }
+
+  const isFormValid =
+    (requiredFullName(fullName) ?? fullNameFormat(fullName)) === null &&
+    (requiredEmail(email) ?? emailFormat(email)) === null &&
+    (requiredPhone(phone) ?? phoneFormat(phone)) === null &&
+    (requiredPassword(password) ?? passwordRules(password)) === null &&
+    agreedToTerms &&
+    isAdult;
 
   return (
     <>
@@ -599,14 +608,29 @@ function SignupForm({ switchForm }: { switchForm: (f: FormKey) => void }) {
           <button
             type="submit"
             className="btn btn-primary"
-            disabled={isSubmitting}
+            {...(!isFormValid
+              ? { "aria-disabled": "true", "aria-describedby": "su-submit-hint" }
+              : {})}
             style={{
-              opacity: isSubmitting ? 0.7 : 1,
-              cursor: isSubmitting ? "not-allowed" : "pointer",
+              opacity: !isFormValid ? 0.5 : isSubmitting ? 0.7 : 1,
+              cursor: !isFormValid || isSubmitting ? "not-allowed" : "pointer",
             }}
           >
             {isSubmitting ? "Creating account\u2026" : "Create account"}
           </button>
+          {!isFormValid && (
+            <p
+              id="su-submit-hint"
+              className="type-body-small"
+              style={{
+                margin: 0,
+                marginTop: "var(--space-xs)",
+                color: "var(--color-role-field-outline)",
+              }}
+            >
+              Fill in every field and tick both boxes to create your account.
+            </p>
+          )}
         </div>
 
         {statusMessage && (
