@@ -1,0 +1,44 @@
+Rolling back a change I regretted, by its commit ID
+Date: 1 November 2026, about 20:55
+Branch: feature/task-03-auth-pages
+
+The change I regretted (commit 0e848a7): the phone field as type="number", and the
+Create account button hidden until the form is valid. Evidence of both problems:
+09-number-input-annoying.png and 13-button-hidden-version.png.
+
+=== 1. The commit list (recorded with script -q) ===
+$ git log --oneline -8
+0e848a7 (HEAD -> feature/task-03-auth-pages) Try type=number for phone and hide the submit button until valid
+0ef8fdb Accessibility audit with VoiceOver: five problems found and fixed, before and after transcripts
+34a14dc Attack the form, then skip it: direct request to /api/signup saved junk (201)
+593b0b6 Client-side validation in four categories, rules in lib/validation.ts, Yoruba tone-mark fix, evidence 05-08
+04e2160 Client-side validation in four categories, rules in lib/validation.ts, Yoruba tone-mark fix
+cda2dd3 Information design on the account forms: required phone, show-password toggle, terms and 18+ checkboxes, field justification
+f94a547 Collapse signup, login and reset into one /account page with ?form= switching
+76e0006 Task Three: copy Task Two app, add separate signup, login and reset pages
+
+=== 2. The ID I chose: 0e848a7 ===
+(My first attempt used a placeholder ID, ABC1234, copied from my instructions without
+replacing it. Git answered "fatal: bad revision 'ABC1234'" and changed nothing. That
+is the point of naming IDs: a wrong ID fails loudly instead of undoing the wrong thing.)
+
+=== 3. The commands I ran ===
+$ git revert --no-commit 0e848a7
+$ git restore --source 0e848a7 --staged --worktree task-03-client-validation/evidence/09-number-input-annoying.png task-03-client-validation/evidence/13-button-hidden-version.png
+$ git commit -m "Revert 0e848a7 (type=number phone, hidden submit button), keeping its evidence screenshots"
+[feature/task-03-auth-pages 96d88cd] Revert 0e848a7 (type=number phone, hidden submit button), keeping its evidence screenshots
+ 1 file changed, 14 insertions(+), 24 deletions(-)
+
+Why the middle step: 0e848a7 also added the two evidence screenshots. A plain revert
+would have deleted them along with the bad code. So I undid the commit without saving,
+put the two screenshots back, then saved the undo.
+
+=== 4. Result ===
+$ git log --oneline -3
+96d88cd (HEAD -> feature/task-03-auth-pages) Revert 0e848a7 (type=number phone, hidden submit button), keeping its evidence screenshots
+0e848a7 Try type=number for phone and hide the submit button until valid
+0ef8fdb Accessibility audit with VoiceOver: five problems found and fixed, before and after transcripts
+
+Checked afterwards: no type="number" left in app/account/AccountForms.tsx, the button is
+visible again, and both evidence screenshots still exist. Nothing was deleted from history:
+the mistake (0e848a7) and its undo (96d88cd) are both in the log.

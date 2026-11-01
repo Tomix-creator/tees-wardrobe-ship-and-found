@@ -1,0 +1,56 @@
+Attacking my own form: trying to defeat every rule I wrote
+Date: 1 November 2026
+Branch: feature/task-03-auth-pages
+
+How: I ran each input through the exact functions the form calls (lib/validation.ts,
+required check first, then the format rule, the same order the form uses). The 'a@b',
+'blessing@gmail', 'Blessing' and 'pass' cases were also tried by hand in the browser
+(evidence 06, 07, 08).
+
+GOT THROUGH = the form would accept it.  BLOCKED = the form shows the message under it.
+
+BLOCKED     Full name single character                "a"
+                      -> Please enter at least your first name and surname, using letters only.
+GOT THROUGH Full name two single letters              "a b"
+GOT THROUGH Full name bot-style filler                "test test"
+GOT THROUGH Full name pasted with spaces both ends    "   Blessing Okafor   "
+GOT THROUGH Full name exactly 80 characters           "AAAAAAAAAAAA"… (80 chars)
+BLOCKED     Full name 81 characters                   "AAAAAAAAAAAA"… (81 chars)
+                      -> Please enter at least your first name and surname, using letters only.
+BLOCKED     Email     the PDF's a@b                   "a@b"
+                      -> That doesn’t look like an email address. Check for a missing @ or dot.
+GOT THROUGH Email     a@b.c                           "a@b.c"
+GOT THROUGH Email     pasted with spaces              " blessing@gmail.com "
+GOT THROUGH Email     250 characters                  "xxxxxxxxxxxx"… (250 chars)
+BLOCKED     Email     260 characters                  "xxxxxxxxxxxx"… (260 chars)
+                      -> That doesn’t look like an email address. Check for a missing @ or dot.
+GOT THROUGH Phone     all zeros                       "00000000000"
+GOT THROUGH Phone     fake overseas                   "+1 2345678"
+GOT THROUGH Phone     pasted with spaces and dashes   " 0803-123-4567 "
+BLOCKED     Phone     +234 too short                  "+2341234"
+                      -> Use a Nigerian number like 0803 123 4567, or an overseas number starting with +.
+BLOCKED     Password  8 spaces                        "        "
+                      -> A password can’t be only spaces.
+GOT THROUGH Password  7 spaces + x                    "       x"
+GOT THROUGH Password  8 identical letters             "aaaaaaaa"
+GOT THROUGH Password  exactly 64                      "pppppppppppp"… (64 chars)
+BLOCKED     Password  65 characters                   "pppppppppppp"… (65 chars)
+                      -> Use 64 characters or fewer.
+
+WHAT GOT THROUGH, AND WHY IT MATTERS
+- "a b" and "test test": two "words" beat the two-word rule. The rule checks shape, not
+  whether it is a real name. A bot only has to add a space.
+- "a@b.c": the right shape, but not a real address. Only sending a code proves ownership.
+- "00000000000" and "+1 2345678": the right number of digits, but not real numbers.
+- "       x" (7 spaces + x) and "aaaaaaaa": 8 characters, so the length rule is met,
+  but they are trivially guessable. The rule stops ALL-space passwords, not mostly-space ones.
+- Pasted spaces around name, email and phone: accepted, and that is intended. The form
+  trims them (cleanFullName, cleanEmail, cleanPhone) before sending.
+
+TWO WRONG MESSAGES FOUND (logged in docs/defects.md)
+- An 81-character name says "Please enter at least your first name and surname",
+  which is not the problem; it is too long.
+- A 260-character email says "Check for a missing @ or dot", which is not the problem either.
+
+All of this only matters for someone using the form. 16-direct-request-command-and-response.txt
+shows that skipping the form skips every one of these rules.

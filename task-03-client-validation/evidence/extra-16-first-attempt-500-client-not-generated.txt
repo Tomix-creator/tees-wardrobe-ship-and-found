@@ -1,0 +1,25 @@
+FIRST attempt at the direct request: 500, because the app could not save anything
+Date: 1 November 2026, 18:02 GMT (from the Date header below)
+Cause: Prisma 7's 'migrate dev' created the Customer table but did not regenerate
+the client in generated/prisma, which only knew about Order. prisma.customer did not
+exist, so every signup crashed, including correct ones from the form. Fixed with
+'npx prisma generate' and a dev server restart; the successful run is in
+16-direct-request-command-and-response.txt.
+
+$ curl -i -X POST http://localhost:3000/api/signup -H "Content-Type: application/json" -d '{"fullName":"a","email":"not-an-email","phone":"x","password":" "}'
+
+HTTP/1.1 500 Internal Server Error
+vary: RSC, Next-Router-State-Tree, Next-Router-Prefetch, Next-Router-Segment-Prefetch
+content-type: application/json
+Date: Sun, 01 Nov 2026 18:02:08 GMT
+Connection: keep-alive
+Keep-Alive: timeout=5
+Transfer-Encoding: chunked
+
+{"error":"Could not create account."}
+
+$ psql tees_wardrobe_t3 -c 'SELECT id, "fullName", email, phone FROM "Customer";'
+
+ id | fullName | email | phone 
+----+----------+-------+-------
+(0 rows)
