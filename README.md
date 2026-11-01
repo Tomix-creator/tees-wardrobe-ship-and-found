@@ -11,8 +11,8 @@ This is my submission for the Ship & Found five-task assessment. I chose **one r
 | Task | Folder | State |
 |---|---|---|
 | 1. Design system | [`task-01-design-system/`](task-01-design-system/) | **Finished.** Figma design system, token export, JSON-to-CSS converter, one demo screen, all required evidence. Interview answers written; viva not yet done. |
-| 2. Scaffold and repository | [`task-02-repository-and-scaffold/`](task-02-repository-and-scaffold/) | **Nearly finished.** Next.js app scaffolded from the Task One tokens. Three breakages recovered. A "New order" form that saves to PostgreSQL and only says "saved" on a real 201, with the false success disproved. Three pull requests merged. Information design and a responsive heading. **Still in progress:** the README test on a real person. Interview answers written; viva not yet done. |
-| 3. Client validation | not created | Not started |
+| 2. Scaffold and repository | [`task-02-repository-and-scaffold/`](task-02-repository-and-scaffold/) | **Finished.** Next.js app scaffolded from the Task One tokens. Three breakages recovered. A "New order" form that saves to PostgreSQL and only says "saved" on a real 201, with the false success disproved. Three pull requests merged. Information design and a responsive heading. The README test on a real person found three problems in my setup steps, now fixed; the tester was then blocked by their internet connection. Interview answers written; viva not yet done. |
+| 3. Client validation | [`task-03-client-validation/`](task-03-client-validation/) | **Finished, with known gaps.** Sign-up, login and reset collapsed into one page. Validation rules from Tee's business, each with who it wrongly blocks. A VoiceOver audit with before and after transcripts. A direct `curl` request the server accepted (201). Rollback by commit ID. Gaps: the server still accepts anything (Task Four), the terms page is a placeholder. Interview answers written; viva not yet done. |
 | 4. Server security | not created | Not started |
 | 5. Sessions and compliance | not created | Not started |
 

@@ -1,0 +1,65 @@
+Task Two evidence 15: full branch history after the final merges (PR #4 and PR #5)
+Recorded 1 November 2026 on main, with: git --no-pager log --graph --oneline --all
+(My first capture went through the pager and only kept the first screen, so I re-ran it without the pager.)
+
+*   a1d38f4 Merge pull request #5 from Tomix-creator/feature/task-03-auth-pages
+|\  
+| * 60eb470 Task Three interview answers
+| * a3ece60 Disabled-but-explained button, enumeration, terms note, defects and README
+| * 334cc6e Rollback evidence and rollback.md
+| * 96d88cd Revert 0e848a7 (type=number phone, hidden submit button), keeping its evidence screenshots
+| * 0e848a7 Try type=number for phone and hide the submit button until valid
+| * 0ef8fdb Accessibility audit with VoiceOver: five problems found and fixed, before and after transcripts
+| * 34a14dc Attack the form, then skip it: direct request to /api/signup saved junk (201)
+| * 593b0b6 Client-side validation in four categories, rules in lib/validation.ts, Yoruba tone-mark fix, evidence 05-08
+| * 04e2160 Client-side validation in four categories, rules in lib/validation.ts, Yoruba tone-mark fix
+| * cda2dd3 Information design on the account forms: required phone, show-password toggle, terms and 18+ checkboxes, field justification
+| * f94a547 Collapse signup, login and reset into one /account page with ?form= switching
+| * 76e0006 Task Three: copy Task Two app, add separate signup, login and reset pages
+* |   d29cc3e Merge pull request #4 from Tomix-creator/docs/readme
+|\ \  
+| |/  
+|/|   
+| * f8305d8 README test on a real person: three setup problems found and fixed
+| * 9f5148a Update root README to Task Two's true status
+| * 2b0ff77 Rewrite Task Two README to match my evidence and add README test template
+|/  
+*   ca3d8a4 Merge pull request #3 from Tomix-creator/feature/information-design
+|\  
+| * 5055c46 Add known defects, interview answers and unmerged branch deletion evidence
+| * cfb8292 Document information design decisions and model choices
+| * 86b17c6 Add Step 10 evidence: head on two routes, heading wrap, clamp at three widths
+| * 2823298 Add page titles, SEO, Open Graph and favicon; simplify home page with responsive heading
+|/  
+*   dd9a33f Merge pull request #2 from Tomix-creator/docs/working-tree
+|\  
+| * 6e074fb Add hand-drawn working tree and explain why one branch is not enough
+|/  
+*   bef6c23 Merge pull request #1 from Tomix-creator/feature/order-form
+|\  
+| * 16ae6b4 Add Prisma Studio screenshot of the Order table
+| * 2ec4ebf Rename Step 6 evidence to match the brief and add the inspector screenshot
+| * a96083d Add first database write evidence and false-success analysis
+| * 46da287 Add Order table, save API and new-order form with Prisma 7
+| * c642836 Correct the standard tone count to 14
+|/  
+* 84daef4 Add the palette script that rebuilt primary tones around the brand colour
+* b05b247 Add Task Two evidence recorded by hand and diagnosis write-ups
+* f75a0c8 Add Task Two Next.js scaffold with design tokens and home screen
+* fd2eec9 Ignore throwaway disposable test folders
+* 9a236aa Add root README and gitignore for secrets and system files
+* 966c963 Rewrite Task One docs in plain language, fix defect claims, add support evidence
+* ec8eac1 Update Task One brief and README
+* 9cd539f Add Task One defects and limitations
+* fccb9bf Add Task One spacing token source
+* 6e85d82 Add spacing tokens and documentation
+* db8ff31 Add supporting palette evidence
+* e398c1b Add typography and shadow design decisions
+* 0b03994 Add colour role documentation
+* ba213d7 Add palette and typography comparison evidence
+* a09f686 Add incomplete token export and review
+* ce2da7f Add token regression experiment evidence
+* cc604c5 Add colour and typography evidence
+* 297519b Add business research and original before evidence
+* 5e82513 Update order screen and business brief
+* 9cfb008 Add order demo and design token converter
